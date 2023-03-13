@@ -35,3 +35,24 @@ export const userGoogle = createAsyncThunk (
         return res.data
     }
 )
+export const showProfile = createAsyncThunk (
+    'users/showProfile',
+    async (data) => {
+        const res = await customAxios.get('users/profile/'+data,
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    authorization: 'Bearer ' + localStorage.getItem("access-token"),
+                }
+            })
+        return res.data
+    }
+)
+export const editProfile = createAsyncThunk (
+    'users/editProfile',
+    async (data) => {
+        const res = await customAxios.put('users/'+data.idUser, data)
+        console.log(res.data)
+        return res.data
+    }
+)

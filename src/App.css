@@ -68,13 +68,32 @@
 }
 
 /* thay đổi màu background khi hover vào đường dẫn */
-.noidung_dropdown a:hover {color: aquamarine}
+.noidung_dropdown a:hover {color:  rgb(0,255,110)}
 
 /* hiển thị nội dung dropdown khi hover */
 .dropdown-menu:hover .noidung_dropdown {display: block;}
 
 /* Thay đổi màu background cho nút khi được hover */
-.dropdown-menu:hover .nut_dropdown {background-color: #00bfff;}
+.dropdown-menu:hover .nut_dropdown {background-color: rgb(238,77,45)}
 
 /*Dùng Để hiển thị nội dung*/
 .hienThi {display:block;}
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
+}

@@ -1,13 +1,23 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Link, useNavigate} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {googleLogout} from "@react-oauth/google";
+import {showProfile} from "../service/userService";
 
 export default function Navbar() {
+    const dispatch = useDispatch()
     const navigate = useNavigate()
     const user = useSelector(state => {
         return state.users.users
     })
+    const profile = useSelector(state => {
+        if (state !== undefined) {
+            return state.users.user.user
+        }
+    })
+    useEffect(() => {
+        dispatch(showProfile(user.idUser))
+    }, [])
     const logOut = () => {
         localStorage.clear();
         googleLogout();
@@ -67,13 +77,13 @@ export default function Navbar() {
                                                     :
                                                     <>
                                                         <div className="dropdown-menu col" style={{backgroundColor: 'rgb(238,77,45)', border: 'none', marginTop:'-10px'}}>
-                                                            <button className="nut_dropdown"><img src={user.avatar}
+                                                            <button className="nut_dropdown"><img src={profile !== undefined &&profile.avatar}
                                                                                                   alt="" width={'20px'}
                                                                                                   height={'20px'}
                                                                                                   style={{borderRadius: '100%'}}/>
-                                                                <small>{user.fullName}</small></button>
+                                                                <small>{profile!== undefined && profile.fullName}</small></button>
                                                             <div className="noidung_dropdown">
-                                                                <a className="btn" type={'submit'}>Tài khoản của tôi</a>
+                                                                <Link to={'/account'} className="btn" type={'submit'}>Tài khoản của tôi</Link>
                                                                 <a className="btn" type={'submit'}>Giỏ hàng</a>
                                                                 <a className="btn" type={'submit'} onClick={() => logOut()}>Đăng xuất</a>
                                                             </div>
