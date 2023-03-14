@@ -17,28 +17,28 @@ export default function Header() {
                 </ol>
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img class="d-block w-100" src="/img/anh(1).jpg" style={{height: "300px", width: "100%"}} alt="1"/>
+                        <img class="d-block w-100" src="/img/banner-1.png" style={{height: "300px", width: "100%"}} alt="1"/>
                     </div>
                     <div class="carousel-item">
-                        <img class="d-block w-100" src="/img/anh(1).png" style={{height: "300px", width: "100%"}} alt="2"/>
+                        <img class="d-block w-100" src="/img/banner-2.png" style={{height: "300px", width: "100%"}} alt="2"/>
                     </div>
                     <div class="carousel-item">
-                        <img class="d-block w-100" src="/img/anh(2).jpg" style={{height: "300px", width: "100%"}} alt="3"/>
+                        <img class="d-block w-100" src="/img/banner-3.png" style={{height: "300px", width: "100%"}} alt="3"/>
                     </div>
                     <div class="carousel-item">
-                        <img class="d-block w-100" src="/img/anh(3).jpg" style={{height: "300px", width: "100%"}} alt="4"/>
+                        <img class="d-block w-100" src="/img/banner-4.png" style={{height: "300px", width: "100%"}} alt="4"/>
                     </div>
                     <div class="carousel-item">
-                        <img class="d-block w-100" src="/img/anh(4).jpg" style={{height: "300px", width: "100%"}} alt="5"/>
+                        <img class="d-block w-100" src="/img/banner-5.png" style={{height: "300px", width: "100%"}} alt="5"/>
                     </div>
                     <div class="carousel-item">
-                        <img class="d-block w-100" src="/img/anh(5).jpg" style={{height: "300px", width: "100%"}} alt="6"/>
+                        <img class="d-block w-100" src="/img/banner-6.png" style={{height: "300px", width: "100%"}} alt="6"/>
                     </div>
                     <div class="carousel-item">
-                        <img class="d-block w-100" src="/img/anh(6).jpg" style={{height: "300px", width: "100%"}} alt="7"/>
+                        <img class="d-block w-100" src="/img/banner-7.png" style={{height: "300px", width: "100%"}} alt="7"/>
                     </div>
                     <div class="carousel-item">
-                        <img class="d-block w-100" src="/img/shenhe.jpg" style={{height: "300px", width: "100%"}} alt="8"/>
+                        <img class="d-block w-100" src="/img/banner-8.png" style={{height: "300px", width: "100%"}} alt="8"/>
                     </div>
                 </div>
                 <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
