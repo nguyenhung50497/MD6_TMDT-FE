@@ -9,7 +9,8 @@ import AccountUser from "./pages/users/accountUser";
 import ProfileUser from "./pages/users/profileUser";
 import AddressUser from "./pages/users/addressUser";
 import Password from "./pages/users/password";
-import CreateShop from "./pages/users/createShop";
+import CreateShop from "./pages/shops/createShop";
+import ShopInterface from "./pages/shops/shopInterface";
 
 function App() {
     const user = useSelector(state => {
@@ -19,7 +20,9 @@ function App() {
         <Routes>
             <Route path={'login'} element={<Login/>}/>
             <Route path={'register'} element={<Register/>}/>
-            <Route path={''} element={<Home/>}/>
+            <Route path={''} element={<Home/>}>
+                <Route path={'shopInterface'} element={<ShopInterface/>}/>
+            </Route>
             {user !== null ?
                 <>
                     <Route path={'account'} element={<AccountUser/>}>

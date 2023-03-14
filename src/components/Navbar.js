@@ -8,7 +8,9 @@ export default function Navbar() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const user = useSelector(state => {
-        return state.users.users
+       if (state !== undefined) {
+           return state.users.users
+       }
     })
     const profile = useSelector(state => {
         if (state !== undefined) {
@@ -16,7 +18,10 @@ export default function Navbar() {
         }
     })
     useEffect(() => {
-        dispatch(showProfile(user.idUser))
+        if (user === null) {
+        } else {
+            dispatch(showProfile(user.idUser))
+        }
     }, [])
     const logOut = () => {
         localStorage.clear();
@@ -70,7 +75,7 @@ export default function Navbar() {
                                                         <Link to={'/login'}
                                                               style={{marginRight: '10px', color: 'white'}}>Đăng
                                                             nhập</Link> | <Link to={'/register'} style={{
-                                                        marginRight: '10px',
+                                                        paddingLeft: '10px',
                                                         color: 'white'
                                                     }}>Đăng ký</Link>
                                                     </>
@@ -97,7 +102,7 @@ export default function Navbar() {
                                 <div className="col-12" style={{height: '90px'}}>
                                     <div className="row">
                                         <div className="col-2" style={{height: '90px', marginLeft: '15px'}}>
-                                            <Link to={''} style={{color: 'white', textDecoration: 'none'}}>
+                                            <Link to={'/'} style={{color: 'white', textDecoration: 'none'}}>
                                                 <div className="row">
                                                     <div style={{marginTop: '21px'}}>
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"
