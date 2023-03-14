@@ -46,6 +46,7 @@ export default function ProfileUser() {
         data.avatar = url
         dispatch(editProfile(data)).then((check) => {
             if (check.payload === 'success') {
+                swal("Chỉnh sửa thành công!")
                 window.location.reload()
             }
         })

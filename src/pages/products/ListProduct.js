@@ -13,6 +13,7 @@ export default function ListProduct() {
    const dispatch = useDispatch();
    const navigate = useNavigate();
    const products = useSelector((state) => {
+      console.log(state);
       return state.products.products.products;
    });
    const categories = useSelector((state) => {
