@@ -42,5 +42,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@react-oauth/google": "^0.8.0",
+    "firebase": "^9.17.2",
+    "formik": "^2.2.9",
+    "yup": "^1.0.2"
   }
 }
