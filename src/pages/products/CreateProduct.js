@@ -9,172 +9,242 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { getCategories } from "../../service/categoryService";
 import { addProduct } from "../../service/productService";
 const validateSchema = Yup.object().shape({
-  nameProduct: Yup.string()
-    .min(2, "Too short!")
-    .max(50, "Too long!")
-    .required("Required"),
-  description: Yup.string()
-    .min(2, "Too short!")
-    .max(5000, "Too long!")
-    .required("Required"),
+   nameProduct: Yup.string()
+      .min(2, "Too short!")
+      .max(50, "Too long!")
+      .required("Required"),
+   description: Yup.string()
+      .min(2, "Too short!")
+      .max(5000, "Too long!")
+      .required("Required"),
 });
 
 export default function CreateProduct() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const categories = useSelector((state) => {
-    return state.categories.categories;
-  });
-  const [images, setImages] = useState([]);
-  const [urls, setUrls] = useState('');
-  const [progress, setProgress] = useState(0);
-  const [file, setFile] = useState("");
-  const [url, setUrl] = useState("");
-  const [percent, setPercent] = useState(0);
+   const navigate = useNavigate();
+   const dispatch = useDispatch();
+   const categories = useSelector((state) => {
+      return state.categories.categories;
+   });
+   const [images, setImages] = useState([]);
+   const [urls, setUrls] = useState("");
+   const [progress, setProgress] = useState(0);
+   const [file, setFile] = useState("");
+   const [url, setUrl] = useState("");
+   const [percent, setPercent] = useState(0);
 
-  const handleChange = (e) => {
-    for (let i = 0; i < e.target.files.length; i++) {
-      const newImage = e.target.files[i];
-      newImage["id"] = Math.random();
-      setImages((prevState) => [...prevState, newImage]);
-    }
-  };
+   const handleChange = (e) => {
+      for (let i = 0; i < e.target.files.length; i++) {
+         const newImage = e.target.files[i];
+         newImage["id"] = Math.random();
+         setImages((prevState) => [...prevState, newImage]);
+      }
+   };
 
-  const handleUpload = (event) => {
-    setFile(event.target.files[0]);
-    const storageRef = ref(storage, `/files/${file.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, file);
-    uploadTask.on(
-        "state_changed",
-        (snapshot) => {
+   const handleUpload = (event) => {
+      setFile(event.target.files[0]);
+      const storageRef = ref(storage, `/files/${file.name}`);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+      uploadTask.on(
+         "state_changed",
+         (snapshot) => {
             const percent = Math.round(
-                (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+               (snapshot.bytesTransferred / snapshot.totalBytes) * 100
             );
             setPercent(percent);
-        },
-        (err) => console.log(err),
-        () => {
+         },
+         (err) => console.log(err),
+         () => {
             getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-                setUrls(url)
+               setUrls(url);
             });
-        }
-    );
-  };
+         }
+      );
+   };
 
-  const handleCreateProduct = (values) => {
-    let data = { ...values, image: urls, idShop: 1 };
-    dispatch(addProduct(data)).then((value) => {
-      swal("Create Success !!!");
-      navigate("/home");
-    });
-  };
-  useEffect(() => {
-    dispatch(getCategories());
-  }, []);
-  return (
-    <div className="row mt-3">
-      <div className="col-2">
-
-      </div>
-      <div class="container-xxl py-5 col-8 bg-light">
+   const handleCreateProduct = (values) => {
+      let data = { ...values, image: urls, idShop: 1 };
+      dispatch(addProduct(data)).then((value) => {
+         swal("Create Success !!!");
+         navigate("/home");
+      });
+   };
+   useEffect(() => {
+      dispatch(getCategories());
+   }, []);
+   return (
+      <div className="row mt-3">
+         <div className="col-2"></div>
+         <div class="container-xxl py-5 col-8 bg-light">
             <div class="container">
-                <div class="text-center mx-auto mb-5" style={{maxWidth: "600px"}}>
-                    <h1 class="mb-3">Edit Product</h1>
-                </div>
-                <div class="row g-4">
-                    <div class="col-md-4">
-                          {urls && <img className="position-relative rounded w-100 h-100" style={{height: "300px", width: "100%"}} src={urls} alt="Error" />}
-                    </div>
-                    <div class="col-md-8">
-                        <div>
-                            <Formik
-                              initialValues={{
-                                nameProduct: "",
-                                description: "",
-                                price: "",
-                                quantity: "",
-                                idCategory: 0,
-                              }}
-                              validationSchema={validateSchema}
-                              onSubmit={(values) => {
-                                handleCreateProduct(values);
-                              }}
-                            >
-                            <Form>
-                                <div class="row g-3">
-                                    <div class="col-12">
-                                        <div class="form-floating">
-                                            <label for="nameProduct" style={{color: "blue"}}>Tên Sản Phẩm</label>
-                                            <Field type="text" class="form-control" name={'nameProduct'} id="nameProduct" placeholder="Tên Sản Phẩm"/>
-                                            <alert className="text-danger">
-                                              <ErrorMessage name={"nameProduct"}></ErrorMessage>
-                                            </alert>
-                                        </div>
+               <div
+                  class="text-center mx-auto mb-5"
+                  style={{ maxWidth: "600px" }}>
+                  <h1 class="mb-3">Edit Product</h1>
+               </div>
+               <div class="row g-4">
+                  <div class="col-md-4">
+                     {urls && (
+                        <img
+                           className="position-relative rounded w-100 h-100"
+                           style={{ height: "300px", width: "100%" }}
+                           src={urls}
+                           alt="Error"
+                        />
+                     )}
+                  </div>
+                  <div class="col-md-8">
+                     <div>
+                        <Formik
+                           initialValues={{
+                              nameProduct: "",
+                              description: "",
+                              price: "",
+                              quantity: "",
+                              idCategory: 0,
+                           }}
+                           validationSchema={validateSchema}
+                           onSubmit={(values) => {
+                              handleCreateProduct(values);
+                           }}>
+                           <Form>
+                              <div class="row g-3">
+                                 <div class="col-12">
+                                    <div class="form-floating">
+                                       <label
+                                          for="nameProduct"
+                                          style={{ color: "blue" }}>
+                                          Tên Sản Phẩm
+                                       </label>
+                                       <Field
+                                          type="text"
+                                          class="form-control"
+                                          name={"nameProduct"}
+                                          id="nameProduct"
+                                          placeholder="Tên Sản Phẩm"
+                                       />
+                                       <alert className="text-danger">
+                                          <ErrorMessage
+                                             name={
+                                                "nameProduct"
+                                             }></ErrorMessage>
+                                       </alert>
                                     </div>
-                                    <div class="col-12 mt-2">
-                                        <div class="form-floating">
-                                            <label for="description" style={{color: "blue"}}>Mô Tả</label>
-                                            <Field as={'textarea'} class="form-control" name={'description'} id="description" placeholder="Mô Tả" style={{height: '150px'}}/>
-                                            <alert className="text-danger">
-                                              <ErrorMessage name={"description"}></ErrorMessage>
-                                            </alert>
-                                        </div>
+                                 </div>
+                                 <div class="col-12 mt-2">
+                                    <div class="form-floating">
+                                       <label
+                                          for="description"
+                                          style={{ color: "blue" }}>
+                                          Mô Tả
+                                       </label>
+                                       <Field
+                                          as={"textarea"}
+                                          class="form-control"
+                                          name={"description"}
+                                          id="description"
+                                          placeholder="Mô Tả"
+                                          style={{ height: "150px" }}
+                                       />
+                                       <alert className="text-danger">
+                                          <ErrorMessage
+                                             name={
+                                                "description"
+                                             }></ErrorMessage>
+                                       </alert>
                                     </div>
-                                    <div class="col-md-6 mt-2">
-                                        <div class="form-floating">
-                                            <label for="price" style={{color: "blue"}}>Giá</label>
-                                            <Field type="number" class="form-control" name={'price'} id="price" placeholder="Giá"/>
-                                        </div>
+                                 </div>
+                                 <div class="col-md-6 mt-2">
+                                    <div class="form-floating">
+                                       <label
+                                          for="price"
+                                          style={{ color: "blue" }}>
+                                          Giá
+                                       </label>
+                                       <Field
+                                          type="number"
+                                          class="form-control"
+                                          name={"price"}
+                                          id="price"
+                                          placeholder="Giá"
+                                       />
                                     </div>
-                                    <div class="col-md-6 mt-2">
-                                        <div class="form-floating">
-                                            <label for="quantity" style={{color: "blue"}}>Số Lượng</label>
-                                            <Field type="number" class="form-control" name={'quantity'} id="quantity" placeholder="Số Lượng"/>
-                                        </div>
+                                 </div>
+                                 <div class="col-md-6 mt-2">
+                                    <div class="form-floating">
+                                       <label
+                                          for="quantity"
+                                          style={{ color: "blue" }}>
+                                          Số Lượng
+                                       </label>
+                                       <Field
+                                          type="number"
+                                          class="form-control"
+                                          name={"quantity"}
+                                          id="quantity"
+                                          placeholder="Số Lượng"
+                                       />
                                     </div>
-                                    <div className="col-12 mt-2">
-                                        <label for="quantity" style={{color: "blue"}}>Danh Mục</label>
-                                        <Field
-                                          as="select"
-                                          name={"idCategory"}
-                                          className="form-control"
-                                          id="idCategory"
-                                        >
-                                          <option selected>Chọn danh mục</option>
-                                          {categories !== undefined &&
-                                            categories.map((item, index) => (
-                                              <option value={item.idCategory}>
+                                 </div>
+                                 <div className="col-12 mt-2">
+                                    <label
+                                       for="quantity"
+                                       style={{ color: "blue" }}>
+                                       Danh Mục
+                                    </label>
+                                    <Field
+                                       as="select"
+                                       name={"idCategory"}
+                                       className="form-control"
+                                       id="idCategory">
+                                       <option selected>Chọn danh mục</option>
+                                       {categories !== undefined &&
+                                          categories.map((item, index) => (
+                                             <option value={item.idCategory}>
                                                 {item.nameCategory}
-                                              </option>
-                                            ))}
-                                        </Field>
+                                             </option>
+                                          ))}
+                                    </Field>
+                                 </div>
+                                 <div class="input-group p-3">
+                                    <div class="input-group-prepend">
+                                       <span
+                                          class="input-group-text"
+                                          id="inputGroupFileAddon01">
+                                          Tải Ảnh
+                                       </span>
                                     </div>
-                                    <div class="input-group p-3">
-                                      <div class="input-group-prepend">
-                                        <span class="input-group-text" id="inputGroupFileAddon01">Tải Ảnh</span>
-                                      </div>
-                                      <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01"
+                                    <div class="custom-file">
+                                       <input
+                                          type="file"
+                                          class="custom-file-input"
+                                          id="inputGroupFile01"
+                                          aria-describedby="inputGroupFileAddon01"
                                           multiple
                                           onMouseOut={handleUpload}
-                                        />
-                                        <label class="custom-file-label" for="inputGroupFile01">Chọn tệp</label>
-                                      </div>
+                                       />
+                                       <label
+                                          class="custom-file-label"
+                                          for="inputGroupFile01">
+                                          Chọn tệp
+                                       </label>
                                     </div>
-                                    <div class="col-12 mt-2">
-                                        <button class="btn btn-primary w-100 py-3" type="submit">Thêm Sản Phẩm</button>
-                                    </div>
-                                </div>
-                            </Form>
-                            </Formik>
-                        </div>
-                    </div>
-                </div>
+                                 </div>
+                                 <div class="col-12 mt-2">
+                                    <button
+                                       class="btn btn-primary w-100 py-3"
+                                       type="submit">
+                                       Thêm Sản Phẩm
+                                    </button>
+                                 </div>
+                              </div>
+                           </Form>
+                        </Formik>
+                     </div>
+                  </div>
+               </div>
             </div>
+         </div>
+         <div className="col-2"></div>
       </div>
-      <div className="col-2">
-
-      </div>
-    </div>
-  );
+   );
 }
