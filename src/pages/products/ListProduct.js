@@ -24,6 +24,14 @@ export default function ListProduct() {
         return state.products.products.totalPage;
         }
     });
+    const formatCurrency = (price) => {
+        var DecimalSeparator = Number('1.2').toLocaleString().substr(1, 1);
+        var priceWithCommas = price.toLocaleString();
+        var arParts = String(priceWithCommas).split(DecimalSeparator);
+        var intPart = arParts[0];
+        var decPart = arParts.length > 1 ? arParts[1] : '';
+        return intPart;
+    }
     useEffect(() => {
         dispatch(getProducts(1))
     }, []);
@@ -108,8 +116,8 @@ export default function ListProduct() {
                                                     <p className="d-block ml-2 mb-1 mt-1 text-dark" style={{fontSize: "13px"}}>{item.nameProduct}</p>
                                                     <div>
                                                         <div className="text-danger ml-1" style={{float: "left"}}>
-                                                            <span className="text-danger" style={{fontSize: "12px", textDecoration: "underline"}}>đ</span>
-                                                            {item.price}
+                                                            <span className="text-danger" style={{fontSize: "12px", textDecoration: "underline"}}>đ </span>
+                                                            {formatCurrency(item.price)}
                                                         </div>
                                                         <div className="text-secondary mr-1 mt-1" style={{float: "right", fontSize: "13px"}}>
                                                             {item.sold < 1000 && <>Đã bán: {item.sold}</>}

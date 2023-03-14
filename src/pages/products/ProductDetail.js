@@ -11,6 +11,16 @@ export default function ProductDetail() {
             return state.products.product
         }
     })
+
+    const formatCurrency = (price) => {
+        var DecimalSeparator = Number('1.2').toLocaleString().substr(1, 1);
+        var priceWithCommas = price.toLocaleString();
+        var arParts = String(priceWithCommas).split(DecimalSeparator);
+        var intPart = arParts[0];
+        var decPart = arParts.length > 1 ? arParts[1] : '';
+        return intPart;
+    }
+
     useEffect(() => {
         dispatch(getProductById(id))
     },[])
@@ -68,7 +78,7 @@ export default function ProductDetail() {
                             </div>
                         </div>
                         <div className="mt-5 mb-5 pl-4">
-                            <h1 className="text-danger"><span style={{fontSize: "24px", textDecoration: "underline"}}>đ</span> {product.price}</h1>
+                            <h1 className="text-danger"><span style={{fontSize: "24px", textDecoration: "underline"}}>đ</span> { product.price && formatCurrency(product.price)}</h1>
                         </div>
                         <div className="row mb-5">
                             <div className="col-3 text-secondary text-center">
