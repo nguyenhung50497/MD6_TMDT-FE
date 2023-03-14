@@ -10,38 +10,58 @@ export default function Navbar() {
     const dispatch = useDispatch()
     const [checkedValues, setCheckedValues] = useState([]);
     const [checkedValuesDelete, setCheckedValuesDelete] = useState([]);
+    const [queryValue,setQueryValue] = useState({
+        keyword: ['']
+    })
     const [queryStringAPI, setQueryStringAPI] = useState('');
     const handleSubmit = async (values) => {
-        if (values) {
-            console.log(values)
-            setCheckedValues([...checkedValues, values.keyword]);
-            setCheckedValuesDelete(checkedValuesDelete.filter((val) => val !== values.keyword)
-            )
-
-        } else {
-            setCheckedValues(checkedValues.filter((val) => val !== values.keyword)
-            );
-            setCheckedValuesDelete([...checkedValuesDelete, values.keyword])
+        if (values.keyword !== '') {
+            queryValue.keyword[0] = values.keyword
+            setQueryValue({
+                keyword: queryValue.keyword
+            })
         }
+        if (values.keyword === '') {
+            setQueryValue({
+                keyword: ['']
+            })
+        }
+        // if (values) {
+        //     console.log(values)
+        //     setCheckedValues([...checkedValues, values.keyword]);
+        //     setCheckedValuesDelete(checkedValuesDelete.filter((val) => val !== values.keyword)
+        //     )
+        //
+        // } else {
+        //     setCheckedValues(checkedValues.filter((val) => val !== values.keyword)
+        //     );
+        //     setCheckedValuesDelete([...checkedValuesDelete, values.keyword])
+        // }
     }
-
     const searchParams = new URLSearchParams();
     useEffect(() => {
-        console.log(checkedValues)
-        if (checkedValues[0] !== undefined) {
-            searchParams.append('keyword', checkedValues[checkedValues.length-1]);
-            searchParams.delete(checkedValuesDelete[checkedValues.length-1]);
-        }else if (checkedValues[checkedValues.length-1] === ''){
-            console.log(111111111)
-            searchParams.delete('keyword');
+        if(queryValue.keyword[0] !== '') {
+            searchParams.append('keyword', queryValue.keyword[0])
         }
+        // console.log(checkedValues)
+        // if (checkedValues[0] !== undefined) {
+        //     searchParams.append('keyword', checkedValues[checkedValues.length-1]);
+        //     searchParams.delete(checkedValuesDelete[checkedValues.length-1]);
+        // }else if (checkedValues[checkedValues.length-1] === ''){
+        //     console.log(111111111)
+        //     searchParams.delete('keyword');
+        // }
         const queryString = searchParams.toString();
         if (queryString) {
             setQueryStringAPI(queryString)
-            navigate('/home/search?' + queryString,{state: queryString})
+            navigate('/home/search?' + queryString,{state: queryValue.keyword[0]})
 
         }
-    }, [checkedValues])
+        else  {
+            setQueryStringAPI(queryString)
+            navigate('/home/search')
+        }
+    }, [queryValue.keyword[0]])
     useEffect(() => {
         dispatch(search(queryStringAPI));
     }, [queryStringAPI]);

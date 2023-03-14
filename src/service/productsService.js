@@ -1,5 +1,4 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import axios from "axios";
 import customAxios from "./api";
 
 export const getProducts = createAsyncThunk(
@@ -12,7 +11,18 @@ export const getProducts = createAsyncThunk(
 export const search = createAsyncThunk (
     'products/searchProducts',
     async (search) => {
-        return await customAxios.get('search?' + search);
+        const res = await customAxios.get('search?' + search)
+        console.log(search)
+        const searchParams = new URLSearchParams(search);
+// Display the key/value pairs
+        let keyword = [];
+        for (const [key, value] of searchParams.entries()) {
+            if (key === 'keyword') keyword[0]=value
+            else keyword[0]=null
+            // console.log(`${key}, ${value}`);
+        }
+        // return res.data
+        return { search: res.data, keyword: keyword};
     }
 )
 export const searchProductById = createAsyncThunk (

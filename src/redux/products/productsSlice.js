@@ -4,7 +4,8 @@ import {getProducts, search, searchProductById} from "../../service/productsServ
 
 const initialState = {
     products: [],
-    search:[],
+    search: [],
+    keyword: [],
     currentProduct: {},
     loading: true
 }
@@ -18,7 +19,9 @@ const productsSlice = createSlice({
                 state.loading = false
             });
             builder.addCase(search.fulfilled, (state, action) => {
-                state.search = action.payload.data;
+                // state.search = action.payload;
+                state.search = action.payload.search;
+                state.keyword = action.payload.keyword;
                 state.loading = false
             });
             builder.addCase(searchProductById.fulfilled, (state, action) => {

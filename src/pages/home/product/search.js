@@ -8,94 +8,210 @@ export default function Search() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const location = useLocation();
-    console.log(location.state)
+
     let products = useSelector((state) => {
 
         return state.products.search
     })
+    const keyword = useSelector(state => {
+        return state.products.keyword
+    })
+
     const [checkedValues, setCheckedValues] = useState([]);
     const [checkedValuesDelete, setCheckedValuesDelete] = useState([]);
+    const [queryValue, setQueryValue] = useState({
+        addressShop: [],
+        nameCategory: [],
+        minPrice: [''],
+        maxPrice: [''],
+        keyword: [...keyword]
+    })
     const [queryStringAPI, setQueryStringAPI] = useState('');
     const loading = useSelector(state => {
         return state.products.loading
     })
-    let a = {
-        addressShop: [],
-        nameCategory: [],
-        minPrice: null,
-        maxPrice: null
-    }
+
+    console.log(keyword)
+
+    // console.log(location.state)
 
     function handleChange(event) {
         const isChecked = event.target.checked;
         const value = event.target.value;
-
         if (isChecked === true) {
-            setCheckedValues([...checkedValues, value]);
-            setCheckedValuesDelete(checkedValuesDelete.filter((val) => val !== value))
+            if (value === 'Hà Nội' || value === 'TP Hồ Chí Minh' || value === 'Hải Phòng') {
+                queryValue.addressShop.push(value)
+                setQueryValue({
+                    addressShop: queryValue.addressShop,
+                    nameCategory: [...queryValue.nameCategory],
+                    minPrice: [...queryValue.minPrice],
+                    maxPrice: [...queryValue.maxPrice],
+                    keyword: [...keyword]
+                })
+
+            }
+            if (value === 'Quần áo' || value === 'Điện tử' || value === 'Thực phẩm') {
+                queryValue.nameCategory.push(value)
+                setQueryValue({
+                    addressShop: [...queryValue.addressShop],
+                    nameCategory: queryValue.nameCategory,
+                    minPrice: [...queryValue.minPrice],
+                    maxPrice: [...queryValue.maxPrice],
+                    keyword: [...keyword]
+                })
+            }
+            // setCheckedValues([...checkedValues, '1']);
+            // setCheckedValuesDelete(checkedValuesDelete.filter((val) => val !== value))
         } else if (isChecked === false) {
-            setCheckedValues(checkedValues.filter((val) => val !== value)
-            );
-            setCheckedValuesDelete([...checkedValuesDelete, value])
+            if (value === 'Hà Nội' || value === 'TP Hồ Chí Minh' || value === 'Hải Phòng') {
+                for (let i = 0; i < queryValue.addressShop.length; i++) {
+                    if (queryValue.addressShop[i] === value) queryValue.addressShop.splice(i, 1)
+                }
+                setQueryValue({
+                    addressShop: queryValue.addressShop,
+                    nameCategory: [...queryValue.nameCategory],
+                    minPrice: [...queryValue.minPrice],
+                    maxPrice: [...queryValue.maxPrice],
+                    keyword: [...keyword]
+                })
+            }
+            if (value === 'Quần áo' || value === 'Điện tử' || value === 'Thực phẩm') {
+                for (let i = 0; i < queryValue.nameCategory.length; i++) {
+                    if (queryValue.nameCategory[i] === value) queryValue.nameCategory.splice(i, 1)
+
+                }
+                setQueryValue({
+                    addressShop: [...queryValue.addressShop],
+                    nameCategory: queryValue.nameCategory,
+                    minPrice: [...queryValue.minPrice],
+                    maxPrice: [...queryValue.maxPrice],
+                    keyword: [...keyword]
+                })
+            }
+            // setCheckedValues(checkedValues.filter((val) => val !== value)
+            // );
+            // setCheckedValuesDelete([...checkedValuesDelete, value])
         }
     }
+
 
     const handleSubmit = async (values) => {
-        if (values.maxPrice !== '' || values.minPrice !== '') {
-            setCheckedValues([...checkedValues, values]);
-            setCheckedValuesDelete(checkedValuesDelete.filter((val) => val.maxPrice !== values.maxPrice && val.minPrice !== values.minPrice)
-            )
-        } else {
-            setCheckedValues(checkedValues.filter((val) => val !== values)
-            );
-            setCheckedValuesDelete([...checkedValuesDelete, values])
-        }
-    }
 
+        if (values.maxPrice !== '' || values.minPrice !== '') {
+            queryValue.maxPrice[0] = values.maxPrice
+            queryValue.minPrice[0] = values.minPrice
+            setQueryValue({
+                addressShop: [...queryValue.addressShop],
+                nameCategory: [...queryValue.nameCategory],
+                minPrice: queryValue.minPrice,
+                maxPrice: queryValue.maxPrice,
+                keyword: [...keyword]
+            })
+        }
+        if (values.maxPrice === '' || values.minPrice !== '') {
+            queryValue.minPrice[0] = values.minPrice
+            setQueryValue({
+                addressShop: [...queryValue.addressShop],
+                nameCategory: [...queryValue.nameCategory],
+                minPrice: queryValue.minPrice,
+                maxPrice: [...queryValue.maxPrice],
+                keyword: [...keyword]
+            })
+        }
+        if (values.maxPrice !== '' || values.minPrice === '') {
+            queryValue.maxPrice[0] = values.maxPrice
+            setQueryValue({
+                addressShop: [...queryValue.addressShop],
+                nameCategory: [...queryValue.nameCategory],
+                minPrice: [...queryValue.minPrice],
+                maxPrice: queryValue.maxPrice,
+                keyword: [...keyword]
+            })
+        }
+
+        // if (values.maxPrice !== '' || values.minPrice !== '') {
+        //     setCheckedValues([...checkedValues, values]);
+        //     setCheckedValuesDelete(checkedValuesDelete.filter((val) => val.maxPrice !== values.maxPrice && val.minPrice !== values.minPrice)
+        //     )
+        // } else {
+        //     setCheckedValues(checkedValues.filter((val) => val !== values)
+        //     );
+        //     setCheckedValuesDelete([...checkedValuesDelete, values])
+        // }
+    }
+    console.log(queryValue)
     const searchParams = new URLSearchParams();
     useEffect(() => {
-        for (let i = 0; i < checkedValues.length; i++) {
-            if (checkedValues[i] === 'Hà Nội' || checkedValues[i] === 'TP Hồ Chí Minh' || checkedValues[i] === 'Hải Phòng') {
-                searchParams.append('addressShop', checkedValues[i])
-                searchParams.delete(checkedValuesDelete[i]);
-                console.log(checkedValuesDelete[i])
-            }
-            if (typeof checkedValues[i] === "object") {
-                if (checkedValues[i].minPrice === '' && checkedValues[i].maxPrice !== '') {
-                    searchParams.set('maxPrice', checkedValues[i].maxPrice)
-                    searchParams.set('minPrice', '')
-                    searchParams.delete('minPrice');
-                } else if (checkedValues[i].minPrice !== '' && checkedValues[i].maxPrice === '') {
-                    searchParams.set('minPrice', checkedValues[i].minPrice)
-                    searchParams.set('maxPrice', '')
-                    searchParams.delete('maxPrice');
-                } else if (checkedValues[i].minPrice !== '' && checkedValues[i].maxPrice !== '') {
-                    searchParams.set('minPrice', checkedValues[i].minPrice)
-                    searchParams.set('maxPrice', checkedValues[i].maxPrice)
-                    searchParams.delete(checkedValuesDelete[i]);
-                } else if (checkedValues[i].minPrice === '' && checkedValues[i].maxPrice === '') {
-                    searchParams.set('minPrice', checkedValues[i].minPrice)
-                    searchParams.set('maxPrice', checkedValues[i].maxPrice)
-                    searchParams.delete('minPrice');
-                    searchParams.delete('maxPrice');
-                }
-
-            }
-            if (checkedValues[i] === 'Quần áo' || checkedValues[i] === 'Điện tử' || checkedValues[i] === 'Thực phẩm') {
-                searchParams.append('nameCategory', checkedValues[i])
-                searchParams.delete(checkedValuesDelete[i]);
-            }
-            // searchParams.append(name, checkedValues[i]);
-            // searchParams.delete(checkedValuesDelete[i]);
+        if (keyword[0] !== 'undefined' && queryValue.keyword.length > 0 && keyword[0] !== 'null' && keyword[0] !== null) {
+            searchParams.append('keyword', queryValue.keyword[0])
         }
+        if (queryValue.addressShop.length > 0) {
+            for (let i = 0; i < queryValue.addressShop.length; i++) {
+                searchParams.append('addressShop', queryValue.addressShop[i])
+            }
+        }
+        if (queryValue.nameCategory.length > 0) {
+            for (let i = 0; i < queryValue.nameCategory.length; i++) {
+                searchParams.append('nameCategory', queryValue.nameCategory[i])
+            }
+        }
+        if (queryValue.minPrice[0] !== '' && queryValue.maxPrice[0] !== '') {
+            searchParams.append('minPrice', queryValue.minPrice[0])
+            searchParams.append('maxPrice', queryValue.maxPrice[0])
+        }
+        if (queryValue.minPrice[0] === '' && queryValue.maxPrice[0] !== '') {
+            searchParams.append('maxPrice', queryValue.maxPrice[0])
+        }
+        if (queryValue.minPrice[0] !== '' && queryValue.maxPrice[0] === '') {
+            searchParams.append('minPrice', queryValue.minPrice[0])
+        }
+
+        // for (let i = 0; i < checkedValues.length; i++) {
+        //     if (checkedValues[i] === 'Hà Nội' || checkedValues[i] === 'TP Hồ Chí Minh' || checkedValues[i] === 'Hải Phòng') {
+        //         searchParams.append('addressShop', checkedValues[i])
+        //         searchParams.delete(checkedValuesDelete[i]);
+        //     }
+        //     if (typeof checkedValues[i] === "object") {
+        //         if (checkedValues[i].minPrice === '' && checkedValues[i].maxPrice !== '') {
+        //             searchParams.set('maxPrice', checkedValues[i].maxPrice)
+        //             searchParams.set('minPrice', '')
+        //             searchParams.delete('minPrice');
+        //         } else if (checkedValues[i].minPrice !== '' && checkedValues[i].maxPrice === '') {
+        //             searchParams.set('minPrice', checkedValues[i].minPrice)
+        //             searchParams.set('maxPrice', '')
+        //             searchParams.delete('maxPrice');
+        //         } else if (checkedValues[i].minPrice !== '' && checkedValues[i].maxPrice !== '') {
+        //             searchParams.set('minPrice', checkedValues[i].minPrice)
+        //             searchParams.set('maxPrice', checkedValues[i].maxPrice)
+        //             searchParams.delete(checkedValuesDelete[i]);
+        //         } else if (checkedValues[i].minPrice === '' && checkedValues[i].maxPrice === '') {
+        //             searchParams.set('minPrice', checkedValues[i].minPrice)
+        //             searchParams.set('maxPrice', checkedValues[i].maxPrice)
+        //             searchParams.delete('minPrice');
+        //             searchParams.delete('maxPrice');
+        //         }
+        //
+        //     }
+        //     if (checkedValues[i] === 'Quần áo' || checkedValues[i] === 'Điện tử' || checkedValues[i] === 'Thực phẩm') {
+        //         searchParams.append('nameCategory', checkedValues[i])
+        //         searchParams.delete(checkedValuesDelete[i]);
+        //     }
+        //     // searchParams.append(name, checkedValues[i]);
+        //     // searchParams.delete(checkedValuesDelete[i]);
+        // }
         const queryString = searchParams.toString();
+
         if (queryString) {
             setQueryStringAPI(queryString)
-            navigate('?' + location.state + '&' + queryString)
+            // navigate('?' + queryString)
+            navigate('?' + queryString)
         }
-    }, [checkedValues])
+        if (!queryString) {
+            setQueryStringAPI(queryString)
+            navigate('')
+        }
+    }, [queryValue])
     useEffect(() => {
-        console.log(queryStringAPI)
         dispatch(search(queryStringAPI));
     }, [queryStringAPI]);
     let initialValues = {
