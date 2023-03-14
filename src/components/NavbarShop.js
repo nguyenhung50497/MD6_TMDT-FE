@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { googleLogout } from "@react-oauth/google";
 import { showProfile } from "../service/userService";
 
-export default function Navbar() {
+export default function NavbarShop() {
    const dispatch = useDispatch();
    const navigate = useNavigate();
    const user = useSelector((state) => {
@@ -30,10 +30,10 @@ export default function Navbar() {
    };
    return (
       <>
-         <div className="row mb-2">
+         <div className="row mb-4">
             <div
-               className="col-12"
-               style={{ backgroundColor: "rgb(238,77,45)", height: "120px" }}>
+               className="col-12 pt-1"
+               style={{ backgroundColor: "rgb(238,77,45)", height: "37px" }}>
                <div className="row">
                   <div className="col-2"></div>
                   <div
@@ -45,14 +45,13 @@ export default function Navbar() {
                               <div className="col-6">
                                  <small style={{ marginRight: "10px" }}>
                                     {" "}
-                                    Tải ứng dụng |{" "}
                                     <Link
-                                       to={"/shop-manager"}
+                                       to={"/"}
                                        style={{
                                           textDecoration: "none",
                                           color: "white",
                                        }}>
-                                       Kết nối
+                                       Trang Chủ
                                     </Link>{" "}
                                  </small>{" "}
                                  <small
@@ -176,100 +175,6 @@ export default function Navbar() {
                                           </div>
                                        </>
                                     )}
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        <div className="col-12" style={{ height: "90px" }}>
-                           <div className="row">
-                              <div
-                                 className="col-2"
-                                 style={{ height: "90px", marginLeft: "15px" }}>
-                                 <Link
-                                    to={"/"}
-                                    style={{
-                                       color: "white",
-                                       textDecoration: "none",
-                                    }}>
-                                    <div className="row">
-                                       <div style={{ marginTop: "21px" }}>
-                                          <svg
-                                             xmlns="http://www.w3.org/2000/svg"
-                                             width="40"
-                                             height="40"
-                                             fill="currentColor"
-                                             className="bi bi-bag-heart-fill"
-                                             viewBox="0 0 16 16">
-                                             <path d="M11.5 4v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5ZM8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1Zm0 6.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132Z" />
-                                          </svg>
-                                       </div>
-                                       <div
-                                          style={{
-                                             fontSize: "35px",
-                                             marginLeft: "5px",
-                                             marginTop: "21px",
-                                          }}>
-                                          <p>
-                                             <b>HNH</b>
-                                          </p>
-                                       </div>
-                                    </div>
-                                 </Link>
-                              </div>
-                              <div className="col-7">
-                                 <div className="row">
-                                    <div className="col-12">
-                                       <div
-                                          className="input-group mb-3"
-                                          style={{
-                                             border: "3px white solid",
-                                             marginTop: "21px",
-                                          }}>
-                                          <input
-                                             type="text"
-                                             className="form-control"
-                                             placeholder="Nhập sản phẩm bạn muốn tìm kiếm"
-                                             aria-label="Recipient's username"
-                                             aria-describedby="button-addon2"
-                                             style={{ border: "none" }}
-                                          />
-                                          <div className="input-group-append">
-                                             <button
-                                                className="btn btn-outline-secondary"
-                                                type="button"
-                                                id="button-addon2"
-                                                style={{ color: "white" }}>
-                                                <svg
-                                                   xmlns="http://www.w3.org/2000/svg"
-                                                   width="20"
-                                                   height="20"
-                                                   fill="currentColor"
-                                                   className="bi bi-search"
-                                                   viewBox="0 0 16 16">
-                                                   <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-                                                </svg>
-                                             </button>
-                                          </div>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div>
-                              <div
-                                 className="col-2"
-                                 style={{
-                                    marginLeft: "92px",
-                                    marginTop: "31px",
-                                 }}>
-                                 <div title={"giỏ hàng"}>
-                                    <svg
-                                       xmlns="http://www.w3.org/2000/svg"
-                                       width="30"
-                                       height="30"
-                                       fill="currentColor"
-                                       className="bi bi-cart"
-                                       viewBox="0 0 16 16">
-                                       <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-                                    </svg>
                                  </div>
                               </div>
                            </div>

@@ -15,6 +15,7 @@ import AddressUser from "./pages/users/addressUser";
 import Password from "./pages/users/password";
 import CreateShop from "./pages/shops/createShop";
 import ShopInterface from "./pages/shops/shopInterface";
+import ShopManager from "./pages/shops/shopManager";
 
 function App() {
    const user = useSelector((state) => {
@@ -38,7 +39,7 @@ function App() {
                      element={<ProductDetail />}
                   />
                </Route>
-
+               <Route path="shop-manager" element={<ShopManager/>}></Route>
                <Route path={"account"} element={<AccountUser />}>
                   <Route path={""} element={<ProfileUser />} />
                   <Route path={"address/:id"} element={<AddressUser />} />
