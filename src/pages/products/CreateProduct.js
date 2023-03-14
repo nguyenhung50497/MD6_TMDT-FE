@@ -65,7 +65,7 @@ export default function CreateProduct() {
       let data = { ...values, image: urls, idShop: 1 };
       dispatch(addProduct(data)).then((value) => {
          swal("Create Success !!!");
-         navigate("/home");
+         navigate("/");
       });
    };
    useEffect(() => {
