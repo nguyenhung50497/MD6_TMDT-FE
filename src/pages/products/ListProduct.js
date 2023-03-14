@@ -152,13 +152,15 @@ export default function ListProduct() {
                                     </button>
                                  </div>
                                  <div>
-                                    <p
-                                       className="d-block ml-2 mb-1 mt-1 text-dark"
-                                       style={{
-                                          fontSize: "13px",
-                                       }}>
-                                       {item.nameProduct}
-                                    </p>
+                                    <div style={{ height: "50px" }}>
+                                       <p
+                                          className="d-block ml-2 mb-1 mt-1 text-dark"
+                                          style={{
+                                             fontSize: "13px",
+                                          }}>
+                                          {item.nameProduct}
+                                       </p>
+                                    </div>
                                     <div>
                                        <div
                                           className="text-danger ml-1"
