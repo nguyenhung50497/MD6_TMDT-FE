@@ -79,6 +79,15 @@ body {
    background-color: whitesmoke;
 }
 
+.card-category {
+   transition-duration: 0.3s;
+   border: 1px solid rgb(231, 229, 229);
+   background-color: white;
+}
+.card-category:hover {
+   border: 2px solid #e98773;
+}
+
 .card-product {
    transition-duration: 0.3s;
    border: 3px solid rgb(231, 229, 229);

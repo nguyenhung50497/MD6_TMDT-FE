@@ -53,11 +53,7 @@ export default function ListProduct() {
                </div>
                {categories &&
                   categories.map((item, key) => (
-                     <div
-                        className="col-2 bg-light"
-                        style={{
-                           border: "1px solid rgb(231, 229, 229)",
-                        }}>
+                     <div className="col-2 bg-light card-category">
                         <div>
                            <img
                               src={item.imageCategory}
@@ -175,9 +171,10 @@ export default function ListProduct() {
                                                 fontSize: "12px",
                                                 textDecoration: "underline",
                                              }}>
-                                             đ{" "}
-                                          </span>
-                                          {formatCurrency(item.price)}
+                                             đ
+                                          </span>{" "}
+                                          {item.price &&
+                                             formatCurrency(item.price)}
                                        </div>
                                        <div
                                           className="text-secondary mr-1 mt-1"
