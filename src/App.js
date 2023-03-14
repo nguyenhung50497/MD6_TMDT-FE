@@ -20,9 +20,8 @@ function App() {
         <Routes>
             <Route path={'login'} element={<Login/>}/>
             <Route path={'register'} element={<Register/>}/>
-            <Route path={''} element={<Home/>}>
-                <Route path={'shopInterface'} element={<ShopInterface/>}/>
-            </Route>
+            <Route path={''} element={<Home/>}/>
+            <Route path={'shopInterface'} element={<ShopInterface/>}/>
             {user !== null ?
                 <>
                     <Route path={'account'} element={<AccountUser/>}>

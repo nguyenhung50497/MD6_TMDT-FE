@@ -125,7 +125,7 @@ export default function Navbar() {
                                             <div className="row">
                                                 <div className="col-12">
                                                     <div className="input-group mb-3"
-                                                         style={{border: '3px white solid', marginTop: '21px'}}>
+                                                         style={{border: '3px white solid', marginTop: '21px', borderRadius: '5px'}}>
                                                         <input type="text" className="form-control"
                                                                placeholder="Nhập sản phẩm bạn muốn tìm kiếm"
                                                                aria-label="Recipient's username"

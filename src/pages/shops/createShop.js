@@ -15,7 +15,7 @@ export default function CreateShop() {
     const [file1, setFile] = useState("");
     const [url1, setUrl] = useState("");
     const [percent, setPercent] = useState(0);
-    const [check, setCheck] = useState(1)
+    const [check, setCheck] = useState('')
     const [shop, setShop] = useState()
     const [transportShop, setTransportShop] = useState(2)
     const handleUpload = (event) => {
@@ -64,6 +64,7 @@ export default function CreateShop() {
         dispatch(createShop(data)).then(check => {
             if (check.payload === 'success') {
                 swal('Tạo cửa hàng thành công')
+                window.location.reload()
             }
         })
 

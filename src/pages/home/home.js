@@ -9,7 +9,6 @@ export default function Home() {
                     <Navbar/>
                 </div>
                 <div className="col-12">
-                    <Outlet></Outlet>
                 </div>
             </div>
         </>
