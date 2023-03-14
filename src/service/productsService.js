@@ -4,14 +4,14 @@ import customAxios from "./api";
 export const getProducts = createAsyncThunk(
     'products/getProducts',
     async ()=>{
-        const res = await customAxios.get('')
+        const res = await customAxios.get('search/all')
         return res.data;
     }
 )
 export const search = createAsyncThunk (
     'products/searchProducts',
     async (search) => {
-        const res = await customAxios.get('search?' + search)
+        const res = await customAxios.get('search/products?' + search)
         console.log(search)
         const searchParams = new URLSearchParams(search);
 // Display the key/value pairs
