@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { googleLogout } from "@react-oauth/google";
 import { showProfile } from "../service/userService";
 import { search } from "../service/productService";
+import { Field, Form, Formik } from "formik";
 
 export default function Navbar() {
 
@@ -310,39 +311,50 @@ export default function Navbar() {
                               <div className="col-7">
                                  <div className="row">
                                     <div className="col-12">
-                                       <div
-                                          className="input-group mb-3"
-                                          style={{
-                                             border: "3px white solid",
-                                             marginTop: "21px",
-                                             borderRadius: "5px",
-                                          }}>
-                                          <input
-                                             type="text"
-                                             className="form-control"
-                                             placeholder="Nhập sản phẩm bạn muốn tìm kiếm"
-                                             aria-label="Recipient's username"
-                                             aria-describedby="button-addon2"
-                                             style={{ border: "none" }}
-                                          />
-                                          <div className="input-group-append">
-                                             <button
-                                                className="btn btn-outline-secondary"
-                                                type="button"
-                                                id="button-addon2"
-                                                style={{ color: "white" }}>
-                                                <svg
-                                                   xmlns="http://www.w3.org/2000/svg"
-                                                   width="20"
-                                                   height="20"
-                                                   fill="currentColor"
-                                                   className="bi bi-search"
-                                                   viewBox="0 0 16 16">
-                                                   <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-                                                </svg>
-                                             </button>
-                                          </div>
-                                       </div>
+                                       <Formik
+                                          initialValues={{ keyword: [""] }}
+                                          onSubmit={handleSubmit}>
+                                          <Form>
+                                             <div
+                                                className="input-group mb-3"
+                                                style={{
+                                                   border: "3px white solid",
+                                                   marginTop: "21px",
+                                                }}>
+                                                <Field
+                                                   type="text"
+                                                   className="form-control"
+                                                   name="keyword"
+                                                   placeholder="Nhập sản phẩm bạn muốn tìm kiếm"
+                                                   aria-label="Recipient's username"
+                                                   aria-describedby="button-addon2"
+                                                   style={{
+                                                      border: "none",
+                                                      width: "500px",
+                                                   }}
+                                                />
+                                                <div className="input-group-append">
+                                                   <button
+                                                      className="btn btn-outline-secondary"
+                                                      type="submit"
+                                                      id="button-addon2"
+                                                      style={{
+                                                         color: "white",
+                                                      }}>
+                                                      <svg
+                                                         xmlns="http://www.w3.org/2000/svg"
+                                                         width="20"
+                                                         height="20"
+                                                         fill="currentColor"
+                                                         className="bi bi-search"
+                                                         viewBox="0 0 16 16">
+                                                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                                      </svg>
+                                                   </button>
+                                                </div>
+                                             </div>
+                                          </Form>
+                                       </Formik>
                                     </div>
                                  </div>
                               </div>

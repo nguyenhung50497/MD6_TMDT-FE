@@ -32,7 +32,6 @@ function App() {
          <Route path={""} element={<Home />}>
             <Route path={""} element={<ListProduct />}></Route>
             <Route path={"search"} element={<SearchProduct />} />
-            <Route path={"shopInterface"} element={<ShopInterface />} />
             <Route path="address" element={<Address />} />
          </Route>
           <Route path={"shopInterface"} element={<ShopInterface />} />
