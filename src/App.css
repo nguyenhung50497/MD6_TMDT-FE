@@ -213,6 +213,18 @@ input:checked[type="checkbox"]::after {
 body {
    background-color: rgb(237, 237, 237);
 }
+.shopInterface {
+  width: 168px;
+  height: 30px;
+  border-radius: 5px;
+  background: none;
+  border: 2px white solid;
+  color: white;
+}
+.shopInterface:hover {
+  border: 2px orange solid;
+
+}
 
 table {
    width: 100%;

@@ -14,9 +14,10 @@ export default function Home() {
                     <div className="col-12"><Outlet></Outlet></div>
                     <div className="col-12"><Footer></Footer></div>
                 </div>
+                <div className="col-12">
+                    <Outlet></Outlet>
+                </div>
             </div>
-        </div>
-    );
+        </>
+    )
 }
-
-
