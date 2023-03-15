@@ -42,7 +42,7 @@ export default function ListProduct() {
       <>
          <div className="row mt-2">
             <div className="col-2"></div>
-            <div className="col-8 row" style={{ marginLeft: "-1px" }}>
+            <div className="col-8">
                <div
                   className="col-12 bg-light pt-3"
                   style={{
@@ -51,28 +51,30 @@ export default function ListProduct() {
                   }}>
                   <strong className="text-secondary">DANH MỤC</strong>
                </div>
-               {categories &&
-                  categories.map((item, key) => (
-                     <div className="col-2 bg-light card-category">
-                        <div>
-                           <img
-                              src={item.imageCategory}
-                              alt=""
-                              style={{
-                                 width: "100%",
-                                 height: "150px",
-                              }}
-                           />
-                           <p className="text-center">{item.nameCategory}</p>
+               <div className="row m-0 p-0">
+                  {categories &&
+                     categories.map((item, key) => (
+                        <div className="col-2 bg-light card-category">
+                           <div>
+                              <img
+                                 src={item.imageCategory}
+                                 alt=""
+                                 style={{
+                                    width: "100%",
+                                    height: "150px",
+                                 }}
+                              />
+                              <p className="text-center">{item.nameCategory}</p>
+                           </div>
                         </div>
-                     </div>
-                  ))}
+                     ))}
+               </div>
             </div>
             <div className="col-2"></div>
          </div>
          <div className="row mt-3">
             <div className="col-2"></div>
-            <div className="col-8 row" style={{ marginLeft: "-1px" }}>
+            <div className="col-8">
                <div
                   className="col-12 bg-light pt-3 text-center"
                   style={{
@@ -82,83 +84,88 @@ export default function ListProduct() {
                   }}>
                   <strong className="text-danger">Sản Phẩm</strong>
                </div>
-               {products !== undefined &&
-                  products.map((item, key) => (
-                     <>
-                        <div
-                           key={key}
-                           className="col-lg-2 col-md-3 p-1 card-product">
-                           <div>
-                              <div
-                                 className="bg-light shadow-sm"
-                                 style={{
-                                    height: "300px",
-                                 }}>
-                                 <Link
-                                    to={`product-detail/${item.idProduct}`}
+               <div className="row m-0 p-0">
+                  {products !== undefined &&
+                     products.map((item, key) => (
+                        <>
+                           <div
+                              key={key}
+                              className="col-lg-2 col-md-3 p-1 card-product">
+                              <div>
+                                 <div
+                                    className="bg-light shadow-sm"
                                     style={{
-                                       textDecoration: "none",
+                                       height: "300px",
                                     }}>
-                                    <img
-                                       className="img-fluid"
-                                       src={item.image}
+                                    <Link
+                                       to={`product-detail/${item.idProduct}`}
                                        style={{
-                                          height: "200px",
-                                          width: "100%",
-                                       }}
-                                       alt=""
-                                    />
-                                 </Link>
-                                 <div>
-                                    <div style={{ height: "50px" }}>
-                                       <p
-                                          className="d-block ml-2 mb-1 mt-1 text-dark"
+                                          textDecoration: "none",
+                                       }}>
+                                       <img
+                                          className="img-fluid"
+                                          src={item.image}
                                           style={{
-                                             fontSize: "13px",
-                                          }}>
-                                          {item.nameProduct}
-                                       </p>
-                                    </div>
+                                             height: "200px",
+                                             width: "100%",
+                                          }}
+                                          alt=""
+                                       />
+                                    </Link>
                                     <div>
-                                       <div
-                                          className="text-danger ml-1"
-                                          style={{
-                                             float: "left",
-                                          }}>
-                                          <span
-                                             className="text-danger"
+                                       <div style={{ height: "50px" }}>
+                                          <p
+                                             className="d-block ml-2 mb-1 mt-1 text-dark"
                                              style={{
-                                                fontSize: "12px",
-                                                textDecoration: "underline",
+                                                fontSize: "13px",
                                              }}>
-                                             đ
-                                          </span>{" "}
-                                          {item.price &&
-                                             formatCurrency(item.price)}
+                                             {item.nameProduct}
+                                          </p>
                                        </div>
-                                       <div
-                                          className="text-secondary mr-1 mt-1"
-                                          style={{
-                                             float: "right",
-                                             fontSize: "13px",
-                                          }}>
-                                          {item.sold < 1000 && (
-                                             <>Đã bán: {item.sold}</>
-                                          )}
-                                          {item.sold >= 1000 && (
-                                             <>
-                                                Đã bán:{" "}
-                                                {(item.sold / 1000).toFixed(1)}k
-                                             </>
-                                          )}
+                                       <div>
+                                          <div
+                                             className="text-danger ml-1"
+                                             style={{
+                                                float: "left",
+                                             }}>
+                                             <span
+                                                className="text-danger"
+                                                style={{
+                                                   fontSize: "12px",
+                                                   textDecoration: "underline",
+                                                }}>
+                                                đ
+                                             </span>{" "}
+                                             {item.price &&
+                                                formatCurrency(item.price)}
+                                          </div>
+                                          <div
+                                             className="text-secondary mr-1 mt-1"
+                                             style={{
+                                                float: "right",
+                                                fontSize: "13px",
+                                             }}>
+                                             {item.sold < 1000 && (
+                                                <>Đã bán: {item.sold}</>
+                                             )}
+                                             {item.sold >= 1000 && (
+                                                <>
+                                                   Đã bán:{" "}
+                                                   {(item.sold / 1000).toFixed(
+                                                      1
+                                                   )}
+                                                   k
+                                                </>
+                                             )}
+                                          </div>
                                        </div>
                                     </div>
                                  </div>
                               </div>
                            </div>
-                        </div>
-                     </>
-                  ))}
+                        </>
+                     ))}
+               </div>
                <div className="col-12 mt-3">
                   <nav aria-label="Page navigation example">
                      <ul className="pagination justify-content-center">

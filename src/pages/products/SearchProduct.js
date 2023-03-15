@@ -251,7 +251,7 @@ export default function SearchProduct() {
                   <div className="col-2"></div>
                   <div className="col-8">
                      <div className="row">
-                        <div className="col-3">
+                        <div className="col-3 bg-light">
                            <div className="contact-form">
                               <h5
                                  style={{
@@ -637,7 +637,7 @@ export default function SearchProduct() {
                               }}>
                               <strong className="text-danger">Sản Phẩm</strong>
                            </div>
-                           <div className="row">
+                           <div className="row col-12 m-0 p-0">
                               {products !== undefined &&
                                  products.map((item, key) => (
                                     <>
