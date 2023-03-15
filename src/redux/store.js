@@ -14,6 +14,10 @@ const store = configureStore({
       transports: transportReducer,
       address: addressReducer,
    },
+    middleware: getDefaultMiddleware =>
+        getDefaultMiddleware({
+            serializableCheck: false,
+        }),
 });
 
 export default store;

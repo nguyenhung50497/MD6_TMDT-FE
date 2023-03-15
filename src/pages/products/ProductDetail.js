@@ -24,6 +24,7 @@ export default function ProductDetail() {
    useEffect(() => {
       dispatch(getProductById(id));
    }, []);
+   console.log(product);
    return (
       <div className="container-fluid row mt-3 mb-3">
          <div className="col-2"></div>
