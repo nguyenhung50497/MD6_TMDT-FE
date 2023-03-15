@@ -11,8 +11,23 @@ import {search} from "../service/productsService";
 
 
 export default function Navbar() {
-    const navigate = useNavigate()
+
+
+export default function Navbar() {
+
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const user = useSelector(state => {
+       if (state !== undefined) {
+           return state.users.users
+       }
+    })
+    const profile = useSelector(state => {
+        if (state !== undefined) {
+            return state.users.user.user
+        }
+    })
+
     const [queryValue,setQueryValue] = useState({
         keyword: ['']
     })
@@ -72,21 +87,28 @@ export default function Navbar() {
                     searchParams.append(key[i], value[i])
                 }
                 queryString += searchParams.toString();
+            }}
+            if (queryString ) {
+                setQueryStringAPI(queryString)
+                navigate('/home/search?' + queryString,{state: queryString})
             }
+            // if (queryString && existUrl !== '') {
+            //     setQueryStringAPI(existUrl)
+            //     navigate('/home/search?' + existUrl,{state: queryString})
+            // }
+            if (!queryString && existUrl !== '')  {
+                setQueryStringAPI(queryString)
+                navigate('/home/search')
+            }
+            if (!queryString && existUrl === '')  {
+                setQueryStringAPI(queryString)
+                navigate('/home')
+            }
+        }, [queryValue.keyword[0]])
+        useEffect(() => {
+            dispatch(search(queryStringAPI));
+        }, [queryStringAPI]);
 
-export default function Navbar() {
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
-    const user = useSelector(state => {
-       if (state !== undefined) {
-           return state.users.users
-       }
-    })
-    const profile = useSelector(state => {
-        if (state !== undefined) {
-            return state.users.user.user
-        }
-    })
     useEffect(() => {
         if (user === null) {
         } else {
@@ -237,69 +259,50 @@ export default function Navbar() {
         </>
     )
 }
-        }
-        if (queryString ) {
-            setQueryStringAPI(queryString)
-            navigate('/home/search?' + queryString,{state: queryString})
-        }
-        // if (queryString && existUrl !== '') {
-        //     setQueryStringAPI(existUrl)
-        //     navigate('/home/search?' + existUrl,{state: queryString})
-        // }
-        if (!queryString && existUrl !== '')  {
-            setQueryStringAPI(queryString)
-            navigate('/home/search')
-        }
-        if (!queryString && existUrl === '')  {
-            setQueryStringAPI(queryString)
-            navigate('/home')
-        }
-    }, [queryValue.keyword[0]])
-    useEffect(() => {
-        dispatch(search(queryStringAPI));
-    }, [queryStringAPI]);
-    return (
-        <>
-            <div className="row">
-                <div className="col-12">
-                    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                        <Link className="navbar-brand" to="/home">Logo</Link>
-                        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                            <span className="navbar-toggler-icon"></span>
-                        </button>
-                        <div className="collapse navbar-collapse" id="navbarNav">
-                            <ul className="navbar-nav">
-                                <li className="nav-item active">
-                                    <Link className="nav-link" to="add-blog">Add Blog <span
-                                        className="sr-only">(current)</span></Link>
-                                </li>
-                                <li className="nav-item">
-                                    <a className="nav-link" href="#">Features</a>
-                                </li>
-                                <li className="nav-item">
-                                    <a className="nav-link" href="#">Pricing</a>
-                                </li>
-                                <li className="nav-item">
-                                    <a className="nav-link disabled">Disabled</a>
-                                </li>
-                            </ul>
-
-                            <Formik initialValues={{keyword: ['']}} onSubmit={handleSubmit}>
-                                <Form>
-                                    <div className="form-group">
-                                        <Field type="text" name="keyword"/>
-                                        <button type="submit">Apply</button>
-                                    </div>
-
-                                </Form>
-                            </Formik>
 
 
-                        </div>
-                    </nav>
-                </div>
-            </div>
-        </>
-    )
+    // return (
+    //     <>
+    //         <div className="row">
+    //             <div className="col-12">
+    //                 <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    //                     <Link className="navbar-brand" to="/home">Logo</Link>
+    //                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+    //                             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    //                         <span className="navbar-toggler-icon"></span>
+    //                     </button>
+    //                     <div className="collapse navbar-collapse" id="navbarNav">
+    //                         <ul className="navbar-nav">
+    //                             <li className="nav-item active">
+    //                                 <Link className="nav-link" to="add-blog">Add Blog <span
+    //                                     className="sr-only">(current)</span></Link>
+    //                             </li>
+    //                             <li className="nav-item">
+    //                                 <a className="nav-link" href="#">Features</a>
+    //                             </li>
+    //                             <li className="nav-item">
+    //                                 <a className="nav-link" href="#">Pricing</a>
+    //                             </li>
+    //                             <li className="nav-item">
+    //                                 <a className="nav-link disabled">Disabled</a>
+    //                             </li>
+    //                         </ul>
+    //
+    //                         <Formik initialValues={{keyword: ['']}} onSubmit={handleSubmit}>
+    //                             <Form>
+    //                                 <div className="form-group">
+    //                                     <Field type="text" name="keyword"/>
+    //                                     <button type="submit">Apply</button>
+    //                                 </div>
+    //
+    //                             </Form>
+    //                         </Formik>
+    //
+    //
+    //                     </div>
+    //                 </nav>
+    //             </div>
+    //         </div>
+    //     </>
+    // )
 }

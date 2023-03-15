@@ -15,12 +15,9 @@ import AddressUser from "./pages/users/addressUser";
 import Password from "./pages/users/password";
 import CreateShop from "./pages/shops/createShop";
 import ShopInterface from "./pages/shops/shopInterface";
-import {Route, Routes} from "react-router-dom"
 import React from "react";
-import ListProduct from "./pages/home/product/listProduct";
-import Home from "./pages/home/home";
 import Search from "./pages/home/product/search";
-import ProductDetail from "./pages/home/product/productDetail";
+
 
 function App() {
     const user = useSelector(state => {
@@ -41,6 +38,7 @@ function App() {
                         <Route path={"create-product"} element={<CreateProduct />} />
                         <Route path={"edit-product/:id"} element={<EditProduct />} />
                         <Route path={"product-detail/:id"} element={<ProductDetail />} />
+                        <Route path={'search'} element={<Search/>}/>
                     </Route>
 
                     <Route path={'account'} element={<AccountUser/>}>
@@ -56,19 +54,6 @@ function App() {
                 </>
             }
         </Routes>
-    );
-    return (
-        <>
-            <Routes>
-                <Route path="home" element={<Home/>}>
-                    <Route path={''} element={<ListProduct/>}/>
-                    <Route path={'search'} element={<Search/>}/>
-
-                </Route>
-                <Route path="productDetail/:id" element={<ProductDetail/>}/>
-            </Routes>
-
-        </>
     );
 }
 
