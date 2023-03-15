@@ -16,6 +16,7 @@ import Password from "./pages/users/password";
 import CreateShop from "./pages/shops/createShop";
 import ShopInterface from "./pages/shops/shopInterface";
 import ShopManager from "./pages/shops/shopManager";
+import Address from "./pages/products/address";
 
 function App() {
    const user = useSelector((state) => {
@@ -52,6 +53,7 @@ function App() {
                <Route path={"*"} element={<Home />} />
             </>
          )}
+         <Route path="address" element={<Address/>}/>
       </Routes>
    );
 }
