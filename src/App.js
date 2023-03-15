@@ -5,10 +5,10 @@ import ListProduct from "./pages/products/ListProduct";
 import CreateProduct from "./pages/products/CreateProduct";
 import EditProduct from "./pages/products/EditProduct";
 import ProductDetail from "./pages/products/ProductDetail";
-import './App.css';
+import "./App.css";
 import Login from "./pages/auth/login";
 import Register from "./pages/auth/register";
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 import AccountUser from "./pages/users/accountUser";
 import ProfileUser from "./pages/users/profileUser";
 import AddressUser from "./pages/users/addressUser";
@@ -35,14 +35,13 @@ function App() {
             <Route path={"shopInterface"} element={<ShopInterface />} />
             <Route path="address" element={<Address />} />
          </Route>
+          <Route path={"shopInterface"} element={<ShopInterface />} />
          {user !== null ? (
             <>
                <Route path={""} element={<Home />}>
                   <Route path={"create-product"} element={<CreateProduct />} />
                   <Route path={"edit-product/:id"} element={<EditProduct />} />
-                  <Route
-                     path={"product-detail/:id"}
-                     element={<ProductDetail />}
+                  <Route path={"product-detail/:id"} element={<ProductDetail />}
                   />
                </Route>
                <Route path="shop-manager" element={<ShopManager />}></Route>

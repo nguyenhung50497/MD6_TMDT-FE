@@ -213,8 +213,33 @@ input:checked[type="checkbox"]::after {
 body {
    background-color: rgb(237, 237, 237);
 }
+.shopInterface {
+  width: 168px;
+  height: 30px;
+  border-radius: 5px;
+  background: none;
+  border: 2px white solid;
+  color: white;
+}
+.shopInterface:hover {
+  border: 2px orange solid;
+
+}
 
 table {
    width: 100%;
    text-align: center;
+}
+.password {
+   transition-duration: 0.3s;
+   width: 120px;
+   height: 40px;
+   background-color: rgb(238,77,45);
+   color: white;
+   border: none;
+   border-radius: 5px
+}
+.password:hover {
+   width: 130px;
+   height: 50px;
 }

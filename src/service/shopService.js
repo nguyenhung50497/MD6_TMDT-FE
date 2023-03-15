@@ -7,3 +7,10 @@ export const createShop = createAsyncThunk (
         return res.data;
     }
 )
+export const findByIdUserShop = createAsyncThunk (
+    'shops/findByIdUserShop',
+    async (data) => {
+        const res = await customAxios.get('shops/'+data)
+        return res.data;
+    }
+)
