@@ -12,17 +12,16 @@ export const search = createAsyncThunk (
     'products/searchProducts',
     async (search) => {
         const res = await customAxios.get('search/products?' + search)
-        console.log(search)
         const searchParams = new URLSearchParams(search);
-// Display the key/value pairs
+
         let keyword = [];
+        let keywordExist = false
         for (const [key, value] of searchParams.entries()) {
-            if (key === 'keyword') keyword[0]=value
-            else keyword[0]=null
-            // console.log(`${key}, ${value}`);
-        }
-        // return res.data
-        return { search: res.data, keyword: keyword};
+            if (key === 'keyword') {
+                keywordExist = true
+                keyword[0]=value}
+        }if (keywordExist === false) keyword[0] = null
+        return { search: res.data, keyword: keyword, existUrl: search};
     }
 )
 export const searchProductById = createAsyncThunk (

@@ -8,13 +8,15 @@ import {search} from "../service/productsService";
 export default function Navbar() {
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    const [checkedValues, setCheckedValues] = useState([]);
-    const [checkedValuesDelete, setCheckedValuesDelete] = useState([]);
     const [queryValue,setQueryValue] = useState({
         keyword: ['']
     })
+    const existUrl = useSelector(state => {
+        return state.products.existUrl
+    })
     const [queryStringAPI, setQueryStringAPI] = useState('');
     const handleSubmit = async (values) => {
+        console.log(values)
         if (values.keyword !== '') {
             queryValue.keyword[0] = values.keyword
             setQueryValue({
@@ -26,40 +28,63 @@ export default function Navbar() {
                 keyword: ['']
             })
         }
-        // if (values) {
-        //     console.log(values)
-        //     setCheckedValues([...checkedValues, values.keyword]);
-        //     setCheckedValuesDelete(checkedValuesDelete.filter((val) => val !== values.keyword)
-        //     )
-        //
-        // } else {
-        //     setCheckedValues(checkedValues.filter((val) => val !== values.keyword)
-        //     );
-        //     setCheckedValuesDelete([...checkedValuesDelete, values.keyword])
-        // }
+        console.log(queryValue.keyword)
+    }
+    const existSearchParams = new URLSearchParams(existUrl)
+    let key =[]
+    let value =[]
+    for (const [key1, value1] of existSearchParams.entries()) {
+        key.push(key1)
+        value.push(value1)
     }
     const searchParams = new URLSearchParams();
     useEffect(() => {
-        if(queryValue.keyword[0] !== '') {
-            searchParams.append('keyword', queryValue.keyword[0])
-        }
-        // console.log(checkedValues)
-        // if (checkedValues[0] !== undefined) {
-        //     searchParams.append('keyword', checkedValues[checkedValues.length-1]);
-        //     searchParams.delete(checkedValuesDelete[checkedValues.length-1]);
-        // }else if (checkedValues[checkedValues.length-1] === ''){
-        //     console.log(111111111)
-        //     searchParams.delete('keyword');
+        // if(queryValue.keyword[0] !== '') {
+        //     searchParams.append('keyword', queryValue.keyword[0])
         // }
-        const queryString = searchParams.toString();
-        if (queryString) {
-            setQueryStringAPI(queryString)
-            navigate('/home/search?' + queryString,{state: queryValue.keyword[0]})
+        // const queryString = searchParams.toString();
+        let queryString = ''
+        if(existUrl === ''){
+            if(queryValue.keyword[0] !== '') {
+                searchParams.append('keyword', queryValue.keyword[0])
+            }
+            queryString += searchParams.toString();
+        }
+        if(existUrl !== ''){
+            console.log(queryValue.keyword)
+            if(key.length === 1){
+                if(queryValue.keyword[0] !== '') {
+                    searchParams.append('keyword', queryValue.keyword[0])
+                }
+                queryString += searchParams.toString();
+            }
+            else {
+                if(queryValue.keyword[0] !== '') {
+                    searchParams.append('keyword', queryValue.keyword[0])
+                }
+
+                for (let i = 1; i < key.length; i++) {
+                    searchParams.append(key[i], value[i])
+                }
+                queryString += searchParams.toString();
+            }
 
         }
-        else  {
+        if (queryString ) {
+            setQueryStringAPI(queryString)
+            navigate('/home/search?' + queryString,{state: queryString})
+        }
+        // if (queryString && existUrl !== '') {
+        //     setQueryStringAPI(existUrl)
+        //     navigate('/home/search?' + existUrl,{state: queryString})
+        // }
+        if (!queryString && existUrl !== '')  {
             setQueryStringAPI(queryString)
             navigate('/home/search')
+        }
+        if (!queryString && existUrl === '')  {
+            setQueryStringAPI(queryString)
+            navigate('/home')
         }
     }, [queryValue.keyword[0]])
     useEffect(() => {
@@ -92,14 +117,13 @@ export default function Navbar() {
                                 </li>
                             </ul>
 
-                            <Formik initialValues={{keyword: ''}} onSubmit={handleSubmit}>
+                            <Formik initialValues={{keyword: ['']}} onSubmit={handleSubmit}>
                                 <Form>
                                     <div className="form-group">
                                         <Field type="text" name="keyword"/>
-                                    </div>
-                                    <div className="form-group">
                                         <button type="submit">Apply</button>
                                     </div>
+
                                 </Form>
                             </Formik>
 

@@ -6,6 +6,7 @@ const initialState = {
     products: [],
     search: [],
     keyword: [],
+    existUrl: '',
     currentProduct: {},
     loading: true
 }
@@ -19,9 +20,9 @@ const productsSlice = createSlice({
                 state.loading = false
             });
             builder.addCase(search.fulfilled, (state, action) => {
-                // state.search = action.payload;
                 state.search = action.payload.search;
                 state.keyword = action.payload.keyword;
+                state.existUrl = action.payload.existUrl;
                 state.loading = false
             });
             builder.addCase(searchProductById.fulfilled, (state, action) => {
