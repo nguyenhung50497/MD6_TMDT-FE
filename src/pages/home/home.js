@@ -18,6 +18,6 @@ export default function Home() {
                     <Outlet></Outlet>
                 </div>
             </div>
-        </>
+        </div>
     )
 }

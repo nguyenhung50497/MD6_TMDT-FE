@@ -230,3 +230,16 @@ table {
    width: 100%;
    text-align: center;
 }
+.password {
+   transition-duration: 0.3s;
+   width: 120px;
+   height: 40px;
+   background-color: rgb(238,77,45);
+   color: white;
+   border: none;
+   border-radius: 5px
+}
+.password:hover {
+   width: 130px;
+   height: 50px;
+}

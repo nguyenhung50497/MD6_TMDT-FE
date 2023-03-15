@@ -27,16 +27,14 @@ function App() {
          <Route path={"register"} element={<Register />} />
          <Route path={""} element={<Home />}>
             <Route path={""} element={<ListProduct />}></Route>
-            <Route path={"shopInterface"} element={<ShopInterface />} />
          </Route>
+          <Route path={"shopInterface"} element={<ShopInterface />} />
          {user !== null ? (
             <>
                <Route path={""} element={<Home />}>
                   <Route path={"create-product"} element={<CreateProduct />} />
                   <Route path={"edit-product/:id"} element={<EditProduct />} />
-                  <Route
-                     path={"product-detail/:id"}
-                     element={<ProductDetail />}
+                  <Route path={"product-detail/:id"} element={<ProductDetail />}
                   />
                </Route>
                <Route path="shop-manager" element={<ShopManager/>}></Route>

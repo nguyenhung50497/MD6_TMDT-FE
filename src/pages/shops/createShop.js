@@ -15,7 +15,7 @@ export default function CreateShop() {
     const [file1, setFile] = useState("");
     const [url1, setUrl] = useState("");
     const [percent, setPercent] = useState(0);
-    const [check, setCheck] = useState('')
+    const [check, setCheck] = useState('1')
     const [shop, setShop] = useState()
     const [transportShop, setTransportShop] = useState(2)
     const handleUpload = (event) => {
@@ -49,7 +49,7 @@ export default function CreateShop() {
             data.emailShop = profile.emailUser
         }
         setShop(data)
-        setCheck(3)
+        setCheck('3')
     }
     const addTransport = (values) => {
         setTransportShop(values)
@@ -64,10 +64,9 @@ export default function CreateShop() {
         dispatch(createShop(data)).then(check => {
             if (check.payload === 'success') {
                 swal('Tạo cửa hàng thành công')
-                window.location.reload()
+                navigate('/account')
             }
         })
-
     }
     useEffect(() => {
         dispatch(getAllTransport())
@@ -77,7 +76,7 @@ export default function CreateShop() {
             <div className="row">
                 <div className="col-12">
                     <div className="row">
-                        {check === 1 ?
+                        {check === '1' ?
                             <>
                                 <div className="col-12" style={{marginTop: '20px', marginLeft: '20px'}}>
                                     <h5>Tạo cửa hàng của bạn</h5>
@@ -106,7 +105,7 @@ export default function CreateShop() {
                                                 <div className="col-12" style={{paddingLeft: '315px'}}><p>một số thông
                                                     tin cơ bản.</p></div>
                                                 <div className="col-12" style={{paddingLeft: '365px'}}>
-                                                    <button type={"submit"} onClick={() => setCheck(2)} style={{
+                                                    <button type={"submit"} onClick={() => setCheck('2')} style={{
                                                         width: '70px',
                                                         height: '40px',
                                                         backgroundColor: "rgb(238,77,45)",
@@ -122,7 +121,7 @@ export default function CreateShop() {
                                     </div>
                                 </div>
                             </>
-                            : check === 2 ?
+                            : check === '2' ?
                                 <>
                                     <div className="col-12" style={{marginTop: '20px', marginLeft: '20px'}}>
                                         <h5>Tạo cửa hàng của bạn</h5>
@@ -232,7 +231,7 @@ export default function CreateShop() {
                                        </Form>
                                    </Formik>
                                 </>
-                                : check === 3 ?
+                                : check === '3' ?
                                 <>
                                     <div className="col-12" style={{marginTop: '20px', marginLeft: '20px'}}>
                                         <h5>Đơn vị vận chuyển</h5>
