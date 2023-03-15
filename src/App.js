@@ -29,6 +29,7 @@ function App() {
          <Route path={""} element={<Home />}>
             <Route path={""} element={<ListProduct />}></Route>
             <Route path={"shopInterface"} element={<ShopInterface />} />
+            <Route path="address" element={<Address />} />
          </Route>
          {user !== null ? (
             <>
@@ -40,7 +41,7 @@ function App() {
                      element={<ProductDetail />}
                   />
                </Route>
-               <Route path="shop-manager" element={<ShopManager/>}></Route>
+               <Route path="shop-manager" element={<ShopManager />}></Route>
                <Route path={"account"} element={<AccountUser />}>
                   <Route path={""} element={<ProfileUser />} />
                   <Route path={"address/:id"} element={<AddressUser />} />
@@ -53,7 +54,6 @@ function App() {
                <Route path={"*"} element={<Home />} />
             </>
          )}
-         <Route path="address" element={<Address/>}/>
       </Routes>
    );
 }
