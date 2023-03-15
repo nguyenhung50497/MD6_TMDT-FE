@@ -77,7 +77,7 @@ export default function EditProduct() {
       let data = { ...values, image: urls, idShop: 1 };
       dispatch(editProduct(data)).then((value) => {
          swal("Edit Success !!!");
-         navigate("/home");
+         navigate("/");
       });
    };
    useEffect(() => {

@@ -109,56 +109,16 @@ export default function ListProduct() {
                                        alt=""
                                     />
                                  </Link>
-                                 <div className="mt-2">
-                                    <Link to={`edit-product/${item.idProduct}`}>
-                                       <button className="btn btn-primary">
-                                          Edit
-                                       </button>
-                                    </Link>
-                                    <button
-                                       className="btn btn-danger"
-                                       onClick={() => {
-                                          swal({
-                                             title: "Are you sure?",
-                                             text: "Once deleted, you will not be able to recover this imaginary file!",
-                                             icon: "warning",
-                                             buttons: true,
-                                             dangerMode: true,
-                                          }).then((willDelete) => {
-                                             if (willDelete) {
-                                                dispatch(
-                                                   deleteProduct(item.idProduct)
-                                                ).then(() => {
-                                                   dispatch(
-                                                      getProducts(1)
-                                                   ).then(() => {
-                                                      navigate("/home");
-                                                   });
-                                                });
-                                                swal(
-                                                   "Poof! Your imaginary file has been deleted!",
-                                                   {
-                                                      icon: "success",
-                                                   }
-                                                );
-                                             } else {
-                                                swal(
-                                                   "Your imaginary file is safe!"
-                                                );
-                                             }
-                                          });
-                                       }}>
-                                       Delete
-                                    </button>
-                                 </div>
                                  <div>
-                                    <p
-                                       className="d-block ml-2 mb-1 mt-1 text-dark"
-                                       style={{
-                                          fontSize: "13px",
-                                       }}>
-                                       {item.nameProduct}
-                                    </p>
+                                    <div style={{ height: "50px" }}>
+                                       <p
+                                          className="d-block ml-2 mb-1 mt-1 text-dark"
+                                          style={{
+                                             fontSize: "13px",
+                                          }}>
+                                          {item.nameProduct}
+                                       </p>
+                                    </div>
                                     <div>
                                        <div
                                           className="text-danger ml-1"
