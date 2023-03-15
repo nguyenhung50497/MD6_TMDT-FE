@@ -1,33 +1,126 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { googleLogout } from "@react-oauth/google";
 import { showProfile } from "../service/userService";
+import { search } from "../service/productService";
 
 export default function Navbar() {
-   const dispatch = useDispatch();
-   const navigate = useNavigate();
-   const user = useSelector((state) => {
-      if (state !== undefined) {
-         return state.users.users;
-      }
-   });
-   const profile = useSelector((state) => {
-      if (state !== undefined) {
-         return state.users.user.user;
-      }
-   });
-   useEffect(() => {
-      if (user === null) {
-      } else {
-         dispatch(showProfile(user.idUser));
-      }
-   }, []);
-   const logOut = () => {
-      localStorage.clear();
-      googleLogout();
-      window.location.reload();
-   };
+
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const user = useSelector(state => {
+       if (state !== undefined) {
+           return state.users.users
+       }
+    })
+    const profile = useSelector(state => {
+        if (state !== undefined) {
+            return state.users.user.user
+        }
+    })
+
+    const [queryValue,setQueryValue] = useState({
+        keyword: ['']
+    })
+    const existUrl = useSelector(state => {
+        return state.products.existUrl
+    })
+    const [queryStringAPI, setQueryStringAPI] = useState('');
+    const handleSubmit = async (values) => {
+        console.log(values)
+        if (values.keyword !== '') {
+            queryValue.keyword[0] = values.keyword
+            setQueryValue({
+                keyword: queryValue.keyword
+            })
+        }
+        if (values.keyword === '') {
+            setQueryValue({
+                keyword: ['']
+            })
+        }
+        console.log(queryValue.keyword)
+    }
+    const existSearchParams = new URLSearchParams(existUrl)
+    let key =[]
+    let value =[]
+    for (const [key1, value1] of existSearchParams.entries()) {
+        key.push(key1)
+        value.push(value1)
+    }
+    const searchParams = new URLSearchParams();
+    useEffect(() => {
+        // if(queryValue.keyword[0] !== '') {
+        //     searchParams.append('keyword', queryValue.keyword[0])
+        // }
+        // const queryString = searchParams.toString();
+        let queryString = ''
+        if(existUrl === ''){
+            if(queryValue.keyword[0] !== '') {
+                searchParams.append('keyword', queryValue.keyword[0])
+            }
+            queryString += searchParams.toString();
+        }
+        if(existUrl !== ''){
+            console.log(queryValue.keyword)
+            if(key.length === 1){
+                if(queryValue.keyword[0] !== '') {
+                    searchParams.append('keyword', queryValue.keyword[0])
+                }
+                queryString += searchParams.toString();
+            }
+            else {
+                if(queryValue.keyword[0] !== '') {
+                    searchParams.append('keyword', queryValue.keyword[0])
+                }
+
+                for (let i = 1; i < key.length; i++) {
+                    searchParams.append(key[i], value[i])
+                }
+                queryString += searchParams.toString();
+            }}
+            if (queryString ) {
+                setQueryStringAPI(queryString)
+                navigate('/search?' + queryString,{state: queryString})
+            }
+
+            if (!queryString && existUrl !== '')  {
+                setQueryStringAPI(queryString)
+                navigate('/search')
+            }
+            // if (!queryString && existUrl === '')  {
+            //     setQueryStringAPI(queryString)
+            //     navigate('/')
+            // }
+
+
+        }, [queryValue.keyword[0]])
+        useEffect(() => {
+            dispatch(search(queryStringAPI));
+        }, [queryStringAPI]);
+
+    useEffect(() => {
+        if (user === null) {
+        } else {
+            dispatch(showProfile(user.idUser))
+        }
+    }, [])
+    const logOut = () => {
+        localStorage.clear();
+        googleLogout();
+        window.location.reload()
+    }
+   //  return (
+   //      <>
+   //          <div className="row mb-2">
+   //              <div className="col-12" style={{backgroundColor: 'rgb(238,77,45)', height: '120px'}}>
+   //                  <div className="row">
+   //                      <div className="col-2"></div>
+   //                      <div className="col-8" style={{height: '120px', color: 'white'}}>
+   //                          <div className="row">
+   //                              <div className="col-12" style={{height: '30px'}}>
+  
    return (
       <>
          <div className="row mb-2">
