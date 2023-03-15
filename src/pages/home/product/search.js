@@ -1,7 +1,7 @@
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import {Link, useLocation, useNavigate, useSearchParams} from "react-router-dom";
-import {search} from "../../../service/productsService";
+import {search} from "../../../service/productService";
 import {Field, Form, Formik} from "formik";
 
 export default function Search() {
