@@ -16,7 +16,7 @@ import Password from "./pages/users/password";
 import CreateShop from "./pages/shops/createShop";
 import ShopInterface from "./pages/shops/shopInterface";
 import React from "react";
-import Search from "./pages/home/product/search";
+import SearchProduct from "./pages/products/SearchProduct";
 
 
 function App() {
@@ -29,16 +29,18 @@ function App() {
             <Route path={'login'} element={<Login/>}/>
             <Route path={'register'} element={<Register/>}/>
             <Route path={''} element={<Home/>}>
+                <Route path={""} element={<ListProduct />}></Route>
+                <Route path={"search"} element={<SearchProduct/>}/>
                 <Route path={'shopInterface'} element={<ShopInterface/>}/>
             </Route>
             {user !== null ?
                 <>
-                    <Route path={"home"} element={<Home />}>
+                    <Route path={""} element={<Home />}>
                         <Route path={""} element={<ListProduct />}></Route>
                         <Route path={"create-product"} element={<CreateProduct />} />
                         <Route path={"edit-product/:id"} element={<EditProduct />} />
                         <Route path={"product-detail/:id"} element={<ProductDetail />} />
-                        <Route path={'search'} element={<Search/>}/>
+                        <Route path={"search"} element={<SearchProduct/>}/>
                     </Route>
 
                     <Route path={'account'} element={<AccountUser/>}>

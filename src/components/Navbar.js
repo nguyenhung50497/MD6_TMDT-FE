@@ -84,7 +84,7 @@ export default function Navbar() {
             }}
             if (queryString ) {
                 setQueryStringAPI(queryString)
-                navigate('/home/search?' + queryString,{state: queryString})
+                navigate('/search?' + queryString,{state: queryString})
             }
             // if (queryString && existUrl !== '') {
             //     setQueryStringAPI(existUrl)
@@ -92,11 +92,11 @@ export default function Navbar() {
             // }
             if (!queryString && existUrl !== '')  {
                 setQueryStringAPI(queryString)
-                navigate('/home/search')
+                navigate('/search')
             }
             if (!queryString && existUrl === '')  {
                 setQueryStringAPI(queryString)
-                navigate('/home')
+                navigate('/')
             }
         }, [queryValue.keyword[0]])
         useEffect(() => {
@@ -211,36 +211,39 @@ export default function Navbar() {
                                         <div className="col-7">
                                             <div className="row">
                                                 <div className="col-12">
+                                                    <Formik initialValues={{keyword: ['']}} onSubmit={handleSubmit}>
+                                                        <Form>
                                                     <div className="input-group mb-3"
                                                          style={{border: '3px white solid', marginTop: '21px'}}>
-                                                        {/*<input type="text" className="form-control"*/}
-                                                        {/*       placeholder="Nhập sản phẩm bạn muốn tìm kiếm"*/}
-                                                        {/*       aria-label="Recipient's username"*/}
-                                                        {/*       aria-describedby="button-addon2"*/}
-                                                        {/*       style={{border: 'none',width:'500px'}}/>*/}
-                                                        {/*<div className="input-group-append">*/}
-                                                        {/*    <button className="btn btn-outline-secondary"*/}
-                                                        {/*            type="submit" id="button-addon2"*/}
-                                                        {/*            style={{color: 'white'}}>*/}
-                                                        {/*        <svg xmlns="http://www.w3.org/2000/svg" width="20"*/}
-                                                        {/*             height="20" fill="currentColor"*/}
-                                                        {/*             className="bi bi-search" viewBox="0 0 16 16">*/}
-                                                        {/*            <path*/}
-                                                        {/*                d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>*/}
-                                                        {/*        </svg>*/}
-                                                        {/*    </button>*/}
-                                                        {/*</div>*/}
+                                                        <Field type="text" className="form-control" name="keyword"
+                                                               placeholder="Nhập sản phẩm bạn muốn tìm kiếm"
+                                                               aria-label="Recipient's username"
+                                                               aria-describedby="button-addon2"
+                                                               style={{border: 'none',width:'500px'}}/>
+                                                        <div className="input-group-append">
+                                                            <button className="btn btn-outline-secondary"
+                                                                    type="submit" id="button-addon2"
+                                                                    style={{color: 'white'}}>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                                                     height="20" fill="currentColor"
+                                                                     className="bi bi-search" viewBox="0 0 16 16">
+                                                                    <path
+                                                                        d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                                                                </svg>
+                                                            </button>
+                                                        </div>
 
-                                                        <Formik initialValues={{keyword: ['']}} onSubmit={handleSubmit}>
-                                                                                        <Form>
-                                                                                           <div className="form-group">
-                                                                                               <Field type="text" name="keyword"/>
-                                                                                               <button type="submit">Apply</button>
-                                                                                           </div>
-                                                                                        </Form>
-                                                                                    </Formik>
+                                                        {/*<Formik initialValues={{keyword: ['']}} onSubmit={handleSubmit}>*/}
+                                                        {/*                                <Form>*/}
+                                                        {/*                                    <div className="input-group mb-2">*/}
+                                                        {/*                                       <Field placeholder="Nhập sản phẩm bạn muốn tìm kiếm" aria-label="Recipient's username" aria-describedby="button-addon2" className="form-control" type="text" name="keyword" style={{borderColor:'white',width:'500px',height:'50px'}}/>*/}
+                                                        {/*                                       <button type="submit">Apply</button>*/}
+                                                        {/*                                    </div>*/}
+                                                        {/*                                </Form>*/}
+                                                        {/*                            </Formik>*/}
                                                     </div>
-
+                                                        </Form>
+                                                    </Formik>
                                                 </div>
                                             </div>
                                         </div>
