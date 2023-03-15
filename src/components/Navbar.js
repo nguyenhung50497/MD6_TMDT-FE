@@ -236,19 +236,20 @@ export default function Navbar() {
                                              </button>
                                              <div className="noidung_dropdown">
                                                 <Link
-                                                   to={"/account"}
                                                    className="btn"
-                                                   type={"submit"}>
+                                                   onClick={()=>{
+                                                      navigate("/account");
+                                                      window.location.reload();
+                                                   }}
+                                                   >
                                                    Tài khoản của tôi
                                                 </Link>
                                                 <a
-                                                   className="btn"
-                                                   type={"submit"}>
+                                                   className="btn">
                                                    Giỏ hàng
                                                 </a>
                                                 <a
                                                    className="btn"
-                                                   type={"submit"}
                                                    onClick={() => logOut()}>
                                                    Đăng xuất
                                                 </a>
