@@ -40,3 +40,19 @@ export const deleteProduct = createAsyncThunk(
       return res.data;
    }
 );
+export const search = createAsyncThunk (
+    'products/searchProducts',
+    async (search) => {
+        const res = await customAxios.get('search/products?' + search)
+        const searchParams = new URLSearchParams(search);
+
+        let keyword = [];
+        let keywordExist = false
+        for (const [key, value] of searchParams.entries()) {
+            if (key === 'keyword') {
+                keywordExist = true
+                keyword[0]=value}
+        }if (keywordExist === false) keyword[0] = null
+        return { search: res.data, keyword: keyword, existUrl: search};
+    }
+)

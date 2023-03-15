@@ -5,7 +5,6 @@ import ListProduct from "./pages/products/ListProduct";
 import CreateProduct from "./pages/products/CreateProduct";
 import EditProduct from "./pages/products/EditProduct";
 import ProductDetail from "./pages/products/ProductDetail";
-import "./App.css";
 import Login from "./pages/auth/login";
 import Register from "./pages/auth/register";
 import { useSelector } from "react-redux";
@@ -17,6 +16,9 @@ import CreateShop from "./pages/shops/createShop";
 import ShopInterface from "./pages/shops/shopInterface";
 import ShopManager from "./pages/shops/shopManager";
 import Address from "./pages/products/address";
+import React from "react";
+import SearchProduct from "./pages/products/SearchProduct";
+
 
 function App() {
    const user = useSelector((state) => {
@@ -28,19 +30,19 @@ function App() {
          <Route path={"register"} element={<Register />} />
          <Route path={""} element={<Home />}>
             <Route path={""} element={<ListProduct />}></Route>
-            <Route path={"shopInterface"} element={<ShopInterface />} />
+            <Route path={"search"} element={<SearchProduct />} />
+            <Route path="address" element={<Address />} />
          </Route>
+          <Route path={"shopInterface"} element={<ShopInterface />} />
          {user !== null ? (
             <>
                <Route path={""} element={<Home />}>
                   <Route path={"create-product"} element={<CreateProduct />} />
                   <Route path={"edit-product/:id"} element={<EditProduct />} />
-                  <Route
-                     path={"product-detail/:id"}
-                     element={<ProductDetail />}
+                  <Route path={"product-detail/:id"} element={<ProductDetail />}
                   />
                </Route>
-               <Route path="shop-manager" element={<ShopManager/>}></Route>
+               <Route path="shop-manager" element={<ShopManager />}></Route>
                <Route path={"account"} element={<AccountUser />}>
                   <Route path={""} element={<ProfileUser />} />
                   <Route path={"address/:id"} element={<AddressUser />} />
@@ -53,7 +55,6 @@ function App() {
                <Route path={"*"} element={<Home />} />
             </>
          )}
-         <Route path="address" element={<Address/>}/>
       </Routes>
    );
 }
