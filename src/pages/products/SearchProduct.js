@@ -40,7 +40,10 @@ export default function SearchProduct() {
         const isChecked = event.target.checked;
         const value = event.target.value;
         if (isChecked === true) {
-            if (value === 'Hà Nội' || value === 'TP Hồ Chí Minh' || value === 'Hải Phòng') {
+            if (value === 'Hà Nội' || value === 'TP Hồ Chí Minh' || value === 'Hải Phòng'
+                || value === 'Cần Thơ'|| value === 'Đà Nẵng'|| value === 'Bắc Ninh'
+                || value === 'Huế'|| value === 'Biên Hòa'|| value === 'Thủ Đức'
+                || value === 'Hải Dương') {
                 queryValue.addressShop.push(value)
                 setQueryValue({
                     addressShop: queryValue.addressShop,
@@ -51,7 +54,10 @@ export default function SearchProduct() {
                 })
 
             }
-            if (value === 'Quần áo' || value === 'Điện tử' || value === 'Thực phẩm') {
+            if (value === 'Thời Trang' || value === 'Mẹ & Bé' || value === 'Thiết Bị Điện Tử'
+                || value === 'Máy Tính & Laptop'|| value === 'Đồng Hồ'|| value === 'Giày Dép'
+                || value === 'Nhà Cửa & Đời Sống'|| value === 'Sức Khỏe'|| value === 'Phụ Kiện & Trang Sức Nữ'
+                || value === 'Thể Thao'|| value === 'Oto & Xe Máy & Xe Đạp'|| value === 'Bách Hóa Online') {
                 queryValue.nameCategory.push(value)
                 setQueryValue({
                     addressShop: [...queryValue.addressShop],
@@ -62,7 +68,10 @@ export default function SearchProduct() {
                 })
             }
         } else if (isChecked === false) {
-            if (value === 'Hà Nội' || value === 'TP Hồ Chí Minh' || value === 'Hải Phòng') {
+            if (value === 'Hà Nội' || value === 'TP Hồ Chí Minh' || value === 'Hải Phòng'
+                || value === 'Cần Thơ'|| value === 'Đà Nẵng'|| value === 'Bắc Ninh'
+                || value === 'Huế'|| value === 'Biên Hòa'|| value === 'Thủ Đức'
+                || value === 'Hải Dương') {
                 for (let i = 0; i < queryValue.addressShop.length; i++) {
                     if (queryValue.addressShop[i] === value) queryValue.addressShop.splice(i, 1)
                 }
@@ -74,7 +83,10 @@ export default function SearchProduct() {
                     keyword: [...keyword]
                 })
             }
-            if (value === 'Quần áo' || value === 'Điện tử' || value === 'Thực phẩm') {
+            if (value === 'Thời Trang' || value === 'Mẹ & Bé' || value === 'Thiết Bị Điện Tử'
+                || value === 'Máy Tính & Laptop'|| value === 'Đồng Hồ'|| value === 'Giày Dép'
+                || value === 'Nhà Cửa & Đời Sống'|| value === 'Sức Khỏe'|| value === 'Phụ Kiện & Trang Sức Nữ'
+                || value === 'Thể Thao'|| value === 'Oto & Xe Máy & Xe Đạp'|| value === 'Bách Hóa Online') {
                 for (let i = 0; i < queryValue.nameCategory.length; i++) {
                     if (queryValue.nameCategory[i] === value) queryValue.nameCategory.splice(i, 1)
 
@@ -194,7 +206,7 @@ export default function SearchProduct() {
                         <div className="col-2"></div>
                         <div className="col-8">
                             <div className="row">
-                                <div className="col-2">
+                                <div className="col-3">
                                     <div className="contact-form">
 
                                         <h5 style={{marginBottom: '15px',marginTop:'15px'}}>Địa điểm</h5>
@@ -217,6 +229,56 @@ export default function SearchProduct() {
 
                                                 <input type="checkbox" onChange={handleChange} value="Hải Phòng"
                                                        style={{height: "20px", width: "20px"}} /> Hải Phòng
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <label>
+
+                                                <input type="checkbox" onChange={handleChange} value="Cần Thơ"
+                                                       style={{height: "20px", width: "20px"}} /> Cần Thơ
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <label>
+
+                                                <input type="checkbox" onChange={handleChange} value="Đà Nẵng"
+                                                       style={{height: "20px", width: "20px"}} /> Đà Nẵng
+                                            </label>
+                                        </div>
+
+                                        <div>
+                                            <label>
+
+                                                <input type="checkbox" onChange={handleChange} value="Bắc Ninh"
+                                                       style={{height: "20px", width: "20px"}} /> Bắc Ninh
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <label>
+
+                                                <input type="checkbox" onChange={handleChange} value="Huế"
+                                                       style={{height: "20px", width: "20px"}} /> Huế
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <label>
+
+                                                <input type="checkbox" onChange={handleChange} value="Biên Hòa"
+                                                       style={{height: "20px", width: "20px"}} /> Biên Hòa
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <label>
+
+                                                <input type="checkbox" onChange={handleChange} value="Thủ Đức"
+                                                       style={{height: "20px", width: "20px"}} /> Thủ Đức
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <label>
+
+                                                <input type="checkbox" onChange={handleChange} value="Hải Dương"
+                                                       style={{height: "20px", width: "20px"}} /> Hải Dương
                                             </label>
                                         </div>
 
@@ -243,32 +305,82 @@ export default function SearchProduct() {
 
                                         <div>
                                             <label>
-                                                <input type="checkbox" style={{height: "20px", width: "20px"}}
-
-
-                                                       onChange={handleChange} value="Quần áo"/> Quần áo
-
-
+                                                <input type="checkbox"  style={{height: "20px", width: "20px"}}
+                                                       onChange={handleChange} value="Thời Trang"/> Thời Trang
                                             </label>
                                         </div>
 
                                         <div>
                                             <label>
                                                 <input type="checkbox" style={{height: "20px", width: "20px"}}
-                                                       onChange={handleChange} value="Điện tử"/> Điện tử
+                                                       onChange={handleChange} value="Mẹ & Bé"/> Mẹ & Bé
                                             </label>
                                         </div>
                                         <div>
                                             <label>
                                                 <input type="checkbox" style={{height: "20px", width: "20px"}}
-                                                       onChange={handleChange} value="Thực phẩm"/> Thực phẩm
+                                                       onChange={handleChange} value="Thiết Bị Điện Tử"/> Thiết Bị Điện Tử
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <label>
+                                                <input type="checkbox" style={{height: "20px", width: "20px"}}
+                                                       onChange={handleChange} value="Máy Tính & Laptop"/> Máy Tính & Laptop
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <label>
+                                                <input type="checkbox" style={{height: "20px", width: "20px"}}
+                                                       onChange={handleChange} value="Đồng Hồ"/> Đồng Hồ
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <label>
+                                                <input type="checkbox" style={{height: "20px", width: "20px"}}
+                                                       onChange={handleChange} value="Giày Dép"/> Giày Dép
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <label>
+                                                <input type="checkbox" style={{height: "20px", width: "20px"}}
+                                                       onChange={handleChange} value="Nhà Cửa & Đời Sống"/> Nhà Cửa & Đời Sống
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <label>
+                                                <input type="checkbox" style={{height: "20px", width: "20px"}}
+                                                       onChange={handleChange} value="Sức Khỏe"/> Sức Khỏe
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <label>
+                                                <input type="checkbox" style={{height: "20px", width: "20px"}}
+                                                       onChange={handleChange} value="Phụ Kiện & Trang Sức Nữ"/> Phụ Kiện & Trang Sức Nữ
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <label>
+                                                <input type="checkbox" style={{height: "20px", width: "20px"}}
+                                                       onChange={handleChange} value="Thể Thao"/> Thể Thao
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <label>
+                                                <input type="checkbox" style={{height: "20px", width: "20px"}}
+                                                       onChange={handleChange} value="Oto & Xe Máy & Xe Đạp"/> Oto & Xe Máy & Xe Đạp
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <label>
+                                                <input type="checkbox" style={{height: "20px", width: "20px"}}
+                                                       onChange={handleChange} value="Bách Hóa Online"/> Bách Hóa Online
                                             </label>
                                         </div>
                                         <br/>
 
                                     </div>
                                 </div>
-                                <div className="col-10 row" style={{ marginLeft: "-1px" }}>
+                                <div className="col-9 row" style={{ marginLeft: "-1px" }}>
                                     <div
                                         className="col-12 bg-light pt-3 text-center"
                                         style={{

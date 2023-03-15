@@ -94,10 +94,10 @@ export default function Navbar() {
                 setQueryStringAPI(queryString)
                 navigate('/search')
             }
-            if (!queryString && existUrl === '')  {
-                setQueryStringAPI(queryString)
-                navigate('/')
-            }
+            // if (!queryString && existUrl === '')  {
+            //     setQueryStringAPI(queryString)
+            //     navigate('/')
+            // }
         }, [queryValue.keyword[0]])
         useEffect(() => {
             dispatch(search(queryStringAPI));
