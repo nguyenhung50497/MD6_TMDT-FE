@@ -116,7 +116,7 @@ export default function Navbar() {
     }
     return (
         <>
-            <div className="row">
+            <div className="row mb-2">
                 <div className="col-12" style={{backgroundColor: 'rgb(238,77,45)', height: '120px'}}>
                     <div className="row">
                         <div className="col-2"></div>
