@@ -294,7 +294,7 @@ export default function SearchProduct() {
                                                                 height: "300px",
                                                             }}>
                                                             <Link
-                                                                to={`product-detail/${item.idProduct}`}
+                                                                to={`/product-detail/${item.idProduct}`}
                                                                 style={{
                                                                     textDecoration: "none",
                                                                 }}>

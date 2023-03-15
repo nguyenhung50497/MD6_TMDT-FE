@@ -64,6 +64,7 @@ export default function CreateShop() {
         dispatch(createShop(data)).then(check => {
             if (check.payload === 'success') {
                 swal('Tạo cửa hàng thành công')
+                navigate("/account")
             }
         })
 

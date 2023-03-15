@@ -22,7 +22,10 @@ export default function Address() {
          }
       }
    };
-   console.log(province, district);
+   const handleSubmit = (values) => {
+      let data = district + " - " + province;
+      console.log(data);
+   };
    useEffect(() => {
       dispatch(getProvinces());
    }, []);
@@ -31,15 +34,8 @@ export default function Address() {
          <div className="row mt-5">
             <div className="col-2"></div>
             <div className="col-8 text-center">
-               <Formik
-                  initialValues={{
-                     provinces: "",
-                     districts: "",
-                  }}>
-                  <Form>
-                     <Field
-                        as="select"
-                        name={"province"}
+                  <form>
+                     <select
                         onChange={(e) => {
                            handleProvince(e.target.value);
                            setProvince(e.target.value);
@@ -53,10 +49,8 @@ export default function Address() {
                                  </option>
                               </>
                            ))}
-                     </Field>
-                     <Field
-                        as="select"
-                        name={"district"}
+                     </select>
+                     <select
                         onChange={(e) => {
                            setDistrict(e.target.value);
                         }}>
@@ -69,9 +63,11 @@ export default function Address() {
                                  </option>
                               </>
                            ))}
-                     </Field>
-                  </Form>
-               </Formik>
+                     </select>
+                     <button className="muaHang" onSubmit={(values) => {
+                     handleSubmit(values);
+                  }}>Address</button>
+                  </form>
             </div>
             <div className="col-2"></div>
          </div>
