@@ -5,7 +5,6 @@ import ListProduct from "./pages/products/ListProduct";
 import CreateProduct from "./pages/products/CreateProduct";
 import EditProduct from "./pages/products/EditProduct";
 import ProductDetail from "./pages/products/ProductDetail";
-import "./App.css";
 import Login from "./pages/auth/login";
 import Register from "./pages/auth/register";
 import { useSelector } from "react-redux";

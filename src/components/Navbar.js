@@ -112,15 +112,6 @@ export default function Navbar() {
         googleLogout();
         window.location.reload()
     }
-   //  return (
-   //      <>
-   //          <div className="row mb-2">
-   //              <div className="col-12" style={{backgroundColor: 'rgb(238,77,45)', height: '120px'}}>
-   //                  <div className="row">
-   //                      <div className="col-2"></div>
-   //                      <div className="col-8" style={{height: '120px', color: 'white'}}>
-   //                          <div className="row">
-   //                              <div className="col-12" style={{height: '30px'}}>
   
    return (
       <>
