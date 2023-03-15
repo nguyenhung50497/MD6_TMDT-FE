@@ -174,7 +174,6 @@ export default function Search() {
     };
     return (
         <>
-
             {loading === true ?
                 <>
                     <div className="row">
