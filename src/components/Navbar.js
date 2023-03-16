@@ -29,7 +29,6 @@ export default function Navbar() {
     })
     const [queryStringAPI, setQueryStringAPI] = useState('');
     const handleSubmit = async (values) => {
-        console.log(values)
         if (values.keyword !== '') {
             queryValue.keyword[0] = values.keyword
             setQueryValue({
@@ -41,7 +40,6 @@ export default function Navbar() {
                 keyword: ['']
             })
         }
-        console.log(queryValue.keyword)
     }
     const existSearchParams = new URLSearchParams(existUrl)
     let key =[]
@@ -64,7 +62,6 @@ export default function Navbar() {
             queryString += searchParams.toString();
         }
         if(existUrl !== ''){
-            console.log(queryValue.keyword)
             if(key.length === 1){
                 if(queryValue.keyword[0] !== '') {
                     searchParams.append('keyword', queryValue.keyword[0])
@@ -110,6 +107,7 @@ export default function Navbar() {
     const logOut = () => {
         localStorage.clear();
         googleLogout();
+        navigate('/')
         window.location.reload()
     }
   

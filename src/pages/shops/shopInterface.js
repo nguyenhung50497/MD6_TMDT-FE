@@ -20,7 +20,7 @@ export default function ShopInterface() {
     })
     useEffect(() => {
         dispatch(findByIdUserShop(idUser))
-    })
+    },[])
     return (
        <>
           <div className="row">

@@ -1,19 +1,22 @@
 import productReducer from "./slices/productSlice";
 import categoryReducer from "./slices/categorySlice";
 import addressReducer from "./slices/addressSlice";
-import { configureStore } from "@reduxjs/toolkit";
+import {configureStore} from "@reduxjs/toolkit";
 import shopReducer from "./shops/shopSlice";
 import transportReducer from "./transport/transportSlice";
 import userReducer from "./users/userSlice";
+import addressUserReducer from './address/addressSlice'
+
 const store = configureStore({
-   reducer: {
-      products: productReducer,
-      categories: categoryReducer,
-      users: userReducer,
-      shops: shopReducer,
-      transports: transportReducer,
-      address: addressReducer,
-   },
+    reducer: {
+        products: productReducer,
+        categories: categoryReducer,
+        users: userReducer,
+        shops: shopReducer,
+        transports: transportReducer,
+        address: addressReducer,
+        addresses: addressUserReducer,
+    },
     middleware: getDefaultMiddleware =>
         getDefaultMiddleware({
             serializableCheck: false,
