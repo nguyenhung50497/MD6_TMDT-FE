@@ -518,6 +518,10 @@ export default function ShopInterface() {
                                           `/shopInterface/${id}?page=` +
                                              (page1 - 1)
                                        );
+                                       window.scrollTo({
+                                          top: 0,
+                                          behavior: "smooth",
+                                       });
                                     }}>
                                     {" "}
                                     <span aria-hidden="true">&laquo;</span>
@@ -558,6 +562,10 @@ export default function ShopInterface() {
                                           `/shopInterface/${id}?page=` +
                                              (Number(page1) + 1)
                                        );
+                                       window.scrollTo({
+                                          top: 0,
+                                          behavior: "smooth",
+                                       });
                                     }}>
                                     {" "}
                                     <span aria-hidden="true">&raquo;</span>

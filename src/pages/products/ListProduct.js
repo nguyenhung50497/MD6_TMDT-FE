@@ -189,6 +189,10 @@ export default function ListProduct() {
                                     onClick={() => {
                                        dispatch(getProducts(page1 - 1));
                                        navigate("/?page=" + (page1 - 1));
+                                       window.scrollTo({
+                                          top: 900,
+                                          behavior: "smooth",
+                                       });
                                     }}>
                                     {" "}
                                     <span aria-hidden="true">&laquo;</span>
@@ -223,6 +227,10 @@ export default function ListProduct() {
                                        navigate(
                                           "/?page=" + (Number(page1) + 1)
                                        );
+                                       window.scrollTo({
+                                          top: 900,
+                                          behavior: "smooth",
+                                       });
                                     }}>
                                     {" "}
                                     <span aria-hidden="true">&raquo;</span>

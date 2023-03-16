@@ -104,6 +104,7 @@ export default function Navbar() {
    const logOut = () => {
       localStorage.clear();
       googleLogout();
+      navigate("/");
       window.location.reload();
    };
 

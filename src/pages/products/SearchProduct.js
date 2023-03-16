@@ -769,6 +769,10 @@ export default function SearchProduct() {
                                                       `/search?${existUrl}&page=` +
                                                          (page1 - 1)
                                                    );
+                                                   window.scrollTo({
+                                                      top: 350,
+                                                      behavior: "smooth",
+                                                   });
                                                 }}>
                                                 {" "}
                                                 <span aria-hidden="true">
@@ -811,6 +815,10 @@ export default function SearchProduct() {
                                                       `/search?${existUrl}&page=` +
                                                          (Number(page1) + 1)
                                                    );
+                                                   window.scrollTo({
+                                                      top: 350,
+                                                      behavior: "smooth",
+                                                   });
                                                 }}>
                                                 {" "}
                                                 <span aria-hidden="true">

@@ -26,6 +26,7 @@ export default function NavbarShop() {
    const logOut = () => {
       localStorage.clear();
       googleLogout();
+      navigate("/");
       window.location.reload();
    };
    return (
