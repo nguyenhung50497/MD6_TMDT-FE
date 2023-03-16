@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -20,6 +20,7 @@ const validateSchema = Yup.object().shape({
 });
 
 export default function CreateProduct() {
+   const {id} = useParams();
    const navigate = useNavigate();
    const dispatch = useDispatch();
    const categories = useSelector((state) => {
@@ -62,10 +63,10 @@ export default function CreateProduct() {
    };
 
    const handleCreateProduct = (values) => {
-      let data = { ...values, image: urls, idShop: 1 };
+      let data = { ...values, image: urls, idShop: id };
       dispatch(addProduct(data)).then((value) => {
          swal("Create Success !!!");
-         navigate("/");
+         navigate(`/shop-manager/${id}`);
       });
    };
    useEffect(() => {

@@ -92,7 +92,7 @@ export default function Navbar() {
       // }
    }, [queryValue.keyword[0]]);
    useEffect(() => {
-      dispatch(search(queryStringAPI));
+      dispatch(search([queryStringAPI, 1]));
    }, [queryStringAPI]);
 
    useEffect(() => {

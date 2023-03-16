@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {Link, Outlet, useNavigate} from "react-router-dom";
 import {showProfile} from "../../service/userService";
 import {useEffect} from "react";
+import { findByIdUserShop } from "../../service/shopService";
 
 export default function AccountUser() {
     const dispatch = useDispatch()
@@ -17,9 +18,17 @@ export default function AccountUser() {
             return state.users.user.user
         }
     })
+   const shop = useSelector((state) => {
+      if (state !== undefined) {
+         return state.shops.shop;
+      }
+   });
     useEffect(() => {
         dispatch(showProfile(idUser))
     }, [])
+   useEffect(() => {
+      dispatch(findByIdUserShop(idUser), []);
+   });
     return (
         <>
             <div className="row">
@@ -83,7 +92,7 @@ export default function AccountUser() {
                                         <div className="col-12" style={{marginTop: '20px'}}>
                                             {profile !== undefined && profile.role === 'user' ?
                                             <>
-                                                <Link to={'/shopInterface'} style={{color: 'black', textDecoration: 'none'}}>
+                                                <Link to={`/shopInterface/${shop.idShop}`} style={{color: 'black', textDecoration: 'none'}}>
                                                     <div className="row">
                                                         <div className="col-2">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"

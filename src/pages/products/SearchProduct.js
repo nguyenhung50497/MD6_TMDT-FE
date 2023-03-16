@@ -13,14 +13,20 @@ export default function SearchProduct() {
    const navigate = useNavigate();
    const dispatch = useDispatch();
    const location = useLocation();
-
+   const [page, setPage] = useSearchParams();
+   const page1 = page.get("page") || 1;
+   const totalPages = useSelector((state) => {
+      if (state.products.products !== undefined) {
+         return state.products.products.totalPage;
+      }
+   });
    let products = useSelector((state) => {
-      return state.products.search;
+      return state.products.search.products;
    });
    const keyword = useSelector((state) => {
       return state.products.keyword;
    });
-
+   const existUrl = useSelector((state) => state.products.existUrl);
    const [queryValue, setQueryValue] = useState({
       addressShop: [],
       nameCategory: [],
@@ -224,9 +230,9 @@ export default function SearchProduct() {
    }, [queryValue]);
    useEffect(() => {
       if (location.state) {
-         dispatch(search(location.state));
+         dispatch(search([location.state, 1]));
       } else {
-         dispatch(search(queryStringAPI));
+         dispatch(search([queryStringAPI, 1]));
       }
    }, [queryStringAPI]);
    let initialValues = {
@@ -732,73 +738,91 @@ export default function SearchProduct() {
                                     </>
                                  ))}
                            </div>
-                           {/*<div className="col-12 mt-3">*/}
-                           {/*    <nav aria-label="Page navigation example">*/}
-                           {/*        <ul className="pagination justify-content-center">*/}
-                           {/*            <li className="page-item">*/}
-                           {/*                {page1 == 1 ? (*/}
-                           {/*                    <>*/}
-                           {/*                        <div className="page-link">*/}
-                           {/*        <span*/}
-                           {/*            aria-hidden="true"*/}
-                           {/*            style={{*/}
-                           {/*                color: "black",*/}
-                           {/*            }}>*/}
-                           {/*           &laquo;*/}
-                           {/*        </span>*/}
-                           {/*                        </div>*/}
-                           {/*                    </>*/}
-                           {/*                ) : (*/}
-                           {/*                    <>*/}
-                           {/*                        <button*/}
-                           {/*                            className="page-link"*/}
-                           {/*                            onClick={() => {*/}
-                           {/*                                dispatch(getProducts(page1 - 1));*/}
-                           {/*                                navigate("/home?page=" + (page1 - 1));*/}
-                           {/*                            }}>*/}
-                           {/*                            {" "}*/}
-                           {/*                            <span aria-hidden="true">&laquo;</span>*/}
-                           {/*                        </button>*/}
-                           {/*                    </>*/}
-                           {/*                )}*/}
-                           {/*            </li>*/}
-                           {/*            <li className="page-item">*/}
-                           {/*                <a className="page-link">*/}
-                           {/*                    {page1}/{totalPages}*/}
-                           {/*                </a>*/}
-                           {/*            </li>*/}
-                           {/*            <li className="page-item">*/}
-                           {/*                {page1 == totalPages ? (*/}
-                           {/*                    <>*/}
-                           {/*                        <div className="page-link">*/}
-                           {/*        <span*/}
-                           {/*            aria-hidden="true"*/}
-                           {/*            style={{*/}
-                           {/*                color: "black",*/}
-                           {/*            }}>*/}
-                           {/*           &raquo;*/}
-                           {/*        </span>*/}
-                           {/*                        </div>*/}
-                           {/*                    </>*/}
-                           {/*                ) : (*/}
-                           {/*                    <>*/}
-                           {/*                        <button*/}
-                           {/*                            className="page-link"*/}
-                           {/*                            onClick={() => {*/}
-                           {/*                                dispatch(getProducts(Number(page1) + 1));*/}
-                           {/*                                navigate(*/}
-                           {/*                                    "/home?page=" + (Number(page1) + 1)*/}
-                           {/*                                );*/}
-                           {/*                            }}>*/}
-                           {/*                            {" "}*/}
-                           {/*                            <span aria-hidden="true">&raquo;</span>*/}
-                           {/*                        </button>*/}
-                           {/*                    </>*/}
-                           {/*                )}*/}
-                           {/*            </li>*/}
-                           {/*        </ul>*/}
-                           {/*    </nav>*/}
-                           {/*</div>*/}
+                           <div className="col-12 mt-3">
+                              <nav aria-label="Page navigation example">
+                                 <ul className="pagination justify-content-center">
+                                    <li className="page-item">
+                                       {page1 == 1 ? (
+                                          <>
+                                             <div className="page-link">
+                                                <span
+                                                   aria-hidden="true"
+                                                   style={{
+                                                      color: "black",
+                                                   }}>
+                                                   &laquo;
+                                                </span>
+                                             </div>
+                                          </>
+                                       ) : (
+                                          <>
+                                             <button
+                                                className="page-link"
+                                                onClick={() => {
+                                                   dispatch(
+                                                      search([
+                                                         existUrl,
+                                                         page1 - 1,
+                                                      ])
+                                                   );
+                                                   navigate(
+                                                      `/search?${existUrl}&page=` +
+                                                         (page1 - 1)
+                                                   );
+                                                }}>
+                                                {" "}
+                                                <span aria-hidden="true">
+                                                   &laquo;
+                                                </span>
+                                             </button>
+                                          </>
+                                       )}
+                                    </li>
+                                    <li className="page-item">
+                                       <a className="page-link">
+                                          {page1}/{totalPages}
+                                       </a>
+                                    </li>
+                                    <li className="page-item">
+                                       {page1 == totalPages ? (
+                                          <>
+                                             <div className="page-link">
+                                                <span
+                                                   aria-hidden="true"
+                                                   style={{
+                                                      color: "black",
+                                                   }}>
+                                                   &raquo;
+                                                </span>
+                                             </div>
+                                          </>
+                                       ) : (
+                                          <>
+                                             <button
+                                                className="page-link"
+                                                onClick={() => {
+                                                   dispatch(
+                                                      search([
+                                                         existUrl,
+                                                         Number(page1) + 1,
+                                                      ])
+                                                   );
+                                                   navigate(
+                                                      `/search?${existUrl}&page=` +
+                                                         (Number(page1) + 1)
+                                                   );
+                                                }}>
+                                                {" "}
+                                                <span aria-hidden="true">
+                                                   &raquo;
+                                                </span>
+                                             </button>
+                                          </>
+                                       )}
+                                    </li>
+                                 </ul>
+                              </nav>
+                           </div>
                         </div>
                      </div>
                   </div>

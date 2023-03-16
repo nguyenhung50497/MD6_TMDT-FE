@@ -1,14 +1,15 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams, useParams } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import swal from "sweetalert";
-import { deleteProduct, getProducts } from "../../service/productService";
+import { deleteProduct, getProductByIdShop, getProducts } from "../../service/productService";
 import { getCategories } from "../../service/categoryService";
 import NavbarShop from "../../components/NavbarShop";
 import Footer from "../../components/Footer";
 
 export default function ShopManager() {
+   const { id } = useParams();
    const [page, setPage] = useSearchParams();
    const page1 = page.get("page") || 1;
    const [check, setCheck] = useState(0);
@@ -16,9 +17,6 @@ export default function ShopManager() {
    const navigate = useNavigate();
    const products = useSelector((state) => {
       return state.products.products.products;
-   });
-   const categories = useSelector((state) => {
-      return state.categories.categories;
    });
    const loading = useSelector((state) => state.products.loading);
    const totalPages = useSelector((state) => {
@@ -35,10 +33,7 @@ export default function ShopManager() {
       return intPart;
    };
    useEffect(() => {
-      dispatch(getProducts(1));
-   }, []);
-   useEffect(() => {
-      dispatch(getCategories());
+      dispatch(getProductByIdShop({ idShop: id, page: 1 }));
    }, []);
    return (
       <>
@@ -64,7 +59,7 @@ export default function ShopManager() {
                            className="mr-3"
                            style={{ float: "right", width: "20%" }}>
                            <Link
-                              to={"/create-product"}
+                              to={`/create-product/${id}`}
                               style={{ textDecoration: "none" }}>
                               <button className="add-product pl-3 pr-3">
                                  <svg
@@ -200,13 +195,17 @@ export default function ShopManager() {
                                                                      )
                                                                   ).then(() => {
                                                                      dispatch(
-                                                                        getProducts(
-                                                                           1
+                                                                        getProductByIdShop(
+                                                                           {
+                                                                              idShop:
+                                                                                 id,
+                                                                              page: 1,
+                                                                           }
                                                                         )
                                                                      ).then(
                                                                         () => {
                                                                            navigate(
-                                                                              "/"
+                                                                              `/shop-manager/${id}`
                                                                            );
                                                                         }
                                                                      );
@@ -365,9 +364,15 @@ export default function ShopManager() {
                                        <button
                                           className="page-link"
                                           onClick={() => {
-                                             dispatch(getProducts(page1 - 1));
+                                             dispatch(
+                                                getProductByIdShop({
+                                                   idShop: id,
+                                                   page: page1 - 1,
+                                                })
+                                             );
                                              navigate(
-                                                "/home?page=" + (page1 - 1)
+                                                `/shopManager/${id}?page=` +
+                                                   (page1 - 1)
                                              );
                                           }}>
                                           {" "}
@@ -402,10 +407,13 @@ export default function ShopManager() {
                                           className="page-link"
                                           onClick={() => {
                                              dispatch(
-                                                getProducts(Number(page1) + 1)
+                                                getProductByIdShop({
+                                                   idShop: id,
+                                                   page: Number(page1) + 1,
+                                                })
                                              );
                                              navigate(
-                                                "/home?page=" +
+                                                `/shopManager/${id}?page=` +
                                                    (Number(page1) + 1)
                                              );
                                           }}>

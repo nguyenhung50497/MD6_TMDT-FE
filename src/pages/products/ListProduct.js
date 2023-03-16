@@ -98,7 +98,7 @@ export default function ListProduct() {
                                        height: "300px",
                                     }}>
                                     <Link
-                                       to={`product-detail/${item.idProduct}`}
+                                       to={`/product-detail/${item.idProduct}`}
                                        style={{
                                           textDecoration: "none",
                                        }}>
@@ -188,7 +188,7 @@ export default function ListProduct() {
                                     className="page-link"
                                     onClick={() => {
                                        dispatch(getProducts(page1 - 1));
-                                       navigate("/home?page=" + (page1 - 1));
+                                       navigate("/?page=" + (page1 - 1));
                                     }}>
                                     {" "}
                                     <span aria-hidden="true">&laquo;</span>
@@ -221,7 +221,7 @@ export default function ListProduct() {
                                     onClick={() => {
                                        dispatch(getProducts(Number(page1) + 1));
                                        navigate(
-                                          "/home?page=" + (Number(page1) + 1)
+                                          "/?page=" + (Number(page1) + 1)
                                        );
                                     }}>
                                     {" "}

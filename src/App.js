@@ -33,16 +33,16 @@ function App() {
             <Route path={"search"} element={<SearchProduct />} />
             <Route path="address" element={<Address />} />
          </Route>
-          <Route path={"shopInterface"} element={<ShopInterface />} />
+          <Route path={"shopInterface/:id"} element={<ShopInterface />} />
          {user !== null ? (
             <>
                <Route path={""} element={<Home />}>
-                  <Route path={"create-product"} element={<CreateProduct />} />
+                  <Route path={"create-product/:id"} element={<CreateProduct />} />
                   <Route path={"edit-product/:id"} element={<EditProduct />} />
                   <Route path={"product-detail/:id"} element={<ProductDetail />}
                   />
                </Route>
-               <Route path="shop-manager" element={<ShopManager />}></Route>
+               <Route path="shop-manager/:id" element={<ShopManager />}></Route>
                <Route path={"account"} element={<AccountUser />}>
                   <Route path={""} element={<ProfileUser />} />
                   <Route path={"address/:id"} element={<AddressUser />} />

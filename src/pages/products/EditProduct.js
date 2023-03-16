@@ -74,10 +74,10 @@ export default function EditProduct() {
    });
 
    const handleEditProduct = (values) => {
-      let data = { ...values, image: urls, idShop: 1 };
+      let data = { ...values, image: urls };
       dispatch(editProduct(data)).then((value) => {
          swal("Edit Success !!!");
-         navigate("/");
+         navigate(`/shop-manager/${product.idShop}`);
       });
    };
    useEffect(() => {
