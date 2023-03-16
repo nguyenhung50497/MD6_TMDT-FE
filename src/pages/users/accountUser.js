@@ -19,7 +19,7 @@ export default function AccountUser() {
         }
     })
    const shop = useSelector((state) => {
-      if (state !== undefined) {
+      if (state.shops.shop !== undefined) {
          return state.shops.shop;
       }
    });
@@ -90,7 +90,7 @@ export default function AccountUser() {
                                                </div>
                                            </div>
                                         <div className="col-12" style={{marginTop: '20px'}}>
-                                            {profile !== undefined && profile.role === 'user' ?
+                                            {profile !== undefined && profile.role === 'user' && shop != undefined ?
                                             <>
                                                 <Link to={`/shopInterface/${shop.idShop}`} style={{color: 'black', textDecoration: 'none'}}>
                                                     <div className="row">

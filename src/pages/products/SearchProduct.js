@@ -271,10 +271,6 @@ export default function SearchProduct() {
                                  <label>
                                     <input
                                        type="checkbox"
-                                       style={{
-                                          height: "20px",
-                                          width: "20px",
-                                       }}
                                        onChange={handleChange}
                                        value="Hà Nội"
                                     />{" "}
@@ -286,10 +282,6 @@ export default function SearchProduct() {
                                  <label>
                                     <input
                                        type="checkbox"
-                                       style={{
-                                          height: "20px",
-                                          width: "20px",
-                                       }}
                                        onChange={handleChange}
                                        value="TP Hồ Chí Minh"
                                     />{" "}
@@ -303,10 +295,6 @@ export default function SearchProduct() {
                                        type="checkbox"
                                        onChange={handleChange}
                                        value="Hải Phòng"
-                                       style={{
-                                          height: "20px",
-                                          width: "20px",
-                                       }}
                                     />{" "}
                                     Hải Phòng
                                  </label>
@@ -317,10 +305,6 @@ export default function SearchProduct() {
                                        type="checkbox"
                                        onChange={handleChange}
                                        value="Cần Thơ"
-                                       style={{
-                                          height: "20px",
-                                          width: "20px",
-                                       }}
                                     />{" "}
                                     Cần Thơ
                                  </label>
@@ -331,10 +315,6 @@ export default function SearchProduct() {
                                        type="checkbox"
                                        onChange={handleChange}
                                        value="Đà Nẵng"
-                                       style={{
-                                          height: "20px",
-                                          width: "20px",
-                                       }}
                                     />{" "}
                                     Đà Nẵng
                                  </label>
@@ -346,10 +326,6 @@ export default function SearchProduct() {
                                        type="checkbox"
                                        onChange={handleChange}
                                        value="Bắc Ninh"
-                                       style={{
-                                          height: "20px",
-                                          width: "20px",
-                                       }}
                                     />{" "}
                                     Bắc Ninh
                                  </label>
@@ -360,10 +336,6 @@ export default function SearchProduct() {
                                        type="checkbox"
                                        onChange={handleChange}
                                        value="Huế"
-                                       style={{
-                                          height: "20px",
-                                          width: "20px",
-                                       }}
                                     />{" "}
                                     Huế
                                  </label>
@@ -374,10 +346,6 @@ export default function SearchProduct() {
                                        type="checkbox"
                                        onChange={handleChange}
                                        value="Biên Hòa"
-                                       style={{
-                                          height: "20px",
-                                          width: "20px",
-                                       }}
                                     />{" "}
                                     Biên Hòa
                                  </label>
@@ -388,10 +356,6 @@ export default function SearchProduct() {
                                        type="checkbox"
                                        onChange={handleChange}
                                        value="Thủ Đức"
-                                       style={{
-                                          height: "20px",
-                                          width: "20px",
-                                       }}
                                     />{" "}
                                     Thủ Đức
                                  </label>
@@ -402,15 +366,10 @@ export default function SearchProduct() {
                                        type="checkbox"
                                        onChange={handleChange}
                                        value="Hải Dương"
-                                       style={{
-                                          height: "20px",
-                                          width: "20px",
-                                       }}
                                     />{" "}
                                     Hải Dương
                                  </label>
                               </div>
-
                               <br />
                               <hr />
                               <h5 style={{ marginBottom: "15px" }}>
@@ -422,35 +381,22 @@ export default function SearchProduct() {
                                  <Form>
                                     <div className="form-group">
                                        <Field
+                                          className="price"
                                           type="text"
                                           name="minPrice"
-                                          style={{
-                                             width: "80px",
-                                             borderRadius: "2px",
-                                          }}
                                        />
                                        <a> - </a>
                                        <Field
+                                          className="price"
                                           type="text"
                                           name="maxPrice"
-                                          style={{
-                                             width: "80px",
-                                             borderRadius: "2px",
-                                          }}
                                        />
                                     </div>
 
                                     <div className="form-group">
                                        <button
-                                          type="submit"
-                                          style={{
-                                             height: "40px",
-                                             width: "176px",
-                                             backgroundColor: "rgb(238,77,45)",
-                                             color: "white",
-                                             border: "none",
-                                             borderRadius: "5px",
-                                          }}>
+                                          className="btn-price"
+                                          type="submit">
                                           Áp Dụng
                                        </button>
                                     </div>
@@ -465,10 +411,6 @@ export default function SearchProduct() {
                                  <label>
                                     <input
                                        type="checkbox"
-                                       style={{
-                                          height: "20px",
-                                          width: "20px",
-                                       }}
                                        onChange={handleChange}
                                        value="Thời Trang"
                                     />{" "}
@@ -480,10 +422,6 @@ export default function SearchProduct() {
                                  <label>
                                     <input
                                        type="checkbox"
-                                       style={{
-                                          height: "20px",
-                                          width: "20px",
-                                       }}
                                        onChange={handleChange}
                                        value="Mẹ & Bé"
                                     />{" "}
@@ -494,10 +432,6 @@ export default function SearchProduct() {
                                  <label>
                                     <input
                                        type="checkbox"
-                                       style={{
-                                          height: "20px",
-                                          width: "20px",
-                                       }}
                                        onChange={handleChange}
                                        value="Thiết Bị Điện Tử"
                                     />{" "}
@@ -508,10 +442,6 @@ export default function SearchProduct() {
                                  <label>
                                     <input
                                        type="checkbox"
-                                       style={{
-                                          height: "20px",
-                                          width: "20px",
-                                       }}
                                        onChange={handleChange}
                                        value="Máy Tính & Laptop"
                                     />{" "}
@@ -522,10 +452,6 @@ export default function SearchProduct() {
                                  <label>
                                     <input
                                        type="checkbox"
-                                       style={{
-                                          height: "20px",
-                                          width: "20px",
-                                       }}
                                        onChange={handleChange}
                                        value="Đồng Hồ"
                                     />{" "}
@@ -536,10 +462,6 @@ export default function SearchProduct() {
                                  <label>
                                     <input
                                        type="checkbox"
-                                       style={{
-                                          height: "20px",
-                                          width: "20px",
-                                       }}
                                        onChange={handleChange}
                                        value="Giày Dép"
                                     />{" "}
@@ -550,10 +472,6 @@ export default function SearchProduct() {
                                  <label>
                                     <input
                                        type="checkbox"
-                                       style={{
-                                          height: "20px",
-                                          width: "20px",
-                                       }}
                                        onChange={handleChange}
                                        value="Nhà Cửa & Đời Sống"
                                     />{" "}
@@ -564,10 +482,6 @@ export default function SearchProduct() {
                                  <label>
                                     <input
                                        type="checkbox"
-                                       style={{
-                                          height: "20px",
-                                          width: "20px",
-                                       }}
                                        onChange={handleChange}
                                        value="Sức Khỏe"
                                     />{" "}
@@ -578,10 +492,6 @@ export default function SearchProduct() {
                                  <label>
                                     <input
                                        type="checkbox"
-                                       style={{
-                                          height: "20px",
-                                          width: "20px",
-                                       }}
                                        onChange={handleChange}
                                        value="Phụ Kiện & Trang Sức Nữ"
                                     />{" "}
@@ -592,10 +502,6 @@ export default function SearchProduct() {
                                  <label>
                                     <input
                                        type="checkbox"
-                                       style={{
-                                          height: "20px",
-                                          width: "20px",
-                                       }}
                                        onChange={handleChange}
                                        value="Thể Thao"
                                     />{" "}
@@ -606,10 +512,6 @@ export default function SearchProduct() {
                                  <label>
                                     <input
                                        type="checkbox"
-                                       style={{
-                                          height: "20px",
-                                          width: "20px",
-                                       }}
                                        onChange={handleChange}
                                        value="Oto & Xe Máy & Xe Đạp"
                                     />{" "}
@@ -620,10 +522,6 @@ export default function SearchProduct() {
                                  <label>
                                     <input
                                        type="checkbox"
-                                       style={{
-                                          height: "20px",
-                                          width: "20px",
-                                       }}
                                        onChange={handleChange}
                                        value="Bách Hóa Online"
                                     />{" "}
@@ -649,7 +547,7 @@ export default function SearchProduct() {
                                     <>
                                        <div
                                           key={key}
-                                          className="col-lg-3 col-md-3 p-1 card-product"
+                                          className="col-lg-3 col-md-4 col-sm-6 p-1 card-product"
                                           style={{
                                              height: "316px",
                                           }}>

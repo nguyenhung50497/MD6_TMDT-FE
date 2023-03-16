@@ -411,7 +411,7 @@ export default function ShopInterface() {
                         <>
                            <div
                               key={key}
-                              className="col-lg-2 col-md-3 p-1 card-product">
+                              className="col-lg-2 col-md-4 col-sm-6 p-1 card-product">
                               <div>
                                  <div
                                     className="bg-light shadow-sm"
