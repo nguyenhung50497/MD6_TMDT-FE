@@ -20,7 +20,7 @@ const validateSchema = Yup.object().shape({
 });
 
 export default function CreateProduct() {
-   const {id} = useParams();
+   const { id } = useParams();
    const navigate = useNavigate();
    const dispatch = useDispatch();
    const categories = useSelector((state) => {
@@ -80,7 +80,7 @@ export default function CreateProduct() {
                <div
                   class="text-center mx-auto mb-5"
                   style={{ maxWidth: "600px" }}>
-                  <h1 class="mb-3">Edit Product</h1>
+                  <h1 class="mb-3">Thêm Sản Phẩm Mới</h1>
                </div>
                <div class="row g-4">
                   <div class="col-md-4">
@@ -101,7 +101,7 @@ export default function CreateProduct() {
                               description: "",
                               price: "",
                               quantity: "",
-                              idCategory: 0,
+                              idCategory: 1,
                            }}
                            validationSchema={validateSchema}
                            onSubmit={(values) => {
@@ -113,7 +113,7 @@ export default function CreateProduct() {
                                     <div class="form-floating">
                                        <label
                                           for="nameProduct"
-                                          style={{ color: "blue" }}>
+                                          style={{ color: "#ff0800" }}>
                                           Tên Sản Phẩm
                                        </label>
                                        <Field
@@ -121,7 +121,6 @@ export default function CreateProduct() {
                                           class="form-control"
                                           name={"nameProduct"}
                                           id="nameProduct"
-                                          placeholder="Tên Sản Phẩm"
                                        />
                                        <alert className="text-danger">
                                           <ErrorMessage
@@ -135,7 +134,7 @@ export default function CreateProduct() {
                                     <div class="form-floating">
                                        <label
                                           for="description"
-                                          style={{ color: "blue" }}>
+                                          style={{ color: "#ff0800" }}>
                                           Mô Tả
                                        </label>
                                        <Field
@@ -143,7 +142,6 @@ export default function CreateProduct() {
                                           class="form-control"
                                           name={"description"}
                                           id="description"
-                                          placeholder="Mô Tả"
                                           style={{ height: "150px" }}
                                        />
                                        <alert className="text-danger">
@@ -158,7 +156,7 @@ export default function CreateProduct() {
                                     <div class="form-floating">
                                        <label
                                           for="price"
-                                          style={{ color: "blue" }}>
+                                          style={{ color: "#ff0800" }}>
                                           Giá
                                        </label>
                                        <Field
@@ -166,7 +164,6 @@ export default function CreateProduct() {
                                           class="form-control"
                                           name={"price"}
                                           id="price"
-                                          placeholder="Giá"
                                        />
                                     </div>
                                  </div>
@@ -174,7 +171,7 @@ export default function CreateProduct() {
                                     <div class="form-floating">
                                        <label
                                           for="quantity"
-                                          style={{ color: "blue" }}>
+                                          style={{ color: "#ff0800" }}>
                                           Số Lượng
                                        </label>
                                        <Field
@@ -182,14 +179,13 @@ export default function CreateProduct() {
                                           class="form-control"
                                           name={"quantity"}
                                           id="quantity"
-                                          placeholder="Số Lượng"
                                        />
                                     </div>
                                  </div>
                                  <div className="col-12 mt-2">
                                     <label
                                        for="quantity"
-                                       style={{ color: "blue" }}>
+                                       style={{ color: "#ff0800" }}>
                                        Danh Mục
                                     </label>
                                     <Field
@@ -197,7 +193,6 @@ export default function CreateProduct() {
                                        name={"idCategory"}
                                        className="form-control"
                                        id="idCategory">
-                                       <option selected>Chọn danh mục</option>
                                        {categories !== undefined &&
                                           categories.map((item, index) => (
                                              <option value={item.idCategory}>
@@ -232,7 +227,7 @@ export default function CreateProduct() {
                                  </div>
                                  <div class="col-12 mt-2">
                                     <button
-                                       class="btn btn-primary w-100 py-3"
+                                       class="btn-add w-100 py-3"
                                        type="submit">
                                        Thêm Sản Phẩm
                                     </button>

@@ -96,7 +96,7 @@ export default function EditProduct() {
                <div
                   class="text-center mx-auto mb-5"
                   style={{ maxWidth: "600px" }}>
-                  <h1 class="mb-3">Edit Product</h1>
+                  <h1 class="mb-3">Cập Nhật Thông Tin Sản Phẩm</h1>
                </div>
                <div class="row g-4">
                   <div class="col-md-4">
@@ -129,7 +129,7 @@ export default function EditProduct() {
                                     <div>
                                        <label
                                           for="nameProduct"
-                                          style={{ color: "blue" }}>
+                                          style={{ color: "#ff0800" }}>
                                           Tên Sản Phẩm
                                        </label>
                                        <Field
@@ -137,7 +137,6 @@ export default function EditProduct() {
                                           class="form-control"
                                           name={"nameProduct"}
                                           id="nameProduct"
-                                          placeholder="Product"
                                        />
                                        <alert className="text-danger">
                                           <ErrorMessage
@@ -151,7 +150,7 @@ export default function EditProduct() {
                                     <div>
                                        <label
                                           for="description"
-                                          style={{ color: "blue" }}>
+                                          style={{ color: "#ff0800" }}>
                                           Mô Tả
                                        </label>
                                        <Field
@@ -159,7 +158,6 @@ export default function EditProduct() {
                                           class="form-control"
                                           name={"description"}
                                           id="description"
-                                          placeholder="Description"
                                           style={{ height: "150px" }}
                                        />
                                        <alert className="text-danger">
@@ -174,7 +172,7 @@ export default function EditProduct() {
                                     <div>
                                        <label
                                           for="price"
-                                          style={{ color: "blue" }}>
+                                          style={{ color: "#ff0800" }}>
                                           Giá
                                        </label>
                                        <Field
@@ -182,7 +180,6 @@ export default function EditProduct() {
                                           class="form-control"
                                           name={"price"}
                                           id="price"
-                                          placeholder="Price"
                                        />
                                     </div>
                                  </div>
@@ -190,7 +187,7 @@ export default function EditProduct() {
                                     <div>
                                        <label
                                           for="quantity"
-                                          style={{ color: "blue" }}>
+                                          style={{ color: "#ff0800" }}>
                                           Số Lượng
                                        </label>
                                        <Field
@@ -198,14 +195,13 @@ export default function EditProduct() {
                                           class="form-control"
                                           name={"quantity"}
                                           id="quantity"
-                                          placeholder="Quantity"
                                        />
                                     </div>
                                  </div>
                                  <div className="col-12 mt-2">
                                     <label
                                        for="quantity"
-                                       style={{ color: "blue" }}>
+                                       style={{ color: "#ff0800" }}>
                                        Danh Mục
                                     </label>
                                     <Field
@@ -249,7 +245,7 @@ export default function EditProduct() {
                                  </div>
                                  <div class="col-12 mt-2">
                                     <button
-                                       class="btn btn-success w-100 py-3"
+                                       class="btn-add w-100 py-3"
                                        type="submit">
                                        Chỉnh Sửa
                                     </button>

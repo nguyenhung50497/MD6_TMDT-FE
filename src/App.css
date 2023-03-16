@@ -65,6 +65,17 @@ body {
    background-color: #fc6344;
 }
 
+.btn-add {
+   transition-duration: 0.3s;
+   border: 1px solid #ee4d2d;
+   border-radius: 5px;
+   color: white;
+   background-color: #ee4d2d;
+}
+.btn-add:hover {
+   background-color: #fc6344;
+}
+
 .add-product {
    transition-duration: 0.3s;
    border: 1px solid #ee4d2d;
@@ -214,16 +225,15 @@ body {
    background-color: rgb(237, 237, 237);
 }
 .shopInterface {
-  width: 168px;
-  height: 30px;
-  border-radius: 5px;
-  background: none;
-  border: 2px white solid;
-  color: white;
+   width: 168px;
+   height: 30px;
+   border-radius: 5px;
+   background: none;
+   border: 2px white solid;
+   color: white;
 }
 .shopInterface:hover {
-  border: 2px orange solid;
-
+   border: 2px orange solid;
 }
 
 table {
@@ -234,10 +244,10 @@ table {
    transition-duration: 0.3s;
    width: 120px;
    height: 40px;
-   background-color: rgb(238,77,45);
+   background-color: rgb(238, 77, 45);
    color: white;
    border: none;
-   border-radius: 5px
+   border-radius: 5px;
 }
 .password:hover {
    width: 130px;
