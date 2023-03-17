@@ -3,7 +3,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import swal from "sweetalert";
-import { deleteProduct, getProducts } from "../../service/productService";
+import {deleteProduct, getProducts, search} from "../../service/productService";
 import { getCategories } from "../../service/categoryService";
 
 export default function ListProduct() {
@@ -18,6 +18,7 @@ export default function ListProduct() {
    const categories = useSelector((state) => {
       return state.categories.categories;
    });
+   console.log(categories)
    const loading = useSelector((state) => state.products.loading);
    const totalPages = useSelector((state) => {
       if (state.products.products !== undefined) {
@@ -55,15 +56,21 @@ export default function ListProduct() {
                   {categories &&
                      categories.map((item, key) => (
                         <div className="col-2 bg-light card-category">
-                           <div>
-                              <img
-                                 src={item.imageCategory}
-                                 alt=""
-                                 style={{
-                                    width: "100%",
-                                    height: "150px",
-                                 }}
-                              />
+                           <div onClick={()=>{
+                              navigate(`/search?nameCategory=${item.nameCategory}`)
+                              dispatch(search(`/search?nameCategory=${item.nameCategory}`))
+                              console.log(`/search?nameCategory=${item.nameCategory}`)
+                           }}>
+
+                                 <img
+                                     src={item.imageCategory}
+                                     alt=""
+                                     style={{
+                                        width: "100%",
+                                        height: "150px",
+                                     }}
+                                 />
+
                               <p className="text-center">{item.nameCategory}</p>
                            </div>
                         </div>
