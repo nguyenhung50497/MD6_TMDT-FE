@@ -17,7 +17,7 @@ export default function SearchProduct() {
    const page1 = page.get("page") || 1;
    const totalPages = useSelector((state) => {
       if (state.products.products !== undefined) {
-         return state.products.products.totalPage;
+         return state.products.search.totalPage;
       }
    });
    let products = useSelector((state) => {
@@ -370,6 +370,7 @@ export default function SearchProduct() {
                                     Hải Dương
                                  </label>
                               </div>
+
                               <br />
                               <hr />
                               <h5 style={{ marginBottom: "15px" }}>
@@ -384,12 +385,14 @@ export default function SearchProduct() {
                                           className="price"
                                           type="text"
                                           name="minPrice"
+                                          placeholder="đ - VND"
                                        />
                                        <a> - </a>
                                        <Field
                                           className="price"
                                           type="text"
                                           name="maxPrice"
+                                          placeholder="đ - VND"
                                        />
                                     </div>
 

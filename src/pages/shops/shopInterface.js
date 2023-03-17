@@ -58,7 +58,7 @@ export default function ShopInterface() {
             <div className="col-12">
                <Navbar />
             </div>
-            <div className="col-12">
+            <div className="col-12" style={{ marginTop: "120px" }}>
                <div className="row">
                   <div
                      className="col-12"

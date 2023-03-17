@@ -36,7 +36,6 @@ export default function ListProduct() {
       var decPart = arParts.length > 1 ? arParts[1] : "";
       return intPart;
    };
-   const [nameCategory, setNameCategory] = useState();
 
    useEffect(() => {
       dispatch(getProducts(1));
@@ -44,7 +43,7 @@ export default function ListProduct() {
    useEffect(() => {
       dispatch(getCategories());
    }, []);
-   
+
    return (
       <>
          <div className="row mt-2">
@@ -64,7 +63,15 @@ export default function ListProduct() {
                         <div
                            className="col-lg-2 col-md-4 col-sm-6 bg-light card-category"
                            onClick={() => {
-                              setNameCategory(item.nameCategory);
+                              dispatch(
+                                 search([
+                                    `keyword=${item.nameCategory}`,
+                                    1,
+                                 ])
+                              );
+                              navigate("/search?keyword=" + item.nameCategory, {
+                                 state: `keyword=${item.nameCategory}`,
+                              });
                            }}>
                            <div>
                               <img

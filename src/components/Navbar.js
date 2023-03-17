@@ -110,7 +110,9 @@ export default function Navbar() {
 
    return (
       <>
-         <div className="row mb-2">
+         <div
+            className="row m-0 w-100 mb-2"
+            style={{ position: "fixed", zIndex: "1" }}>
             <div
                className="col-12"
                style={{ backgroundColor: "rgb(238,77,45)", height: "120px" }}>
@@ -347,7 +349,7 @@ export default function Navbar() {
                               <div
                                  className="col-2"
                                  style={{
-                                    marginLeft: "92px",
+                                    marginLeft: "90px",
                                     marginTop: "31px",
                                  }}>
                                  <div title={"giỏ hàng"}>
