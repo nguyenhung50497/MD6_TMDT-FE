@@ -38,10 +38,7 @@ function App() {
          {user !== null ? (
             <>
                <Route path={""} element={<Home />}>
-                  <Route
-                     path={"create-product/:id"}
-                     element={<CreateProduct />}
-                  />
+                  <Route path={"create-product/:id"} element={<CreateProduct />}/>
                   <Route path={"edit-product/:id"} element={<EditProduct />} />
                </Route>
                <Route path="shop-manager/:id" element={<ShopManager />}></Route>

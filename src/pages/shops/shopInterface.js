@@ -118,6 +118,7 @@ export default function ShopInterface() {
                                                    color: "white",
                                                    paddingLeft: "34px",
                                                    marginTop: "-15px",
+                                                   fontSize: '12px'
                                                 }}>
                                                 <p>
                                                    <b>

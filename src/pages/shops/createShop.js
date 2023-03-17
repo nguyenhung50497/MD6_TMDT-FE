@@ -55,12 +55,13 @@ export default function CreateShop() {
                 swal('bạn phải thêm số điện thoại cho shop')
             } else {
                 data.phoneShop = profile.phoneUser
+                data.emailShop = profile.emailUser
+                data.addressShop = data.description + '-' + district + '-' + province;
+                setShop(data)
+                setCheck('3')
             }
-            data.emailShop = profile.emailUser
+
         }
-        data.addressShop = data.description + '-' + district + '-' + province;
-        setShop(data)
-        setCheck('3')
     }
     const addTransport = (values) => {
         setTransportShop(values)

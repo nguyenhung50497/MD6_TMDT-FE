@@ -98,7 +98,7 @@ export default function AddressUser() {
                                         phoneAddress: '',
                                         province: '',
                                         district: '',
-                                        description: '',
+                                        descriptionAddress: '',
                                         typeAddress: ''
                                     }} onSubmit={values => {
                                         handleAddress(values).then()
@@ -198,7 +198,7 @@ export default function AddressUser() {
                                                                     </div>
                                                                 </div>
                                                                 <div className="col-12">
-                                                                    <Field type="text" name={'description'} style={{
+                                                                    <Field type="text" name={'descriptionAddress'} style={{
                                                                         width: '446px',
                                                                         height: '60px',
                                                                         marginTop: '-50px',
@@ -271,7 +271,7 @@ export default function AddressUser() {
                                                 <div className="col-12"><p>{item.fullName} | {item.phoneAddress}</p>
                                                 </div>
                                                 <div className="col-12" style={{marginTop: '-15px', color: 'gray'}}>
-                                                    <p>{item.description}</p></div>
+                                                    <p>{item.descriptionAddress}</p></div>
                                                 <div className="col-12" style={{marginTop: '-15px', color: 'gray'}}>
                                                     <p>{item.district}, {item.province}</p></div>
                                                 <div className="col-12" style={{marginTop: '-15px', color: 'gray'}}>
@@ -409,7 +409,7 @@ export default function AddressUser() {
                                                                                     </div>
                                                                                     <div className="col-12">
                                                                                         <Field type="text"
-                                                                                               name={'description'}
+                                                                                               name={'descriptionAddress'}
                                                                                                style={{
                                                                                                    width: '430px',
                                                                                                    height: '60px',
