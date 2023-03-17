@@ -29,9 +29,11 @@ export default function CreateShop() {
         uploadTask1.on("state_changed", (snapshot) => {
             const percent = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
             setPercent(percent);
-        }, (err) => console.log(err), () => {
+         },
+         (err) => console.log(err),
+         () => {
             getDownloadURL(uploadTask1.snapshot.ref).then((url) => {
-                setUrl(url)
+               setUrl(url);
             });
         });
     };

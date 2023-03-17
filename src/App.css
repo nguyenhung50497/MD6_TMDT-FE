@@ -38,56 +38,66 @@
 }
 
 body {
-    background-color: rgb(231, 229, 229);
+   background-color: rgb(231, 229, 229);
 }
 
 .themGioHang {
-    transition-duration: 0.3s;
-    border: 1px solid #ee4d2d;
-    border-radius: 5px;
-    height: 50px;
-    color: #ee4d2d;
-    background-color: rgba(255, 87, 34, 0.1);
+   transition-duration: 0.4s;
+   border: 1px solid #ee4d2d;
+   border-radius: 5px;
+   height: 50px;
+   color: #ee4d2d;
+   background-color: rgba(255, 87, 34, 0.1);
 }
-
 .themGioHang:hover {
-    background-color: white;
+   background-color: white;
 }
 
 .muaHang {
-    transition-duration: 0.3s;
-    border: 1px solid #ee4d2d;
-    border-radius: 5px;
-    height: 50px;
-    color: white;
-    background-color: #ee4d2d;
+   transition-duration: 0.4s;
+   border: 1px solid #ee4d2d;
+   border-radius: 5px;
+   height: 50px;
+   color: white;
+   background-color: #ee4d2d;
 }
 
 .muaHang:hover {
-    background-color: #fc6344;
+   background-color: #fc6344;
+}
+
+.btn-add {
+   transition-duration: 0.4s;
+   border: 1px solid #ee4d2d;
+   border-radius: 5px;
+   color: white;
+   background-color: #ee4d2d;
+}
+.btn-add:hover {
+   background-color: #fc6344;
 }
 
 .add-product {
-    transition-duration: 0.3s;
-    border: 1px solid #ee4d2d;
-    border-radius: 5px;
-    height: 50px;
-    color: white;
-    background-color: #ee4d2d;
+   transition-duration: 0.4s;
+   border: 1px solid #ee4d2d;
+   border-radius: 5px;
+   height: 50px;
+   color: white;
+   background-color: #ee4d2d;
 }
 
 .add-product:hover {
-    background-color: #fc6344;
+   background-color: #fc6344;
 }
 
 .xemShop {
-    transition-duration: 0.3s;
-    border: 1px solid gray;
-    border-radius: 2%;
-    height: 35px;
-    width: 130px;
-    color: gray;
-    background-color: white;
+   transition-duration: 0.4s;
+   border: 1px solid gray;
+   border-radius: 2%;
+   height: 35px;
+   width: 130px;
+   color: gray;
+   background-color: white;
 }
 
 .xemShop:hover {
@@ -95,19 +105,18 @@ body {
 }
 
 .card-category {
-    transition-duration: 0.3s;
-    border: 1px solid rgb(231, 229, 229);
-    background-color: white;
+   transition-duration: 0.4s;
+   border: 1px solid rgb(231, 229, 229);
+   background-color: white;
 }
-
 .card-category:hover {
-    border: 2px solid #e98773;
+   border: 2px solid #e98773;
 }
 
 .card-product {
-    transition-duration: 0.3s;
-    border: 3px solid rgb(231, 229, 229);
-    background-color: white;
+   transition-duration: 0.4s;
+   border: 3px solid rgb(231, 229, 229);
+   background-color: white;
 }
 
 .card-product:hover {
@@ -203,7 +212,7 @@ input[type="checkbox"] {
 }
 
 input:checked[type="checkbox"] {
-    background: green;
+   background: #fc6344;
 }
 
 input[type="checkbox"]::after {
@@ -229,12 +238,12 @@ body {
 }
 
 .shopInterface {
-    width: 168px;
-    height: 30px;
-    border-radius: 5px;
-    background: none;
-    border: 2px white solid;
-    color: white;
+   width: 168px;
+   height: 30px;
+   border-radius: 5px;
+   background: none;
+   border: 2px white solid;
+   color: white;
 }
 
 .shopInterface:hover {
@@ -248,19 +257,43 @@ table {
 }
 
 .password {
-    transition-duration: 0.3s;
-    width: 120px;
-    height: 40px;
-    background-color: rgb(238, 77, 45);
-    color: white;
-    border: none;
-    border-radius: 5px
+   transition-duration: 0.3s;
+   width: 120px;
+   height: 40px;
+   background-color: rgb(238, 77, 45);
+   color: white;
+   border: none;
+   border-radius: 5px;
 }
 
 .password:hover {
     width: 130px;
     height: 50px;
 }
+
+.price {
+   width: 138px;
+   border-radius: 2px;
+   border: 1px solid rgb(238, 77, 45);
+   box-sizing: border-box;
+   outline: none;
+}
+.price:focus {
+   border: 2px solid #fc6344;
+}
+.btn-price {
+   height: 40px;
+   width: 100%;
+   background-color: rgb(238, 77, 45);
+   color: white;
+   border: none;
+   border-radius: 5px;
+   transition-duration: 0.4s;
+}
+.btn-price:hover {
+   background-color: #fc6344;
+}
+
 
 .selectdiv {
     position: relative;

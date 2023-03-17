@@ -1,14 +1,19 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams, useParams } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import swal from "sweetalert";
-import { deleteProduct, getProducts } from "../../service/productService";
+import {
+   deleteProduct,
+   getProductByIdShop,
+   getProducts,
+} from "../../service/productService";
 import { getCategories } from "../../service/categoryService";
 import NavbarShop from "../../components/NavbarShop";
 import Footer from "../../components/Footer";
 
 export default function ShopManager() {
+   const { id } = useParams();
    const [page, setPage] = useSearchParams();
    const page1 = page.get("page") || 1;
    const [check, setCheck] = useState(0);
@@ -17,8 +22,8 @@ export default function ShopManager() {
    const products = useSelector((state) => {
       return state.products.products.products;
    });
-   const categories = useSelector((state) => {
-      return state.categories.categories;
+   const count = useSelector((state) => {
+      return state.products.products.count;
    });
    const loading = useSelector((state) => state.products.loading);
    const totalPages = useSelector((state) => {
@@ -35,10 +40,7 @@ export default function ShopManager() {
       return intPart;
    };
    useEffect(() => {
-      dispatch(getProducts(1));
-   }, []);
-   useEffect(() => {
-      dispatch(getCategories());
+      dispatch(getProductByIdShop({ idShop: id, page: 1 }));
    }, []);
    return (
       <>
@@ -58,13 +60,13 @@ export default function ShopManager() {
                         <div
                            className="mt-2 ml-4"
                            style={{ float: "left", width: "20%" }}>
-                           <h2>{products && products.length} Sản Phẩm</h2>
+                           <h2>{count} Sản Phẩm</h2>
                         </div>
                         <div
                            className="mr-3"
                            style={{ float: "right", width: "20%" }}>
                            <Link
-                              to={"/create-product"}
+                              to={`/create-product/${id}`}
                               style={{ textDecoration: "none" }}>
                               <button className="add-product pl-3 pr-3">
                                  <svg
@@ -200,13 +202,17 @@ export default function ShopManager() {
                                                                      )
                                                                   ).then(() => {
                                                                      dispatch(
-                                                                        getProducts(
-                                                                           1
+                                                                        getProductByIdShop(
+                                                                           {
+                                                                              idShop:
+                                                                                 id,
+                                                                              page: 1,
+                                                                           }
                                                                         )
                                                                      ).then(
                                                                         () => {
                                                                            navigate(
-                                                                              "/"
+                                                                              `/shop-manager/${id}`
                                                                            );
                                                                         }
                                                                      );
@@ -251,177 +257,91 @@ export default function ShopManager() {
                   </div>
                   <div className="col-2"></div>
                </div>
-               <div className="row mt-3">
-                  <div className="col-2"></div>
-                  <div className="col-8 row" style={{ marginLeft: "-1px" }}>
-                     <div
-                        className="col-12 bg-light pt-3 text-center"
-                        style={{
-                           border: "1px solid rgb(231, 229, 229)",
-                           height: "60px",
-                           fontSize: "20px",
-                        }}>
-                        <strong className="text-danger">Sản Phẩm</strong>
-                     </div>
-                     {products !== undefined &&
-                        products.map((item, key) => (
-                           <>
-                              <div
-                                 key={key}
-                                 className="col-lg-2 col-md-3 p-1 card-product">
-                                 <div>
-                                    <div
-                                       className="bg-light shadow-sm"
+               <div className="col-12 mt-3">
+                  <nav aria-label="Page navigation example">
+                     <ul className="pagination justify-content-center">
+                        <li className="page-item">
+                           {page1 == 1 ? (
+                              <>
+                                 <div className="page-link">
+                                    <span
+                                       aria-hidden="true"
                                        style={{
-                                          height: "300px",
+                                          color: "black",
                                        }}>
-                                       <Link
-                                          to={`product-detail/${item.idProduct}`}
-                                          style={{
-                                             textDecoration: "none",
-                                          }}>
-                                          <img
-                                             className="img-fluid"
-                                             src={item.image}
-                                             style={{
-                                                height: "200px",
-                                                width: "100%",
-                                             }}
-                                             alt=""
-                                          />
-                                       </Link>
-                                       <div>
-                                          <div style={{ height: "50px" }}>
-                                             <p
-                                                className="d-block ml-2 mb-1 mt-1 text-dark"
-                                                style={{
-                                                   fontSize: "13px",
-                                                }}>
-                                                {item.nameProduct}
-                                             </p>
-                                          </div>
-                                          <div>
-                                             <div
-                                                className="text-danger ml-1"
-                                                style={{
-                                                   float: "left",
-                                                }}>
-                                                <span
-                                                   className="text-danger"
-                                                   style={{
-                                                      fontSize: "12px",
-                                                      textDecoration:
-                                                         "underline",
-                                                   }}>
-                                                   đ
-                                                </span>{" "}
-                                                {item.price &&
-                                                   formatCurrency(item.price)}
-                                             </div>
-                                             <div
-                                                className="text-secondary mr-1 mt-1"
-                                                style={{
-                                                   float: "right",
-                                                   fontSize: "13px",
-                                                }}>
-                                                {item.sold < 1000 && (
-                                                   <>Đã bán: {item.sold}</>
-                                                )}
-                                                {item.sold >= 1000 && (
-                                                   <>
-                                                      Đã bán:{" "}
-                                                      {(
-                                                         item.sold / 1000
-                                                      ).toFixed(1)}
-                                                      k
-                                                   </>
-                                                )}
-                                             </div>
-                                          </div>
-                                       </div>
-                                    </div>
+                                       &laquo;
+                                    </span>
                                  </div>
-                              </div>
-                           </>
-                        ))}
-                     <div className="col-12 mt-3">
-                        <nav aria-label="Page navigation example">
-                           <ul className="pagination justify-content-center">
-                              <li className="page-item">
-                                 {page1 == 1 ? (
-                                    <>
-                                       <div className="page-link">
-                                          <span
-                                             aria-hidden="true"
-                                             style={{
-                                                color: "black",
-                                             }}>
-                                             &laquo;
-                                          </span>
-                                       </div>
-                                    </>
-                                 ) : (
-                                    <>
-                                       <button
-                                          className="page-link"
-                                          onClick={() => {
-                                             dispatch(getProducts(page1 - 1));
-                                             navigate(
-                                                "/home?page=" + (page1 - 1)
-                                             );
-                                          }}>
-                                          {" "}
-                                          <span aria-hidden="true">
-                                             &laquo;
-                                          </span>
-                                       </button>
-                                    </>
-                                 )}
-                              </li>
-                              <li className="page-item">
-                                 <a className="page-link">
-                                    {page1}/{totalPages}
-                                 </a>
-                              </li>
-                              <li className="page-item">
-                                 {page1 == totalPages ? (
-                                    <>
-                                       <div className="page-link">
-                                          <span
-                                             aria-hidden="true"
-                                             style={{
-                                                color: "black",
-                                             }}>
-                                             &raquo;
-                                          </span>
-                                       </div>
-                                    </>
-                                 ) : (
-                                    <>
-                                       <button
-                                          className="page-link"
-                                          onClick={() => {
-                                             dispatch(
-                                                getProducts(Number(page1) + 1)
-                                             );
-                                             navigate(
-                                                "/home?page=" +
-                                                   (Number(page1) + 1)
-                                             );
-                                          }}>
-                                          {" "}
-                                          <span aria-hidden="true">
-                                             &raquo;
-                                          </span>
-                                       </button>
-                                    </>
-                                 )}
-                              </li>
-                           </ul>
-                        </nav>
-                     </div>
-                  </div>
-                  <div className="col-2"></div>
+                              </>
+                           ) : (
+                              <>
+                                 <button
+                                    className="page-link"
+                                    onClick={() => {
+                                       dispatch(
+                                          getProductByIdShop({
+                                             idShop: id,
+                                             page: page1 - 1,
+                                          })
+                                       );
+                                       navigate(
+                                          `/shop-manager/${id}?page=` +
+                                             (page1 - 1)
+                                       );
+                                       window.scrollTo({
+                                          top: 0,
+                                          behavior: "smooth",
+                                       });
+                                    }}>
+                                    {" "}
+                                    <span aria-hidden="true">&laquo;</span>
+                                 </button>
+                              </>
+                           )}
+                        </li>
+                        <li className="page-item">
+                           <a className="page-link">
+                              {page1}/{totalPages}
+                           </a>
+                        </li>
+                        <li className="page-item">
+                           {page1 == totalPages ? (
+                              <>
+                                 <div className="page-link">
+                                    <span
+                                       aria-hidden="true"
+                                       style={{
+                                          color: "black",
+                                       }}>
+                                       &raquo;
+                                    </span>
+                                 </div>
+                              </>
+                           ) : (
+                              <>
+                                 <button
+                                    className="page-link"
+                                    onClick={() => {
+                                       dispatch(
+                                          getProductByIdShop({
+                                             idShop: id,
+                                             page: Number(page1) + 1,
+                                          })
+                                       );
+                                       navigate(
+                                          `/shop-manager/${id}?page=` +
+                                             (Number(page1) + 1)
+                                       );
+                                       window.scrollTo({top: 0, behavior: "smooth"});
+                                    }}>
+                                    {" "}
+                                    <span aria-hidden="true">&raquo;</span>
+                                 </button>
+                              </>
+                           )}
+                        </li>
+                     </ul>
+                  </nav>
                </div>
             </>
          )}
