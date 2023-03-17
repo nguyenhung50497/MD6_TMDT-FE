@@ -2,9 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
-import swal from "sweetalert";
 import {
-   deleteProduct,
    getProducts,
    search,
 } from "../../service/productService";
