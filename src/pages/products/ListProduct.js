@@ -44,222 +44,240 @@ export default function ListProduct() {
 
    return (
       <>
-         <div className="row mt-2">
-            <div className="col-2"></div>
-            <div className="col-8">
-               <div
-                  className="col-12 bg-light pt-3"
-                  style={{
-                     border: "1px solid rgb(231, 229, 229)",
-                     height: "60px",
-                  }}>
-                  <strong className="text-secondary">DANH MỤC</strong>
-               </div>
-               <div className="row m-0 p-0">
-                  {categories &&
-                     categories.map((item, key) => (
-                        <div
-                           className="col-lg-2 col-md-4 col-sm-6 bg-light card-category"
-                           onClick={() => {
-                              dispatch(
-                                 search([
-                                    `keyword=${item.nameCategory}`,
-                                    1,
-                                 ])
-                              );
-                              navigate("/search?keyword=" + item.nameCategory, {
-                                 state: `keyword=${item.nameCategory}`,
-                              });
-                           }}>
-                           <div>
-                              <img
-                                 src={item.imageCategory}
-                                 alt=""
-                                 style={{
-                                    width: "100%",
-                                    height: "150px",
-                                 }}
-                              />
-                              <p className="text-center">{item.nameCategory}</p>
-                           </div>
-                        </div>
-                     ))}
-               </div>
-            </div>
-            <div className="col-2"></div>
-         </div>
-         <div className="row mt-3">
-            <div className="col-2"></div>
-            <div className="col-8">
-               <div
-                  className="col-12 bg-light pt-3 text-center"
-                  style={{
-                     border: "1px solid rgb(231, 229, 229)",
-                     height: "60px",
-                     fontSize: "20px",
-                  }}>
-                  <strong className="text-danger">Sản Phẩm</strong>
-               </div>
-               <div className="row m-0 p-0">
-                  {products !== undefined &&
-                     products.map((item, key) => (
-                        <>
-                           <div
-                              key={key}
-                              className="col-lg-2 col-md-4 col-sm-6 p-1 card-product">
-                              <div>
-                                 <div
-                                    className="bg-light shadow-sm"
-                                    style={{
-                                       height: "300px",
-                                    }}>
-                                    <Link
-                                       to={`/product-detail/${item.idProduct}`}
+         {products && (
+            <>
+               <div className="row mt-2">
+                  <div className="col-2"></div>
+                  <div className="col-8">
+                     <div
+                        className="col-12 bg-light pt-3"
+                        style={{
+                           border: "1px solid rgb(231, 229, 229)",
+                           height: "60px",
+                        }}>
+                        <strong className="text-secondary">DANH MỤC</strong>
+                     </div>
+                     <div className="row m-0 p-0">
+                        {categories &&
+                           categories.map((item, key) => (
+                              <div
+                                 className="col-lg-2 col-md-4 col-sm-6 bg-light card-category"
+                                 onClick={() => {
+                                    dispatch(
+                                       search([
+                                          `keyword=${item.nameCategory}`,
+                                          1,
+                                       ])
+                                    );
+                                    navigate(
+                                       "/search?keyword=" + item.nameCategory,
+                                       {
+                                          state: `keyword=${item.nameCategory}`,
+                                       }
+                                    );
+                                 }}>
+                                 <div>
+                                    <img
+                                       src={item.imageCategory}
+                                       alt=""
                                        style={{
-                                          textDecoration: "none",
-                                       }}>
-                                       <img
-                                          className="img-fluid"
-                                          src={item.image}
-                                          style={{
-                                             height: "200px",
-                                             width: "100%",
-                                          }}
-                                          alt=""
-                                       />
-                                    </Link>
+                                          width: "100%",
+                                          height: "150px",
+                                       }}
+                                    />
+                                    <p className="text-center">
+                                       {item.nameCategory}
+                                    </p>
+                                 </div>
+                              </div>
+                           ))}
+                     </div>
+                  </div>
+                  <div className="col-2"></div>
+               </div>
+               <div className="row mt-3">
+                  <div className="col-2"></div>
+                  <div className="col-8">
+                     <div
+                        className="col-12 bg-light pt-3 text-center"
+                        style={{
+                           border: "1px solid rgb(231, 229, 229)",
+                           height: "60px",
+                           fontSize: "20px",
+                        }}>
+                        <strong className="text-danger">Sản Phẩm</strong>
+                     </div>
+                     <div className="row m-0 p-0">
+                        {products !== undefined &&
+                           products.map((item, key) => (
+                              <>
+                                 <div
+                                    key={key}
+                                    className="col-lg-2 col-md-4 col-sm-6 p-1 card-product">
                                     <div>
-                                       <div style={{ height: "50px" }}>
-                                          <p
-                                             className="d-block ml-2 mb-1 mt-1 text-dark"
+                                       <div
+                                          className="bg-light shadow-sm"
+                                          style={{
+                                             height: "300px",
+                                          }}>
+                                          <Link
+                                             to={`/product-detail/${item.idProduct}`}
                                              style={{
-                                                fontSize: "13px",
+                                                textDecoration: "none",
                                              }}>
-                                             {item.nameProduct}
-                                          </p>
-                                       </div>
-                                       <div>
-                                          <div
-                                             className="text-danger ml-1"
-                                             style={{
-                                                float: "left",
-                                             }}>
-                                             <span
-                                                className="text-danger"
+                                             <img
+                                                className="img-fluid"
+                                                src={item.image}
                                                 style={{
-                                                   fontSize: "12px",
-                                                   textDecoration: "underline",
-                                                }}>
-                                                đ
-                                             </span>{" "}
-                                             {item.price &&
-                                                formatCurrency(item.price)}
-                                          </div>
-                                          <div
-                                             className="text-secondary mr-1 mt-1"
-                                             style={{
-                                                float: "right",
-                                                fontSize: "13px",
-                                             }}>
-                                             {item.sold < 1000 && (
-                                                <>Đã bán: {item.sold}</>
-                                             )}
-                                             {item.sold >= 1000 && (
-                                                <>
-                                                   Đã bán:{" "}
-                                                   {(item.sold / 1000).toFixed(
-                                                      1
+                                                   height: "200px",
+                                                   width: "100%",
+                                                }}
+                                                alt=""
+                                             />
+                                          </Link>
+                                          <div>
+                                             <div style={{ height: "50px" }}>
+                                                <p
+                                                   className="d-block ml-2 mb-1 mt-1 text-dark"
+                                                   style={{
+                                                      fontSize: "13px",
+                                                   }}>
+                                                   {item.nameProduct}
+                                                </p>
+                                             </div>
+                                             <div>
+                                                <div
+                                                   className="text-danger ml-1"
+                                                   style={{
+                                                      float: "left",
+                                                   }}>
+                                                   <span
+                                                      className="text-danger"
+                                                      style={{
+                                                         fontSize: "12px",
+                                                         textDecoration:
+                                                            "underline",
+                                                      }}>
+                                                      đ
+                                                   </span>{" "}
+                                                   {item.price &&
+                                                      formatCurrency(
+                                                         item.price
+                                                      )}
+                                                </div>
+                                                <div
+                                                   className="text-secondary mr-1 mt-1"
+                                                   style={{
+                                                      float: "right",
+                                                      fontSize: "13px",
+                                                   }}>
+                                                   {item.sold < 1000 && (
+                                                      <>Đã bán: {item.sold}</>
                                                    )}
-                                                   k
-                                                </>
-                                             )}
+                                                   {item.sold >= 1000 && (
+                                                      <>
+                                                         Đã bán:{" "}
+                                                         {(
+                                                            item.sold / 1000
+                                                         ).toFixed(1)}
+                                                         k
+                                                      </>
+                                                   )}
+                                                </div>
+                                             </div>
                                           </div>
                                        </div>
                                     </div>
                                  </div>
-                              </div>
-                           </div>
-                        </>
-                     ))}
+                              </>
+                           ))}
+                     </div>
+                     <div className="col-12 mt-3">
+                        <nav aria-label="Page navigation example">
+                           <ul className="pagination justify-content-center">
+                              <li className="page-item">
+                                 {page1 == 1 ? (
+                                    <>
+                                       <div className="page-link">
+                                          <span
+                                             aria-hidden="true"
+                                             style={{
+                                                color: "black",
+                                             }}>
+                                             &laquo;
+                                          </span>
+                                       </div>
+                                    </>
+                                 ) : (
+                                    <>
+                                       <button
+                                          className="page-link"
+                                          onClick={() => {
+                                             dispatch(getProducts(page1 - 1));
+                                             navigate("/?page=" + (page1 - 1));
+                                             window.scrollTo({
+                                                top: 900,
+                                                behavior: "smooth",
+                                             });
+                                          }}>
+                                          {" "}
+                                          <span aria-hidden="true">
+                                             &laquo;
+                                          </span>
+                                       </button>
+                                    </>
+                                 )}
+                              </li>
+                              <li className="page-item">
+                                 <a className="page-link">
+                                    {page1}/{totalPages}
+                                 </a>
+                              </li>
+                              <li className="page-item">
+                                 {page1 == totalPages ? (
+                                    <>
+                                       <div className="page-link">
+                                          <span
+                                             aria-hidden="true"
+                                             style={{
+                                                color: "black",
+                                             }}>
+                                             &raquo;
+                                          </span>
+                                       </div>
+                                    </>
+                                 ) : (
+                                    <>
+                                       <button
+                                          className="page-link"
+                                          onClick={() => {
+                                             dispatch(
+                                                getProducts(Number(page1) + 1)
+                                             );
+                                             navigate(
+                                                "/?page=" + (Number(page1) + 1)
+                                             );
+                                             window.scrollTo({
+                                                top: 900,
+                                                behavior: "smooth",
+                                             });
+                                          }}>
+                                          {" "}
+                                          <span aria-hidden="true">
+                                             &raquo;
+                                          </span>
+                                       </button>
+                                    </>
+                                 )}
+                              </li>
+                           </ul>
+                        </nav>
+                     </div>
+                  </div>
+                  <div className="col-2"></div>
                </div>
-               <div className="col-12 mt-3">
-                  <nav aria-label="Page navigation example">
-                     <ul className="pagination justify-content-center">
-                        <li className="page-item">
-                           {page1 == 1 ? (
-                              <>
-                                 <div className="page-link">
-                                    <span
-                                       aria-hidden="true"
-                                       style={{
-                                          color: "black",
-                                       }}>
-                                       &laquo;
-                                    </span>
-                                 </div>
-                              </>
-                           ) : (
-                              <>
-                                 <button
-                                    className="page-link"
-                                    onClick={() => {
-                                       dispatch(getProducts(page1 - 1));
-                                       navigate("/?page=" + (page1 - 1));
-                                       window.scrollTo({
-                                          top: 900,
-                                          behavior: "smooth",
-                                       });
-                                    }}>
-                                    {" "}
-                                    <span aria-hidden="true">&laquo;</span>
-                                 </button>
-                              </>
-                           )}
-                        </li>
-                        <li className="page-item">
-                           <a className="page-link">
-                              {page1}/{totalPages}
-                           </a>
-                        </li>
-                        <li className="page-item">
-                           {page1 == totalPages ? (
-                              <>
-                                 <div className="page-link">
-                                    <span
-                                       aria-hidden="true"
-                                       style={{
-                                          color: "black",
-                                       }}>
-                                       &raquo;
-                                    </span>
-                                 </div>
-                              </>
-                           ) : (
-                              <>
-                                 <button
-                                    className="page-link"
-                                    onClick={() => {
-                                       dispatch(getProducts(Number(page1) + 1));
-                                       navigate(
-                                          "/?page=" + (Number(page1) + 1)
-                                       );
-                                       window.scrollTo({
-                                          top: 900,
-                                          behavior: "smooth",
-                                       });
-                                    }}>
-                                    {" "}
-                                    <span aria-hidden="true">&raquo;</span>
-                                 </button>
-                              </>
-                           )}
-                        </li>
-                     </ul>
-                  </nav>
-               </div>
-            </div>
-            <div className="col-2"></div>
-         </div>
+            </>
+         )}
       </>
    );
 }

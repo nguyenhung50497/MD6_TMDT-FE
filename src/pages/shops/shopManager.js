@@ -41,6 +41,7 @@ export default function ShopManager() {
    };
    useEffect(() => {
       dispatch(getProductByIdShop({ idShop: id, page: 1 }));
+      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
    }, []);
    return (
       <>

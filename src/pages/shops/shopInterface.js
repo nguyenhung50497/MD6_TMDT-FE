@@ -48,6 +48,7 @@ export default function ShopInterface() {
    };
    useEffect(() => {
       dispatch(findByIdUserShop(idUser));
+      window.scrollTo({top: 0, left: 0, behavior: "smooth"})
    }, []);
    useEffect(() => {
       dispatch(getProductByIdShop({ idShop: id, page: 1 }));
