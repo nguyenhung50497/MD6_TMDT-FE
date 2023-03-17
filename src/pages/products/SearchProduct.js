@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import {getProducts, search} from "../../service/productService";
 import {Field, Form, Formik} from "formik";
-import {BigNumberInput} from "big-number-input";
+
 
 export default function SearchProduct() {
     const navigate = useNavigate();
@@ -18,7 +18,7 @@ export default function SearchProduct() {
     const page1 = page.get("page") || 1;
     const totalPages = useSelector((state) => {
         if (state.products.products !== undefined) {
-            return state.products.products.totalPage;
+            return state.products.search.totalPage;
         }
     });
     let products = useSelector((state) => {
@@ -63,7 +63,6 @@ export default function SearchProduct() {
     function handleChange(event) {
         const isChecked = event.target.checked;
         const value = event.target.value;
-        console.log(value)
         if (isChecked === true) {
             if (
                 value === "Hà Nội" ||
@@ -163,70 +162,69 @@ export default function SearchProduct() {
         }
     }
 
-    const handleSubmit = async (values) => {
-        console.log(values)
-        if (values.maxPrice !== "" || values.minPrice !== "") {
-            queryValue.maxPrice[0] = values.maxPrice;
-            queryValue.minPrice[0] = values.minPrice;
-            setQueryValue({
-                addressShop: [...queryValue.addressShop],
-                nameCategory: [...queryValue.nameCategory],
-                minPrice: queryValue.minPrice,
-                maxPrice: queryValue.maxPrice,
-                keyword: [...keyword],
-            });
-        }
-        if (values.maxPrice === "" || values.minPrice !== "") {
-            queryValue.minPrice[0] = values.minPrice;
-            setQueryValue({
-                addressShop: [...queryValue.addressShop],
-                nameCategory: [...queryValue.nameCategory],
-                minPrice: queryValue.minPrice,
-                maxPrice: [...queryValue.maxPrice],
-                keyword: [...keyword],
-            });
-        }
-        if (values.maxPrice !== "" || values.minPrice === "") {
-            queryValue.maxPrice[0] = values.maxPrice;
-            setQueryValue({
-                addressShop: [...queryValue.addressShop],
-                nameCategory: [...queryValue.nameCategory],
-                minPrice: [...queryValue.minPrice],
-                maxPrice: queryValue.maxPrice,
-                keyword: [...keyword],
-            });
-        }
-    };
-    const searchParams = new URLSearchParams();
-    useEffect(() => {
-        if (
-            keyword[0] !== "undefined" &&
-            queryValue.keyword.length > 0 &&
-            keyword[0] !== "null" &&
-            keyword[0] !== null
-        ) {
-            searchParams.append("keyword", queryValue.keyword[0]);
-        }
-        if (queryValue.addressShop.length > 0) {
-            for (let i = 0; i < queryValue.addressShop.length; i++) {
-                searchParams.append("addressShop", queryValue.addressShop[i]);
-            }
-        }
-        if (queryValue.nameCategory.length > 0) {
-            for (let i = 0; i < queryValue.nameCategory.length; i++) {
-                searchParams.append("nameCategory", queryValue.nameCategory[i]);
-            }
-        }
-        if (queryValue.minPrice[0] !== "" && queryValue.maxPrice[0] !== "") {
-            searchParams.append("minPrice", queryValue.minPrice[0]);
-            searchParams.append("maxPrice", queryValue.maxPrice[0]);
-        }
-        if (queryValue.minPrice[0] === "" && queryValue.maxPrice[0] !== "") {
-            searchParams.append("maxPrice", queryValue.maxPrice[0]);
-        }
-        if (queryValue.minPrice[0] !== "" && queryValue.maxPrice[0] === "") {
-            searchParams.append("minPrice", queryValue.minPrice[0]);
-        }
+   const handleSubmit = async (values) => {
+      if (values.maxPrice !== "" || values.minPrice !== "") {
+         queryValue.maxPrice[0] = values.maxPrice;
+         queryValue.minPrice[0] = values.minPrice;
+         setQueryValue({
+            addressShop: [...queryValue.addressShop],
+            nameCategory: [...queryValue.nameCategory],
+            minPrice: queryValue.minPrice,
+            maxPrice: queryValue.maxPrice,
+            keyword: [...keyword],
+         });
+      }
+      if (values.maxPrice === "" || values.minPrice !== "") {
+         queryValue.minPrice[0] = values.minPrice;
+         setQueryValue({
+            addressShop: [...queryValue.addressShop],
+            nameCategory: [...queryValue.nameCategory],
+            minPrice: queryValue.minPrice,
+            maxPrice: [...queryValue.maxPrice],
+            keyword: [...keyword],
+         });
+      }
+      if (values.maxPrice !== "" || values.minPrice === "") {
+         queryValue.maxPrice[0] = values.maxPrice;
+         setQueryValue({
+            addressShop: [...queryValue.addressShop],
+            nameCategory: [...queryValue.nameCategory],
+            minPrice: [...queryValue.minPrice],
+            maxPrice: queryValue.maxPrice,
+            keyword: [...keyword],
+         });
+      }
+   };
+   const searchParams = new URLSearchParams();
+   useEffect(() => {
+      if (
+         keyword[0] !== "undefined" &&
+         queryValue.keyword.length > 0 &&
+         keyword[0] !== "null" &&
+         keyword[0] !== null
+      ) {
+         searchParams.append("keyword", queryValue.keyword[0]);
+      }
+      if (queryValue.addressShop.length > 0) {
+         for (let i = 0; i < queryValue.addressShop.length; i++) {
+            searchParams.append("addressShop", queryValue.addressShop[i]);
+         }
+      }
+      if (queryValue.nameCategory.length > 0) {
+         for (let i = 0; i < queryValue.nameCategory.length; i++) {
+            searchParams.append("nameCategory", queryValue.nameCategory[i]);
+         }
+      }
+      if (queryValue.minPrice[0] !== "" && queryValue.maxPrice[0] !== "") {
+         searchParams.append("minPrice", queryValue.minPrice[0]);
+         searchParams.append("maxPrice", queryValue.maxPrice[0]);
+      }
+      if (queryValue.minPrice[0] === "" && queryValue.maxPrice[0] !== "") {
+         searchParams.append("maxPrice", queryValue.maxPrice[0]);
+      }
+      if (queryValue.minPrice[0] !== "" && queryValue.maxPrice[0] === "") {
+         searchParams.append("minPrice", queryValue.minPrice[0]);
+      }
 
         const queryString = searchParams.toString();
         if (queryString) {
@@ -238,7 +236,7 @@ export default function SearchProduct() {
             setQueryStringAPI(queryString);
             navigate("?" + location.state);
         }
-        if (!queryString && !location.state && typeof location.state === "string") {
+        if (!queryString && !location.state) {
             setQueryStringAPI(queryString);
             navigate("");
         }
@@ -641,98 +639,98 @@ export default function SearchProduct() {
                                                         <>
                                                             <div className="page-link">
                                                 <span
-                                                    aria-hidden="true"
-                                                    style={{
-                                                        color: "black",
-                                                    }}>
+                                                   aria-hidden="true"
+                                                   style={{
+                                                      color: "black",
+                                                   }}>
                                                    &laquo;
                                                 </span>
-                                                            </div>
-                                                        </>
-                                                    ) : (
-                                                        <>
-                                                            <button
-                                                                className="page-link"
-                                                                onClick={() => {
-                                                                    dispatch(
-                                                                        search([
-                                                                            existUrl,
-                                                                            page1 - 1,
-                                                                        ])
-                                                                    );
-                                                                    navigate(
-                                                                        `/search?${existUrl}&page=` +
-                                                                        (page1 - 1)
-                                                                    );
-                                                                    window.scrollTo({
-                                                                        top: 350,
-                                                                        behavior: "smooth",
-                                                                    });
-                                                                }}>
-                                                                {" "}
-                                                                <span aria-hidden="true">
+                                             </div>
+                                          </>
+                                       ) : (
+                                          <>
+                                             <button
+                                                className="page-link"
+                                                onClick={() => {
+                                                   dispatch(
+                                                      search([
+                                                         existUrl,
+                                                         page1 - 1,
+                                                      ])
+                                                   );
+                                                   navigate(
+                                                      `/search?${existUrl}&page=` +
+                                                         (page1 - 1)
+                                                   );
+                                                   window.scrollTo({
+                                                      top: 350,
+                                                      behavior: "smooth",
+                                                   });
+                                                }}>
+                                                {" "}
+                                                <span aria-hidden="true">
                                                    &laquo;
                                                 </span>
-                                                            </button>
-                                                        </>
-                                                    )}
-                                                </li>
-                                                <li className="page-item">
-                                                    <a className="page-link">
-                                                        {page1}/{totalPages}
-                                                    </a>
-                                                </li>
-                                                <li className="page-item">
-                                                    {page1 == totalPages ? (
-                                                        <>
-                                                            <div className="page-link">
+                                             </button>
+                                          </>
+                                       )}
+                                    </li>
+                                    <li className="page-item">
+                                       <a className="page-link">
+                                          {page1}/{totalPages}
+                                       </a>
+                                    </li>
+                                    <li className="page-item">
+                                       {page1 == totalPages ? (
+                                          <>
+                                             <div className="page-link">
                                                 <span
-                                                    aria-hidden="true"
-                                                    style={{
-                                                        color: "black",
-                                                    }}>
+                                                   aria-hidden="true"
+                                                   style={{
+                                                      color: "black",
+                                                   }}>
                                                    &raquo;
                                                 </span>
-                                                            </div>
-                                                        </>
-                                                    ) : (
-                                                        <>
-                                                            <button
-                                                                className="page-link"
-                                                                onClick={() => {
-                                                                    dispatch(
-                                                                        search([
-                                                                            existUrl,
-                                                                            Number(page1) + 1,
-                                                                        ])
-                                                                    );
-                                                                    navigate(
-                                                                        `/search?${existUrl}&page=` +
-                                                                        (Number(page1) + 1)
-                                                                    );
-                                                                    window.scrollTo({
-                                                                        top: 350,
-                                                                        behavior: "smooth",
-                                                                    });
-                                                                }}>
-                                                                {" "}
-                                                                <span aria-hidden="true">
+                                             </div>
+                                          </>
+                                       ) : (
+                                          <>
+                                             <button
+                                                className="page-link"
+                                                onClick={() => {
+                                                   dispatch(
+                                                      search([
+                                                         existUrl,
+                                                         Number(page1) + 1,
+                                                      ])
+                                                   );
+                                                   navigate(
+                                                      `/search?${existUrl}&page=` +
+                                                         (Number(page1) + 1)
+                                                   );
+                                                   window.scrollTo({
+                                                      top: 350,
+                                                      behavior: "smooth",
+                                                   });
+                                                }}>
+                                                {" "}
+                                                <span aria-hidden="true">
                                                    &raquo;
                                                 </span>
-                                                            </button>
-                                                        </>
-                                                    )}
-                                                </li>
-                                            </ul>
-                                        </nav>
-                                    </div>
-                                </div>
-                            </div>
+                                             </button>
+                                          </>
+                                       )}
+                                    </li>
+                                 </ul>
+                              </nav>
+                           </div>
                         </div>
-                        <div className="col-2"></div>
-                    </div>
-                </>
-            )}
-        </>
-    );
+                     </div>
+                  </div>
+                  <div className="col-2"></div>
+               </div>
+            </>
+         )}
+      </>
+   );
 }

@@ -58,7 +58,7 @@ export default function ShopInterface() {
             <div className="col-12">
                <Navbar />
             </div>
-            <div className="col-12">
+            <div className="col-12" style={{ marginTop: "120px" }}>
                <div className="row">
                   <div
                      className="col-12"
@@ -118,6 +118,7 @@ export default function ShopInterface() {
                                                    color: "white",
                                                    paddingLeft: "34px",
                                                    marginTop: "-15px",
+                                                   fontSize: '12px'
                                                 }}>
                                                 <p>
                                                    <b>
@@ -411,7 +412,7 @@ export default function ShopInterface() {
                         <>
                            <div
                               key={key}
-                              className="col-lg-2 col-md-3 p-1 card-product">
+                              className="col-lg-2 col-md-4 col-sm-6 p-1 card-product">
                               <div>
                                  <div
                                     className="bg-light shadow-sm"

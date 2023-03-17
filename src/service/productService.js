@@ -83,6 +83,7 @@ export const search = createAsyncThunk(
          }
       }
       if (keywordExist === false) keyword[0] = null;
+      console.log(res.data);
       return { search: res.data, keyword: keyword, existUrl: search[0] };
    }
 );

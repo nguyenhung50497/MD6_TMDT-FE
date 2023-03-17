@@ -2,8 +2,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
-import swal from "sweetalert";
-import {deleteProduct, getProducts, search} from "../../service/productService";
+import {
+   getProducts,
+   search,
+} from "../../service/productService";
 import { getCategories } from "../../service/categoryService";
 
 export default function ListProduct() {
@@ -18,7 +20,6 @@ export default function ListProduct() {
    const categories = useSelector((state) => {
       return state.categories.categories;
    });
-   console.log(categories)
    const loading = useSelector((state) => state.products.loading);
    const totalPages = useSelector((state) => {
       if (state.products.products !== undefined) {
@@ -33,12 +34,14 @@ export default function ListProduct() {
       var decPart = arParts.length > 1 ? arParts[1] : "";
       return intPart;
    };
+
    useEffect(() => {
       dispatch(getProducts(1));
    }, []);
    useEffect(() => {
       dispatch(getCategories());
    }, []);
+
    return (
       <>
          <div className="row mt-2">
@@ -55,22 +58,28 @@ export default function ListProduct() {
                <div className="row m-0 p-0">
                   {categories &&
                      categories.map((item, key) => (
-                        <div className="col-2 bg-light card-category">
-                           <div onClick={()=>{
-                              navigate(`/search?nameCategory=${item.nameCategory}`)
-                              dispatch(search(`/search?nameCategory=${item.nameCategory}`))
-                              console.log(`/search?nameCategory=${item.nameCategory}`)
+                        <div
+                           className="col-lg-2 col-md-4 col-sm-6 bg-light card-category"
+                           onClick={() => {
+                              dispatch(
+                                 search([
+                                    `keyword=${item.nameCategory}`,
+                                    1,
+                                 ])
+                              );
+                              navigate("/search?keyword=" + item.nameCategory, {
+                                 state: `keyword=${item.nameCategory}`,
+                              });
                            }}>
-
-                                 <img
-                                     src={item.imageCategory}
-                                     alt=""
-                                     style={{
-                                        width: "100%",
-                                        height: "150px",
-                                     }}
-                                 />
-
+                           <div>
+                              <img
+                                 src={item.imageCategory}
+                                 alt=""
+                                 style={{
+                                    width: "100%",
+                                    height: "150px",
+                                 }}
+                              />
                               <p className="text-center">{item.nameCategory}</p>
                            </div>
                         </div>
@@ -97,7 +106,7 @@ export default function ListProduct() {
                         <>
                            <div
                               key={key}
-                              className="col-lg-2 col-md-3 p-1 card-product">
+                              className="col-lg-2 col-md-4 col-sm-6 p-1 card-product">
                               <div>
                                  <div
                                     className="bg-light shadow-sm"

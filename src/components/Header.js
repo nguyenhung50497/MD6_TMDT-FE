@@ -1,6 +1,6 @@
 export default function Header() {
    return (
-      <div className="row bg-light">
+      <div className="row bg-light" style={{ zIndex: "0" }}>
          <div className="col-2"></div>
          <div className="col-8">
             <div className="row m-0 p-0">
@@ -9,7 +9,9 @@ export default function Header() {
                      id="carouselExampleIndicators"
                      className="carousel slide"
                      data-ride="carousel">
-                     <ol className="carousel-indicators">
+                     <ol
+                        className="carousel-indicators"
+                        style={{ zIndex: "0" }}>
                         <li
                            data-target="#carouselExampleIndicators"
                            data-slide-to="0"
@@ -36,7 +38,7 @@ export default function Header() {
                            data-target="#carouselExampleIndicators"
                            data-slide-to="7"></li>
                      </ol>
-                     <div className="carousel-inner">
+                     <div className="carousel-inner" style={{ zIndex: "0" }}>
                         <div className="carousel-item active">
                            <img
                               className="d-block w-100"
@@ -106,7 +108,8 @@ export default function Header() {
                         className="carousel-control-prev"
                         href="#carouselExampleIndicators"
                         role="button"
-                        data-slide="prev">
+                        data-slide="prev"
+                        style={{ zIndex: "0" }}>
                         <span
                            className="carousel-control-prev-icon"
                            aria-hidden="true"></span>
@@ -116,7 +119,8 @@ export default function Header() {
                         className="carousel-control-next"
                         href="#carouselExampleIndicators"
                         role="button"
-                        data-slide="next">
+                        data-slide="next"
+                        style={{ zIndex: "0" }}>
                         <span
                            className="carousel-control-next-icon"
                            aria-hidden="true"></span>
