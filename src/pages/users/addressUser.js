@@ -487,22 +487,21 @@ export default function AddressUser() {
                                                                 borderRadius: '5px'
                                                             }} onClick={() => {
                                                                 swal({
-                                                                    title: "Are you sure?",
-                                                                    text: "Once deleted, you will not be able to recover this imaginary file!",
+                                                                    title: "Bạn chắc muốn xóa chứ ?",
+                                                                    text: "Khi xác nhận xóa bạn sẽ không thể quay lại được dữ liệu này nữa !",
                                                                     icon: "warning",
                                                                     buttons: true,
                                                                     dangerMode: true,
                                                                 })
                                                                     .then((willDelete) => {
-                                                                        console.log(item)
                                                                         if (willDelete) {
-                                                                            swal("Poof! Your imaginary file has been deleted!", {
+                                                                            swal("Xóa thành công", {
                                                                                 icon: "success",
                                                                             }).then(() => {
                                                                                 handleDeleteAddress(item.idAddress).then()
                                                                             });
                                                                         } else {
-                                                                            swal("Your imaginary file is safe!")
+                                                                            swal("Hủy quá trình xóa")
                                                                         }
                                                                     });
                                                             }}>Xóa
