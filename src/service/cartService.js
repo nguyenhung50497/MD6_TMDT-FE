@@ -36,3 +36,24 @@ export const searchByIdCart = createAsyncThunk (
         return res.data;
     }
 )
+export const getDetailCart = createAsyncThunk (
+    "carts/getDetailCart",
+    async (data) => {
+        const res = await customAxios.get("carts/detail-cart/" + data);
+        return res.data;
+    }
+)
+export const orderStatusSending = createAsyncThunk (
+    "carts/getDetailCart",
+    async (data) => {
+        const res = await customAxios.get("carts/order-status-sending/" + data);
+        return res.data;
+    }
+)
+export const orderStatusRefunds = createAsyncThunk (
+    "carts/orderStatusRefunds",
+    async (data) => {
+        const res = await customAxios.get("carts/order-status-refunds/" + data);
+        return res.data;
+    }
+)
