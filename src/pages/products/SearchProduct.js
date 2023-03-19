@@ -382,14 +382,14 @@ export default function SearchProduct() {
                                  <Form>
                                     <div className="form-group">
                                        <Field
-                                          className="price"
+                                          className="price pl-1"
                                           type="text"
                                           name="minPrice"
                                           placeholder="đ - VND"
                                        />
                                        <a> - </a>
                                        <Field
-                                          className="price"
+                                          className="price pl-1"
                                           type="text"
                                           name="maxPrice"
                                           placeholder="đ - VND"
