@@ -14,10 +14,13 @@ import AddressUser from "./pages/users/addressUser";
 import Password from "./pages/users/password";
 import CreateShop from "./pages/shops/createShop";
 import ShopInterface from "./pages/shops/shopInterface";
-import ShopManager from "./pages/shops/shopManager";
+import ProductManager from "./pages/shopManager/productManager";
 import Address from "./pages/products/address";
 import React from "react";
 import SearchProduct from "./pages/products/SearchProduct";
+import CartManager from "./pages/shopManager/cartManager";
+import ShopManager from "./pages/shopManager/shopManager";
+import DataShop from "./pages/shopManager/dataShop";
 
 
 function App() {
@@ -41,7 +44,11 @@ function App() {
                   <Route path={"create-product/:id"} element={<CreateProduct />}/>
                   <Route path={"edit-product/:id"} element={<EditProduct />} />
                </Route>
-               <Route path="shop-manager/:id" element={<ShopManager />}></Route>
+               <Route path="shop-manager/:id" element={<ShopManager/>}>
+                   <Route path={''} element={<ProductManager/>}/>
+                   <Route path={'cart/:id'}  element={<CartManager/>}/>
+                   <Route path={'data/:id'} element={<DataShop/>}/>
+               </Route>
                <Route path={"account"} element={<AccountUser />}>
                   <Route path={""} element={<ProfileUser />} />
                   <Route path={"address/:id"} element={<AddressUser />} />
