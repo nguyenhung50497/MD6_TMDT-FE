@@ -308,7 +308,6 @@ export default function SearchProduct() {
                                             Khoảng giá{" "}
                                         </h5>
 
-
                                         <Formik
                                             initialValues={initialValues}
                                             onSubmit={handleSubmit}>
