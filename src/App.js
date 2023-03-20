@@ -19,6 +19,9 @@ import Address from "./pages/products/address";
 import React from "react";
 import SearchProduct from "./pages/products/SearchProduct";
 import Sales from "./pages/stats/sales";
+import CartManager from "./pages/shopManager/cartManager";
+import ShopManager from "./pages/shopManager/shopManager";
+import DataShop from "./pages/shopManager/dataShop";
 
 
 function App() {
@@ -34,19 +37,21 @@ function App() {
             <Route path={"search"} element={<SearchProduct/>} />
             <Route path="address" element={<Address />} />
             <Route path={"product-detail/:id"} element={<ProductDetail />} />
-             <Route path={"cart-detail/stats/sales"} element={<Sales />} />
+
          </Route>
          <Route path={"shopInterface/:id"} element={<ShopInterface />} />
          {user !== null ? (
             <>
                <Route path={""} element={<Home />}>
-                  <Route
-                     path={"create-product/:id"}
-                     element={<CreateProduct />}
-                  />
+                  <Route path={"create-product/:id"} element={<CreateProduct />}/>
                   <Route path={"edit-product/:id"} element={<EditProduct />} />
                </Route>
-               <Route path="shop-manager/:id" element={<ShopManager />}></Route>
+               <Route path="shop-manager/:id" element={<ShopManager/>}>
+                   <Route path={''} element={<ProductManager/>}/>
+                   <Route path={'cart/:id'}  element={<CartManager/>}/>
+                   <Route path={'data/:id'} element={<DataShop/>}/>
+                   <Route path={"cart-detail/stats/sales"} element={<Sales />} />
+               </Route>
                <Route path={"account"} element={<AccountUser />}>
                   <Route path={""} element={<ProfileUser />} />
                   <Route path={"address/:id"} element={<AddressUser />} />

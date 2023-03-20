@@ -8,6 +8,7 @@ import userReducer from "./users/userSlice";
 import addressUserReducer from './address/addressSlice'
 import statsReducer from './slices/statsSlice'
 
+import cartReducer from "./cart/cartSlice";
 const store = configureStore({
     reducer: {
         products: productReducer,
@@ -17,6 +18,7 @@ const store = configureStore({
         transports: transportReducer,
         address: addressReducer,
         addresses: addressUserReducer,
+        carts: cartReducer
         stats: statsReducer
     },
     middleware: getDefaultMiddleware =>
