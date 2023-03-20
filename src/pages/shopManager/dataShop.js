@@ -73,7 +73,7 @@ export default function DataShop() {
         outp.slice(0, 3)
     }
 
-    let productQuantity = 0 //lấy tổng số sản phầm 
+    let productQuantity = 0 //lấy tổng số sản phầm
     if(stats.length !==0){
         for (let i = 0; i < stats.length; i++) {
             productQuantity += stats[i].quantityCart
@@ -276,7 +276,7 @@ export default function DataShop() {
                                                        Tổng đơn hàng
                                                     </span>
                                                      <div className="col-12" style={{marginTop: '5px', fontSize: '20px', color: 'rgb(238, 77, 45)'}}>
-                                                       đ {sale && formatCurrency(sale)}
+                                                       {productQuantity && formatCurrency(productQuantity)}
                                                     </div>
                                                 </span>
                                                         </button>
