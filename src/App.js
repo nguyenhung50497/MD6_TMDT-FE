@@ -18,7 +18,6 @@ import ShopManager from "./pages/shops/shopManager";
 import Address from "./pages/products/address";
 import React from "react";
 import SearchProduct from "./pages/products/SearchProduct";
-import CartDetail from "./pages/carts/CartDetail";
 import Sales from "./pages/stats/sales";
 
 
@@ -35,7 +34,6 @@ function App() {
             <Route path={"search"} element={<SearchProduct/>} />
             <Route path="address" element={<Address />} />
             <Route path={"product-detail/:id"} element={<ProductDetail />} />
-             <Route path={"search/cart-detail"} element={<CartDetail />} />
              <Route path={"cart-detail/stats/sales"} element={<Sales />} />
          </Route>
          <Route path={"shopInterface/:id"} element={<ShopInterface />} />
