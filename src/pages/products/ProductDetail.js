@@ -3,6 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getProductById } from "../../service/productService";
 import { Field, Form, Formik } from "formik";
+import {
+   addCartDetails,
+   getCartDetails,
+} from "../../service/cartDetailService";
+import swal from "sweetalert";
 
 export default function ProductDetail() {
    const { id } = useParams();
@@ -12,6 +17,10 @@ export default function ProductDetail() {
       if (state.products.product) {
          return state.products.product;
       }
+   });
+
+   const user = useSelector((state) => {
+      return state.users.users;
    });
 
    const formatCurrency = (price) => {
@@ -29,7 +38,18 @@ export default function ProductDetail() {
          idProduct: product.idProduct,
          priceInCart: product.price,
       };
-      console.log(data);
+      dispatch(addCartDetails(data));
+      swal("Thêm vào giỏ hàng thành công!")
+   };
+
+   const handleFastBuy = (values) => {
+      let data = {
+         ...values,
+         idProduct: product.idProduct,
+         priceInCart: product.price,
+      };
+      dispatch(addCartDetails(data));
+      dispatch(getCartDetails());
    };
 
    useEffect(() => {
@@ -212,46 +232,48 @@ export default function ProductDetail() {
                         </div>
                      </div>
                   </div>
-                  <Formik
-                     initialValues={{
-                        quantityCart: 1,
-                        idCart: 1,
-                        timeCartDetail: new Date().toLocaleDateString(),
-                     }}
-                     onSubmit={(values) => {
-                        handleAddToCart(values);
-                     }}>
-                     <Form>
-                        <div className="row mb-5">
-                           <div className="col-3 text-secondary pl-5">
-                              <span>Số Lượng</span>
+                  {product.idUser !== user.idUser && (
+                     <Formik
+                        initialValues={{
+                           quantityCart: 1,
+                           idCart: 1,
+                           timeCartDetail: new Date().toLocaleDateString(),
+                        }}
+                        onSubmit={(values) => {
+                           handleAddToCart(values);
+                        }}>
+                        <Form>
+                           <div className="row mb-5">
+                              <div className="col-3 text-secondary pl-5">
+                                 <span>Số Lượng</span>
+                              </div>
+                              <div className="col-3 text-secondary pl-0">
+                                 <Field
+                                    className="text-center"
+                                    type="number"
+                                    name={"quantityCart"}
+                                    style={{ width: "80%" }}
+                                 />
+                              </div>
+                              <div className="col-6 text-secondary pl-0">
+                                 <span>{product.quantity} sản phẩm có sẵn</span>
+                              </div>
                            </div>
-                           <div className="col-3 text-secondary pl-0">
-                              <Field
-                                 className="text-center"
-                                 type="number"
-                                 name={"quantityCart"}
-                                 style={{ width: "80%" }}
-                              />
+                           <div className="row">
+                              <div className="col-4 pl-5">
+                                 <button className="themGioHang" type="submit">
+                                    Thêm Vào Giỏ Hàng
+                                 </button>
+                              </div>
+                              <div className="col-8 pl-0">
+                                 <button className="muaHang" type="button">
+                                    Mua Ngay
+                                 </button>
+                              </div>
                            </div>
-                           <div className="col-6 text-secondary pl-0">
-                              <span>{product.quantity} sản phẩm có sẵn</span>
-                           </div>
-                        </div>
-                        <div className="row">
-                           <div className="col-4 pl-5">
-                              <button className="themGioHang" type="submit">
-                                 Thêm Vào Giỏ Hàng
-                              </button>
-                           </div>
-                           <div className="col-8 pl-0">
-                              <button className="muaHang" type="button">
-                                 Mua Ngay
-                              </button>
-                           </div>
-                        </div>
-                     </Form>
-                  </Formik>
+                        </Form>
+                     </Formik>
+                  )}
                </div>
             </div>
             <div className="bg-light p-4 pl-5" style={{ height: "125px" }}>

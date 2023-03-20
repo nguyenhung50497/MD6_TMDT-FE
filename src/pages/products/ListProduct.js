@@ -2,10 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
-import {
-   getProducts,
-   search,
-} from "../../service/productService";
+import { getProducts, search } from "../../service/productService";
 import { getCategories } from "../../service/categoryService";
 
 export default function ListProduct() {
@@ -120,10 +117,19 @@ export default function ListProduct() {
                                           style={{
                                              height: "300px",
                                           }}>
-                                          <Link
-                                             to={`/product-detail/${item.idProduct}`}
+                                          <a
+                                             className="btn"
                                              style={{
                                                 textDecoration: "none",
+                                             }}
+                                             onClick={() => {
+                                                navigate(
+                                                   `/product-detail/${item.idProduct}`
+                                                );
+                                                window.scrollTo({
+                                                   top: 255,
+                                                   behavior: "smooth",
+                                                });
                                              }}>
                                              <img
                                                 className="img-fluid"
@@ -134,7 +140,7 @@ export default function ListProduct() {
                                                 }}
                                                 alt=""
                                              />
-                                          </Link>
+                                          </a>
                                           <div>
                                              <div style={{ height: "50px" }}>
                                                 <p
