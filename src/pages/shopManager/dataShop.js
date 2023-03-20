@@ -19,29 +19,40 @@ export default function DataShop() {
     const stats = useSelector((state) => {
         return state.stats.sales
     });
-    console.log(stats)
+    const [queryStringAPI, setQueryStringAPI] = useState("");
+
     let sale = 0
     if(stats.length !==0){
         for (let i = 0; i < stats.length; i++) {
             sale += stats[i].priceInCart * stats[i].quantityCart
         }
-        console.log(sale)
-    }
-    let outp = [...stats];
-    if(stats.length > 0){
-        outp.sort(function(a, b) {
-            return b.quantityCart- a.quantityCart
-        })
-        outp.slice(0,3)
-    }
-    console.log(outp)
 
-    const [queryStringAPI, setQueryStringAPI] = useState("");
+    }
+
+    let topSeller = [...stats];
+    if(stats.length !== 0){
+        topSeller.sort(function(a, b) {
+            return b.quantityCart*b.priceInCart - a.quantityCart*a.priceInCart
+        })
+        topSeller.slice(0,3)
+    }
+
+    let productQuantity = 0
+    if(stats.length !==0){
+        for (let i = 0; i < stats.length; i++) {
+            productQuantity += stats[i].quantityCart
+        }
+    }
+
+    let totalPriceByCategoty = []
+    if(stats.length !== 0){
+        for (let i = 0; i < stats.length; i++) {
+            totalPriceByCategoty.push(stats[i].quantityCart)
+        }
+    }
+
 
     function handleSubmit(values) {
-        // let queryString =`${values.name}=${values.value}`
-        // setQueryStringAPI(queryString)
-        // console.log(queryStringAPI)
         if (values.week !== '' && values.month !== '' &&  values.quarter !== '' && values.year !== '') {
             let queryString = `week=${values.week}&month=${values.month}&quarter=${values.quarter}&year=${values.year}`
             setQueryStringAPI(queryString)
@@ -173,6 +184,7 @@ export default function DataShop() {
                             <div className="row">
                                 <div className="col-12">
                                     <h1>{sale}</h1>
+                                    <h1>{productQuantity}</h1>
                                     <table className="table table-striped">
                                         <thead>
                                         <tr>
@@ -182,19 +194,20 @@ export default function DataShop() {
                                             <th scope="col">Price</th>
                                             <th scope="col">Shop Name</th>
                                             <th scope="col">Time</th>
+                                            <th scope="col">Total Price</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         {
-                                            outp !== undefined && outp.map((item,index)=>(
-
+                                            topSeller !== undefined && topSeller.map((item,index)=>(
                                                     <tr>
                                                         <th scope="col">{index + 1}</th>
                                                         <td>{item.username}</td>
                                                         <td>{item.nameProduct}</td>
                                                         <td>{item.priceInCart}</td>
                                                         <td>{item.nameShop}</td>
-                                                        <td>{item.timeCartDetail}</td>
+                                                        <td>{item.timePayCart}</td>
+                                                        <td>{item.priceInCart*item.quantityCart}</td>
                                                     </tr>
                                                 )
                                             )
