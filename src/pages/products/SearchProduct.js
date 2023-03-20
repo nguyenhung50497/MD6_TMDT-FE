@@ -21,7 +21,7 @@ export default function SearchProduct() {
          return state.products.search.totalPage;
       }
    });
-   let products = useSelector((state) => {
+   let products = useSelector(( state) => {
       return state.products.search.products;
    });
    const keyword = useSelector((state) => {

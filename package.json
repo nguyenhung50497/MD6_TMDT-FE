@@ -47,9 +47,12 @@
   },
   "devDependencies": {
     "@react-oauth/google": "^0.8.0",
+    "chart.js": "^4.2.1",
+    "faker": "^6.6.6",
     "firebase": "^9.17.2",
     "formik": "^2.2.9",
     "mdb-react-ui-kit": "^5.1.0",
+    "react-bar-chart": "^0.1.2",
     "react-bootstrap": "^2.7.2",
     "react-chartjs-2": "^5.2.0",
     "react-native": "^0.71.4",

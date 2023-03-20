@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, {Component} from 'react';
 import {
     ResponsiveContainer,
     LineChart,
@@ -24,13 +24,23 @@ import {Field, Form, Formik} from "formik";
 import {sales} from "../../service/statsService";
 
 export default function DataShop() {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [queryStringAPI, setQueryStringAPI] = useState("");
     let demoUrl = 'https://codesandbox.io/s/pie-chart-with-customized-label-dlhhj';
+    const formatCurrency = (price) => {
+        var DecimalSeparator = Number("1.2").toLocaleString().substr(1, 1);
+        let priceWithCommas = price.toLocaleString();
+        let arParts = String(priceWithCommas).split(DecimalSeparator);
+        let intPart = arParts[0];
+        var decPart = arParts.length > 1 ? arParts[1] : "";
+        return intPart;
+    };
     const [data, setData] = useState([
         {name: 'Group A', value: 400},
         {name: 'Group B', value: 300},
         {name: 'Group C', value: 300},
         {name: 'Group D', value: 200},
-
     ])
     const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
@@ -46,39 +56,25 @@ export default function DataShop() {
             </text>
         );
     };
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-
-    const loading = useSelector((state) => {
-        return state.stats.loading
-    });
     const stats = useSelector((state) => {
         return state.stats.sales
     });
-    console.log(stats)
-    let sale = 0
-    if(stats.length !==0){
+    let sale = 0 // lấy tổng doanh số
+    if (stats.length !== 0) {
         for (let i = 0; i < stats.length; i++) {
             sale += stats[i].priceInCart * stats[i].quantityCart
         }
-        console.log(sale)
     }
-    let outp = [...stats];
-    if(stats.length > 0){
-        outp.sort(function(a, b) {
-            return b.quantityCart- a.quantityCart
+    let outp = [...stats]; // tốp sản phẩm bán chạy
+    if (stats.length > 0) {
+        outp.sort(function (a, b) {
+            return b.quantityCart - a.quantityCart
         })
-        outp.slice(0,3)
+        outp.slice(0, 3)
     }
-    console.log(outp)
-
-    const [queryStringAPI, setQueryStringAPI] = useState("");
 
     function handleSubmit(values) {
-        // let queryString =`${values.name}=${values.value}`
-        // setQueryStringAPI(queryString)
-        // console.log(queryStringAPI)
-        if (values.week !== '' && values.month !== '' &&  values.quarter !== '' && values.year !== '') {
+        if (values.week !== '' && values.month !== '' && values.quarter !== '' && values.year !== '') {
             let queryString = `week=${values.week}&month=${values.month}&quarter=${values.quarter}&year=${values.year}`
             setQueryStringAPI(queryString)
         }
@@ -100,7 +96,6 @@ export default function DataShop() {
         }
     }
 
-    console.log(queryStringAPI)
     useEffect(() => {
         if (queryStringAPI) {
             navigate('?' + queryStringAPI)
@@ -123,70 +118,90 @@ export default function DataShop() {
             <div className="col-10" style={{width: '100%', height: '1000px'}}>
                 <div className="row">
                     <div className="col-12  bg-light">
-                        <div className="row">
-                            <div className="col-2" style={{paddingTop: '30px'}}><p><b>Khung thời gian</b></p></div>
-                            <div className="col-2" style={{paddingTop: '30px', marginLeft: '-100px'}}>Năm</div>
-                            <div className="col-2" style={{paddingTop: '18px', marginLeft: '-220px'}}>
-                                <div className="selectdiv3">
-                                    <label>
-                                        <select>
-                                            <option selected> Select Box</option>
-                                            <option>Option 1</option>
-                                            <option>Option 2</option>
-                                            <option>Last long option</option>
-                                        </select>
-                                    </label>
-                                </div>
-                            </div>
-                            <div className="col-2" style={{paddingTop: '30px', marginLeft: '-50px'}}>Qúy</div>
-                            <div className="col-2" style={{paddingTop: '18px', marginLeft: '-220px'}}>
-                                <div className="selectdiv3">
-                                    <label>
-                                        <select>
-                                            <option selected> Select Box</option>
-                                            <option>Option 1</option>
-                                            <option>Option 2</option>
-                                            <option>Last long option</option>
-                                        </select>
-                                    </label>
-                                </div>
-                            </div>
-                            <div className="col-2" style={{paddingTop: '30px', marginLeft: '-50px'}}>Tháng</div>
-                            <div className="col-2" style={{paddingTop: '18px', marginLeft: '-200px'}}>
-                                <div className="selectdiv3">
-                                    <label>
-                                        <select>
-                                            <option selected> Select Box</option>
-                                            <option>Option 1</option>
-                                            <option>Option 2</option>
-                                            <option>Last long option</option>
-                                        </select>
-                                    </label>
-                                </div>
-                            </div>
-                            <div className="col-2" style={{paddingTop: '30px', marginLeft: '-50px'}}>Tuần</div>
-                            <div className="col-2" style={{paddingTop: '18px', marginLeft: '-200px'}}>
-                                <div className="selectdiv3">
-                                    <label>
-                                        <select>
-                                            <option selected> Select Box</option>
-                                            <option>Option 1</option>
-                                            <option>Option 2</option>
-                                            <option>Last long option</option>
-                                        </select>
-                                    </label>
-                                </div>
-                            </div>
-                            <div className="col-2" style={{paddingTop: '30px', marginLeft: '-50px'}}></div>
-                            <div className="col-2" style={{paddingTop: '22px', marginLeft: '-220px'}}>
-                                <button type={'summit'} style={{
-                                    width: '165px',
-                                    height: '40px',
-                                    backgroundColor: 'rgb(238, 77, 45)',
-                                    color: 'white',
-                                    border: 'none',
-                                    borderRadius: '5px'
-                                }}>
+                        <Formik
+                            initialValues={initialValues}
+                            onSubmit={handleSubmit}>
+                            <Form>
+                                <div className="row">
+                                    <div className="col-2" style={{paddingTop: '30px'}}><p><b>Khung thời gian</b></p>
+                                    </div>
+                                    <div className="col-2" style={{paddingTop: '30px', marginLeft: '-100px'}}>Năm</div>
+                                    <div className="col-2" style={{paddingTop: '18px', marginLeft: '-220px'}}>
+                                        <div className="selectdiv3">
+                                            <label>
+                                                <Field as="select" name="year">
+                                                    <option value=""></option>
+                                                    <option value="2020">2020</option>
+                                                    <option value="2021">2021</option>
+                                                    <option value="2022">2022</option>
+                                                    <option value="2023">2023</option>
+                                                    <option value="2024">2024</option>
+                                                    <option value="2025">2025</option>
+                                                </Field>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div className="col-2" style={{paddingTop: '30px', marginLeft: '-50px'}}>Qúy</div>
+                                    <div className="col-2" style={{paddingTop: '18px', marginLeft: '-220px'}}>
+                                        <div className="selectdiv3">
+                                            <label>
+                                                <Field as="select" name="quarter">
+                                                    <option value=""></option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                </Field>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div className="col-2" style={{paddingTop: '30px', marginLeft: '-50px'}}>Tháng</div>
+                                    <div className="col-2" style={{paddingTop: '18px', marginLeft: '-200px'}}>
+                                        <div className="selectdiv3">
+                                            <label>
+                                                <Field as="select" name="month">
+                                                    <option value=""></option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5">5</option>
+                                                    <option value="6">6</option>
+                                                    <option value="7">7</option>
+                                                    <option value="8">8</option>
+                                                    <option value="9">9</option>
+                                                    <option value="10">10</option>
+                                                    <option value="11">11</option>
+                                                    <option value="12">12</option>
+                                                </Field>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div className="col-2" style={{paddingTop: '30px', marginLeft: '-50px'}}>Tuần</div>
+                                    <div className="col-2" style={{paddingTop: '18px', marginLeft: '-200px'}}>
+                                        <div className="selectdiv3">
+                                            <label>
+                                                <Field as="select" name="week">
+                                                    <option value=""></option>
+                                                    <option value="1">1</option>
+                                                    <option value="2">2</option>
+                                                    <option value="3">3</option>
+                                                    <option value="4">4</option>
+                                                    <option value="5">5</option>
+                                                </Field>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div className="col-2" style={{paddingTop: '30px', marginLeft: '-50px'}}></div>
+                                    <div className="col-2" style={{paddingTop: '22px', marginLeft: '-220px'}}>
+                                        <button type={'submit'} style={{
+                                            width: '165px',
+                                            height: '40px',
+                                            backgroundColor: 'rgb(238, 77, 45)',
+                                            color: 'white',
+                                            border: 'none',
+                                            borderRadius: '5px'
+                                        }}>
                                     <span className="row">
                                     <div>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -201,18 +216,75 @@ export default function DataShop() {
                                         Tìm kiếm
                                     </div>
                                         </span>
-                                </button>
+                                        </button>
+                                    </div>
+                                </div>
+                            </Form>
+                        </Formik>
+                    </div>
+
+                    <div className="col-12"
+                         style={{background: 'none', width: '100%', height: '20px'}}>
+                    </div>
+                    <div className="col-12">
+                        <div className="row">
+                            <div className="bg-light" style={{width: '69%', height: '500px'}}>
+                                <div className="row">
+                                    <div className="col-12" style={{width: '100%', height: '200px'}}>
+                                        <div className="row">
+                                            <div className="col-12" style={{marginTop: '24px', marginLeft: '24px'}}>
+                                                <h6>Chỉ số quan trọng</h6>
+                                            </div>
+                                            <div className="col-12">
+                                                <div className="row">
+                                                    <div className="col-2" style={{marginTop: '24px', marginLeft: '24px'}}>
+                                                        <button type={'submit'} style={{
+                                                            width: '241px',
+                                                            height: '80px',
+                                                            background: 'none',
+                                                            border: '1px gray solid',
+                                                            borderRadius: '5px'
+                                                        }}><span className="row">
+                                                    <span className="col-12" style={{marginTop: '-10px', marginLeft: '-50px'}}>
+                                                       Tổng Doanh số
+                                                    </span>
+                                                     <div className="col-12" style={{marginTop: '5px', fontSize: '20px', color: 'rgb(238, 77, 45)'}}>
+                                                       đ {sale && formatCurrency(sale)}
+                                                    </div>
+                                                </span>
+                                                        </button>
+                                                    </div>
+                                                    <div className="col-3" style={{marginTop: '24px', marginLeft: '100px'}}>
+                                                        <button type={'submit'} style={{
+                                                            width: '241px',
+                                                            height: '80px',
+                                                            background: 'none',
+                                                            border: '1px gray solid',
+                                                            borderRadius: '5px'
+                                                        }}><span className="row">
+                                                    <span className="col-12" style={{marginTop: '-10px', marginLeft: '-50px'}}>
+                                                       Tổng đơn hàng
+                                                    </span>
+                                                     <div className="col-12" style={{marginTop: '5px', fontSize: '20px', color: 'rgb(238, 77, 45)'}}>
+                                                       đ {sale && formatCurrency(sale)}
+                                                    </div>
+                                                </span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="col-12"></div>
+                                        </div>
+                                    </div>
+                                    <div className="col-12" style={{width: '100%', height: '300px'}}>
+
+                                    </div>
+                                </div>
                             </div>
+                            <div ></div>
                         </div>
                     </div>
-                    <div className="col-12"
-                         style={{background: 'none', width: '100%', height: '20px'}}>
-                    </div>
-                    <div className="col-12 bg-light"
-                         style={{width: '100%', height: '500px'}}>
-                    </div>
-                    <div className="col-12"
-                         style={{background: 'none', width: '100%', height: '20px'}}>
+                    <div className="col-12" style={{background: 'none', width: '100%', height: '20px'}}>
                     </div>
                     <div className="col-12  bg-light" style={{width: '100%'}}>
                         <div className="row">
@@ -267,7 +339,8 @@ export default function DataShop() {
                                                     <div className="row">
                                                         {data.map(item => (
                                                             <>
-                                                                <div className="col-12" style={{marginTop:'6px'}}>{item.name}</div>
+                                                                <div className="col-12"
+                                                                     style={{marginTop: '6px'}}>{item.name}</div>
                                                             </>
                                                         ))}
                                                     </div>
@@ -283,132 +356,6 @@ export default function DataShop() {
             </div>
         </>
     )
-        <>
-            {loading === true ? (
-                <>
-                    <div className="row">
-                        <div
-                            className="offset-5 col-2"
-                            style={{textAlign: "center", marginTop: "300px"}}>
-                            <div className="loader"></div>
-                        </div>
-                    </div>
-                </>
-            ) : (
-                <>
-                    <div className="col-2 "></div>
-                    <div className="col-8">
-
-                        <Formik
-                            initialValues={initialValues}
-                            onSubmit={handleSubmit}>
-                            <Form>
-                                <div className="form-group">
-                                    <label>Năm</label>
-                                    <Field as="select" name="year">
-                                        <option value=""></option>
-                                        <option value="2020">2020</option>
-                                        <option value="2021">2021</option>
-                                        <option value="2022">2022</option>
-                                        <option value="2023">2023</option>
-                                        <option value="2024">2024</option>
-                                        <option value="2025">2025</option>
-                                    </Field>
-                                    <label>Quý</label>
-                                    <Field as="select" name="quarter">
-                                        <option value=""></option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                    </Field>
-                                    <label>Tháng</label>
-                                    <Field as="select" name="month">
-                                        <option value=""></option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
-                                        <option value="9">9</option>
-                                        <option value="10">10</option>
-                                        <option value="11">11</option>
-                                        <option value="12">12</option>
-                                    </Field>
-                                    <label>Tuần</label>
-                                    <Field as="select" name="week">
-                                        <option value=""></option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                    </Field>
-
-                                </div>
-
-                                <div className="form-group">
-                                    <button
-                                        type="submit"
-                                        style={{
-                                            height: "40px",
-                                            width: "176px",
-                                            backgroundColor: "rgb(238,77,45)",
-                                            color: "white",
-                                            border: "none",
-                                            borderRadius: "5px",
-                                        }}>
-                                        Áp Dụng
-                                    </button>
-                                </div>
-                            </Form>
-                        </Formik>
-                    </div>
-                    <div className="col-2 "></div>
-                    <div className="row">
-                        <div className="col-12">
-                            <div className="row">
-                                <div className="col-12">
-                                    <h1>{sale}</h1>
-                                    <table className="table table-striped">
-                                        <thead>
-                                        <tr>
-                                            <th scope="col">#</th>
-                                            <th scope="col">Username</th>
-                                            <th scope="col">Product Name</th>
-                                            <th scope="col">Price</th>
-                                            <th scope="col">Shop Name</th>
-                                            <th scope="col">Time</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {
-                                            outp !== undefined && outp.map((item,index)=>(
-
-                                                    <tr>
-                                                        <th scope="col">{index + 1}</th>
-                                                        <td>{item.username}</td>
-                                                        <td>{item.nameProduct}</td>
-                                                        <td>{item.priceInCart}</td>
-                                                        <td>{item.nameShop}</td>
-                                                        <td>{item.timeCartDetail}</td>
-                                                    </tr>
-                                                )
-                                            )
-                                        }
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </>
-            )}
-        </>
-    );
 }
 
 
