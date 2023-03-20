@@ -26,6 +26,7 @@ export default function ShopInterface() {
    });
    const shop = useSelector((state) => {
       if (state !== undefined) {
+         console.log(state.shops)
          return state.shops.shop;
       }
    });
@@ -47,7 +48,7 @@ export default function ShopInterface() {
       return intPart;
    };
    useEffect(() => {
-      dispatch(findByIdUserShop(idUser));
+      dispatch(findByIdUserShop(id));
       window.scrollTo({top: 0, left: 0, behavior: "smooth"})
    }, []);
    useEffect(() => {
