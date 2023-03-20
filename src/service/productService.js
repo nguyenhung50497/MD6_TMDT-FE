@@ -68,6 +68,7 @@ export const deleteProduct = createAsyncThunk(
 export const search = createAsyncThunk(
    "products/searchProducts",
    async (search) => {
+       console.log(search)
       const res = await customAxios.get(
          "search/products?" + search[0] + "&page=" + search[1]
       );
