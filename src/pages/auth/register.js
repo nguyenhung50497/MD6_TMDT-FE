@@ -64,11 +64,13 @@ export default function Register() {
             data.username = emailUser
         }
         await dispatch(registerUser(data)).then((check) => {
+            console.log(check.payload)
             if (check.payload === 'success') {
                 setCheck(false)
                 setCheck1(false)
-                swal('Tạo tài khoản thành công')
                 navigate('/login')
+                swal('Tạo tài khoản thành công')
+
 
             }
         })
