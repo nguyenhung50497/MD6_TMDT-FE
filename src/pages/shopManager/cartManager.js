@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {
     getAllCartShop,
     getCartByStatus,
-    getDetailCart, orderStatusRefunds, orderStatusSending,
+    getDetailCart, orderStatusRefunds, orderStatusSending, searchByCategory,
     searchByIdCart,
     searchByName,
     searchByPhone
@@ -44,6 +44,8 @@ export default function CartManager() {
             dispatch(searchByPhone(data))
         } else if (type === "Mã đơn hàng") {
             dispatch(searchByIdCart(data))
+        } else if (type === 'Loại hàng') {
+            dispatch(searchByCategory(data))
         }
     }
     const formatCurrency = (price) => {
@@ -128,6 +130,7 @@ export default function CartManager() {
                                                     <option value="Mã đơn hàng">Mã đơn hàng</option>
                                                     <option value="Số điện thoại">Số điện thoại</option>
                                                     <option value="Tên khách hàng">Tên khách hàng</option>
+                                                    <option value="Loại hàng">Loại sản phẩm</option>
                                                 </Field>
                                             </div>
                                             <Field type="text" style={{width: '600px'}} name={'valueInput'}

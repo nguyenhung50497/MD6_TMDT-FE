@@ -2,7 +2,7 @@ import {createSlice} from "@reduxjs/toolkit";
 import {
     getAllCartShop,
     getCartByStatus,
-    getDetailCart,
+    getDetailCart, searchByCategory,
     searchByIdCart,
     searchByName,
     searchByPhone
@@ -23,6 +23,9 @@ const cartSlice = createSlice({
             state.carts = action.payload
         })
         builder.addCase(searchByName.fulfilled,(state, action) => {
+            state.carts = action.payload
+        })
+        builder.addCase(searchByCategory.fulfilled,(state, action) => {
             state.carts = action.payload
         })
         builder.addCase(searchByIdCart.fulfilled,(state, action) => {

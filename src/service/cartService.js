@@ -29,6 +29,13 @@ export const searchByPhone = createAsyncThunk (
         return res.data;
     }
 )
+export const searchByCategory = createAsyncThunk (
+    "carts/searchByCategory",
+    async (data) => {
+        const res = await customAxios.post("carts/search-by-category/" + data.idShop, data);
+        return res.data;
+    }
+)
 export const searchByIdCart = createAsyncThunk (
     "carts/searchByIdCart",
     async (data) => {
