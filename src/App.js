@@ -14,7 +14,6 @@ import AddressUser from "./pages/users/addressUser";
 import Password from "./pages/users/password";
 import CreateShop from "./pages/shops/createShop";
 import ShopInterface from "./pages/shops/shopInterface";
-import ShopManager from "./pages/shops/shopManager";
 import Address from "./pages/products/address";
 import React from "react";
 import SearchProduct from "./pages/products/SearchProduct";
@@ -22,6 +21,7 @@ import Sales from "./pages/stats/sales";
 import CartManager from "./pages/shopManager/cartManager";
 import ShopManager from "./pages/shopManager/shopManager";
 import DataShop from "./pages/shopManager/dataShop";
+import ProductManager from "./pages/shopManager/productManager";
 
 
 function App() {
@@ -49,8 +49,8 @@ function App() {
                <Route path="shop-manager/:id" element={<ShopManager/>}>
                    <Route path={''} element={<ProductManager/>}/>
                    <Route path={'cart/:id'}  element={<CartManager/>}/>
-                   <Route path={'data/:id'} element={<DataShop/>}/>
-                   <Route path={"cart-detail/stats/sales"} element={<Sales />} />
+                   <Route path={'data'} element={<DataShop/>}/>
+                   {/*<Route path={"cart-detail/stats/sales"} element={<Sales/>} />*/}
                </Route>
                <Route path={"account"} element={<AccountUser />}>
                   <Route path={""} element={<ProfileUser />} />

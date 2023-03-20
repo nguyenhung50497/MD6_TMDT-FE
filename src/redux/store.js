@@ -18,7 +18,7 @@ const store = configureStore({
         transports: transportReducer,
         address: addressReducer,
         addresses: addressUserReducer,
-        carts: cartReducer
+        carts: cartReducer,
         stats: statsReducer
     },
     middleware: getDefaultMiddleware =>
