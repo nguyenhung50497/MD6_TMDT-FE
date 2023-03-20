@@ -1,25 +1,8 @@
 import React, {Component} from 'react';
-import {
-    ResponsiveContainer,
-    LineChart,
-    Line,
-    XAxis,
-    YAxis,
-    CartesianGrid,
-    Tooltip,
-    Legend,
-    PieChart,
-    Pie, Cell
-} from 'recharts';
-
+import {ResponsiveContainer, PieChart, Pie, Cell} from 'recharts';
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
-import {
-    Link,
-    useLocation,
-    useNavigate,
-    useSearchParams,
-} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {Field, Form, Formik} from "formik";
 import {sales} from "../../service/statsService";
 
@@ -56,9 +39,19 @@ export default function DataShop() {
             </text>
         );
     };
+
     const stats = useSelector((state) => {
         return state.stats.sales
     });
+    let totalProduct = [] //Tổng tiền của các sản phẩm đã bán
+    for (let i = 0; i < stats.length; i++) {
+        totalProduct[i] = {
+            priceInCart : stats[i].priceInCart,
+            quantityCart : stats[i].quantityCart,
+            nameProduct:  stats[i].nameProduct,
+            total: stats[i].priceInCart*stats[i].quantityCart
+        }
+    }
     let sale = 0 // lấy tổng doanh số
     if (stats.length !== 0) {
         for (let i = 0; i < stats.length; i++) {
@@ -72,7 +65,6 @@ export default function DataShop() {
         })
         outp.slice(0, 3)
     }
-
     function handleSubmit(values) {
         if (values.week !== '' && values.month !== '' && values.quarter !== '' && values.year !== '') {
             let queryString = `week=${values.week}&month=${values.month}&quarter=${values.quarter}&year=${values.year}`
@@ -95,7 +87,6 @@ export default function DataShop() {
             setQueryStringAPI(queryString)
         }
     }
-
     useEffect(() => {
         if (queryStringAPI) {
             navigate('?' + queryStringAPI)
