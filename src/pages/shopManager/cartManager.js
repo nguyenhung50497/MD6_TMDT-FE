@@ -13,7 +13,7 @@ import {
 import swal from "sweetalert";
 
 export default function CartManager() {
-    const [type, setType] = useState('')
+    const [type, setType] = useState('Mã đơn hàng')
     const [statusCart, setStatusCart] = useState('')
     let {id} = useParams()
     const dispatch = useDispatch();
