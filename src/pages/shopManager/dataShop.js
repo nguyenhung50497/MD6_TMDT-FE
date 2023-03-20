@@ -37,9 +37,9 @@ export default function DataShop() {
     };
     return (
         <>
-            <div className="col-10 bg-light" style={{width: '100%', height: '1000px'}}>
+            <div className="col-10" style={{width: '100%', height: '1000px'}}>
                 <div className="row">
-                    <div className="col-12">
+                    <div className="col-12  bg-light">
                         <div className="row">
                             <div className="col-2" style={{paddingTop: '30px'}}><p><b>Khung thời gian</b></p></div>
                             <div className="col-2" style={{paddingTop: '30px', marginLeft: '-100px'}}>Năm</div>
@@ -123,18 +123,18 @@ export default function DataShop() {
                         </div>
                     </div>
                     <div className="col-12"
-                         style={{backgroundColor: 'rgb(231, 229, 229)', width: '100%', height: '20px'}}>
+                         style={{background: 'none', width: '100%', height: '20px'}}>
                     </div>
                     <div className="col-12 bg-light"
                          style={{width: '100%', height: '500px'}}>
                     </div>
                     <div className="col-12"
-                         style={{backgroundColor: 'rgb(231, 229, 229)', width: '100%', height: '20px'}}>
+                         style={{background: 'none', width: '100%', height: '20px'}}>
                     </div>
-                    <div className="col-12" style={{width: '100%'}}>
+                    <div className="col-12  bg-light" style={{width: '100%'}}>
                         <div className="row">
-                            <div style={{backgroundColor: 'red', width: '60%', height: '400px'}}></div>
-                            <div style={{backgroundColor: 'rgb(231, 229, 229)', width: '1%', height: '400px'}}></div>
+                            <div style={{width: '60%', height: '400px'}}></div>
+                            <div style={{background: 'rgb(231, 229, 229)', width: '1%', height: '400px'}}></div>
                             <div style={{width: '39%', height: '400px'}}>
                                 <div className="row">
                                     <div style={{width: '60%'}}>
