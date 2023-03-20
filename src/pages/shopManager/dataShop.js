@@ -65,6 +65,16 @@ export default function DataShop() {
         })
         outp.slice(0, 3)
     }
+
+    let productQuantity = 0 //lấy tổng số sản phầm
+    if(stats.length !==0){
+        for (let i = 0; i < stats.length; i++) {
+            productQuantity += stats[i].quantityCart
+        }
+    }
+
+
+
     function handleSubmit(values) {
         if (values.week !== '' && values.month !== '' && values.quarter !== '' && values.year !== '') {
             let queryString = `week=${values.week}&month=${values.month}&quarter=${values.quarter}&year=${values.year}`
@@ -87,6 +97,7 @@ export default function DataShop() {
             setQueryStringAPI(queryString)
         }
     }
+
     useEffect(() => {
         if (queryStringAPI) {
             navigate('?' + queryStringAPI)
@@ -257,7 +268,7 @@ export default function DataShop() {
                                                        Tổng đơn hàng
                                                     </span>
                                                      <div className="col-12" style={{marginTop: '5px', fontSize: '20px', color: 'rgb(238, 77, 45)'}}>
-                                                       đ {sale && formatCurrency(sale)}
+                                                       {productQuantity && formatCurrency(productQuantity)}
                                                     </div>
                                                 </span>
                                                         </button>
