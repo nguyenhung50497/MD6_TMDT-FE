@@ -2,21 +2,31 @@ import React, {Component} from 'react';
 import {ResponsiveContainer, BarChart, Bar, XAxis, PieChart, Pie, Cell, YAxis} from 'recharts';
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {Field, Form, Formik} from "formik";
 import {sales} from "../../service/statsService";
 
 
 export default function DataShop() {
+    let {id} = useParams()
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [queryStringAPI, setQueryStringAPI] = useState("");
     const [check, setCheck] = useState(false)
-    const stats = useSelector((state) => {
+
+    const cartDetail = useSelector((state) => {
         if (state.stats.sales !== undefined) {
             return state.stats.sales
         }
     });
+    let stats = []
+    for (let i = 0; i < cartDetail.length; i++) {
+        if (cartDetail[i].idShop === +id) {
+            stats.push(cartDetail[i])
+        }
+    }
+
 
     let demoUrl = 'https://codesandbox.io/s/pie-chart-with-customized-label-dlhhj';
     const formatCurrency = (price) => {
@@ -190,6 +200,7 @@ export default function DataShop() {
     };
     return (
         <>
+            {console.log(categoryStat)}
             <div className="col-10" style={{width: '100%', height: '1000px'}}>
                 <div className="row">
                     <div className="col-12  bg-light">
