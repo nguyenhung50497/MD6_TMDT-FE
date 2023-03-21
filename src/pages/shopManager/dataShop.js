@@ -447,42 +447,6 @@ export default function DataShop() {
                     <div className="col-12  bg-light" style={{width: '100%'}}>
                         <div className="row">
                             <div style={{width: '60%', height: '400px'}}>
-                                {/*<div className="col-12" style={{padding: '10px'}}>*/}
-                                {/*    <div className="row">*/}
-                                {/*        <div className="col-12" style={{*/}
-                                {/*            textAlign: 'center',*/}
-                                {/*            marginBottom: '10px',*/}
-                                {/*            color: 'rgb(238, 77, 45)'*/}
-                                {/*        }}>*/}
-                                {/*            <h2>Thứ hạng người dùng</h2>*/}
-                                {/*        </div>*/}
-                                {/*        <div className="col-12">*/}
-                                {/*            <table className="table table" style={{width: '100%'}}>*/}
-                                {/*                <thead>*/}
-                                {/*                <tr style={{*/}
-                                {/*                    backgroundColor: 'rgb(238, 77, 45)',*/}
-                                {/*                    color: 'white',*/}
-                                {/*                    fontSize: '20px'*/}
-                                {/*                }}>*/}
-                                {/*                    <th scope="col">Tên sản phẩm</th>*/}
-                                {/*                    <th scope="col">Số lượt</th>*/}
-                                {/*                </tr>*/}
-                                {/*                </thead>*/}
-                                {/*                <tbody>*/}
-                                {/*                {outp && outp.map(item => (*/}
-                                {/*                    <>*/}
-
-                                {/*                        <tr style={{fontSize: '18px'}}>*/}
-                                {/*                            <td>{item.nameProduct}</td>*/}
-                                {/*                            <td>{item.quantityCart}</td>*/}
-                                {/*                        </tr>*/}
-                                {/*                    </>*/}
-                                {/*                ))}*/}
-                                {/*                </tbody>*/}
-                                {/*            </table>*/}
-                                {/*        </div>*/}
-                                {/*    </div>*/}
-                                {/*</div>*/}
                             </div>
                             <div style={{background: 'rgb(231, 229, 229)', width: '1%', height: '400px'}}></div>
                             <div style={{width: '39%', height: '400px'}}>
