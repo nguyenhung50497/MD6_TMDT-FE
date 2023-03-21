@@ -33,7 +33,11 @@ export default function CartManager() {
         total += Number(detailCart[i].priceInCart) * Number(detailCart[i].quantityCart)
     }
     const handleDetailCart = (values) => {
-        dispatch(getDetailCart(values))
+        let data = {
+            idCart: values,
+            idShop: id
+        }
+        dispatch(getDetailCart(data))
     }
     const handleSearch = (values) => {
         let data = {...values}
