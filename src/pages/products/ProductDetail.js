@@ -6,6 +6,7 @@ import { Field, Form, Formik } from "formik";
 import {
    addCartDetails,
    getCartDetails,
+   getCartDetailsByUser,
 } from "../../service/cartDetailService";
 import swal from "sweetalert";
 
@@ -38,8 +39,12 @@ export default function ProductDetail() {
          idProduct: product.idProduct,
          priceInCart: product.price,
       };
-      dispatch(addCartDetails(data));
-      swal("Thêm vào giỏ hàng thành công!")
+      swal("Thêm vào giỏ hàng thành công!");
+      dispatch(addCartDetails(data)).then(() => {
+         dispatch(getCartDetailsByUser(user.idUser)).then(() => {
+            navigate(`/product-detail/${id}`);
+         });
+      });
    };
 
    const handleFastBuy = (values) => {

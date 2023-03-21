@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
    deleteCartDetails,
    getCartDetailsByUser,
@@ -98,16 +98,23 @@ export default function Cart() {
                                  <div className="col-12">
                                     <div className="row mb-3 mt-2 pl-3">
                                        <div className="col-4">
-                                          <img
-                                             src={item.image}
-                                             alt=""
+                                          <Link
+                                             to={`/product-detail/${item.idProduct}`}
                                              style={{
-                                                width: "100px",
-                                             }}
-                                          />
-                                          <span className="ml-3">
-                                             {item.nameProduct}
-                                          </span>
+                                                textDecoration: "none",
+                                                color: "black",
+                                             }}>
+                                             <img
+                                                src={item.image}
+                                                alt=""
+                                                style={{
+                                                   width: "100px",
+                                                }}
+                                             />
+                                             <span className="ml-3">
+                                                {item.nameProduct}
+                                             </span>
+                                          </Link>
                                        </div>
                                        <div className="col-2 text-center">
                                           <span>{item.nameCategory}</span>
@@ -227,6 +234,7 @@ export default function Cart() {
                                        color: "red",
                                     }}>
                                     {sum != 0 && formatCurrency(sum)}
+                                    {(sum = 0 && sum)}
                                  </span>
                               </div>
                               <div className="col-4">
