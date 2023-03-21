@@ -122,7 +122,9 @@ export default function Navbar() {
       }
    }
    useEffect(() => {
-      dispatch(getCartDetailsByUser(user.idUser));
+      if (user) {
+         dispatch(getCartDetailsByUser(user.idUser));
+      }
    }, []);
    return (
       <>

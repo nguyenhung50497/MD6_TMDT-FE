@@ -9,6 +9,7 @@ import {
    getCartDetailsByUser,
 } from "../../service/cartDetailService";
 import swal from "sweetalert";
+import { getCartByIdUser } from "../../service/cartService";
 
 export default function ProductDetail() {
    const { id } = useParams();
@@ -23,6 +24,11 @@ export default function ProductDetail() {
    const user = useSelector((state) => {
       return state.users.users;
    });
+   const cart = useSelector((state) => {
+      if (state.carts.cart) {
+         return state.carts.cart;
+      }
+   });
 
    const formatCurrency = (price) => {
       var DecimalSeparator = Number("1.2").toLocaleString().substr(1, 1);
@@ -34,31 +40,40 @@ export default function ProductDetail() {
    };
 
    const handleAddToCart = (values) => {
-      let data = {
-         ...values,
-         idProduct: product.idProduct,
-         priceInCart: product.price,
-      };
-      swal("Thêm vào giỏ hàng thành công!");
-      dispatch(addCartDetails(data)).then(() => {
-         dispatch(getCartDetailsByUser(user.idUser)).then(() => {
-            navigate(`/product-detail/${id}`);
+      if (cart) {
+         let data = {
+            ...values,
+            idCart: cart.idCart,
+            idProduct: product.idProduct,
+            priceInCart: product.price,
+         };
+         swal("Thêm vào giỏ hàng thành công!");
+         dispatch(addCartDetails(data)).then(() => {
+            dispatch(getCartDetailsByUser(user.idUser)).then(() => {
+               navigate(`/product-detail/${id}`);
+            });
          });
-      });
+      }
    };
 
    const handleFastBuy = (values) => {
-      let data = {
-         ...values,
-         idProduct: product.idProduct,
-         priceInCart: product.price,
-      };
-      dispatch(addCartDetails(data));
-      dispatch(getCartDetails());
+      if (cart) {
+         let data = {
+            ...values,
+            idCart: cart.idCart,
+            idProduct: product.idProduct,
+            priceInCart: product.price,
+         };
+         // dispatch(addCartDetails(data));
+         // dispatch(getCartDetails());
+      }
    };
 
    useEffect(() => {
       dispatch(getProductById(id));
+   }, []);
+   useEffect(() => {
+      dispatch(getCartByIdUser(user.idUser));
    }, []);
    return (
       <div className="container-fluid row mt-3 mb-3">
@@ -241,7 +256,6 @@ export default function ProductDetail() {
                      <Formik
                         initialValues={{
                            quantityCart: 1,
-                           idCart: 1,
                            timeCartDetail: new Date().toLocaleDateString(),
                         }}
                         onSubmit={(values) => {

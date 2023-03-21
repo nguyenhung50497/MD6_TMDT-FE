@@ -53,7 +53,7 @@ function App() {
                <Route path="shop-manager/:id" element={<ShopManager/>}>
                    <Route path={''} element={<ProductManager/>}/>
                    <Route path={'cart/:id'}  element={<CartManager/>}/>
-                   <Route path={'data/:id'} element={<DataShop/>}/>
+                   <Route path={'data'} element={<DataShop/>}/>
                </Route>
                <Route path={"account"} element={<AccountUser />}>
                   <Route path={""} element={<ProfileUser />} />
