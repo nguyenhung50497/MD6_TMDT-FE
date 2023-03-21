@@ -59,12 +59,15 @@ export default function DataShop() {
     const stats = useSelector((state) => {
         return state.stats.sales
     });
+
+//////////////////////////////////////////////////////////////////////////////////
     let sale = 0 // lấy tổng doanh số
     if (stats.length !== 0) {
         for (let i = 0; i < stats.length; i++) {
             sale += stats[i].priceInCart * stats[i].quantityCart
         }
     }
+////////////////////////////////////////////////////////////////////////////////
     let outp = [...stats]; // tốp sản phẩm bán chạy
     if (stats.length > 0) {
         outp.sort(function (a, b) {
@@ -72,16 +75,89 @@ export default function DataShop() {
         })
         outp.slice(0, 3)
     }
-
-    let productQuantity = 0 //lấy tổng số sản phầm
-    if(stats.length !==0){
+/////////////////////////////////////////////////////////////////////////////
+    let allProductQuantity = 0 //lấy tổng số sản phầm
+    if (stats.length !== 0) {
         for (let i = 0; i < stats.length; i++) {
-            productQuantity += stats[i].quantityCart
+            allProductQuantity += stats[i].quantityCart
         }
     }
-    
+///////////////////////////////////////////////////
+    let category = []
+    let valueCategory = []
+    let quantityCategory = []
+    for (let i = 0; i < stats.length; i++) {
+        category.push(stats[i].nameCategory)
+        valueCategory.push(stats[i].priceInCart * stats[i].quantityCart)
+        quantityCategory.push(stats[i].quantityCart)
+    }
 
+    let indicesCategory = [...new Set(category)];
+    let indicesValueCategory = []
+    let indicesQuantityCategory = []
+    let temp1 = 0
+    let temp2 = 0
+    for (let i = 0; i < indicesCategory.length; i++) {
+        temp1 = 0
+        temp2 = 0
+        for (let j = 0; j < category.length; j++) {
+            if (category[j] === indicesCategory[i]) {
+                temp1 += valueCategory[j]
+                temp2 += quantityCategory[j]
+            }
+        }
+        indicesValueCategory.push(temp1)
+        indicesQuantityCategory.push(temp2)
+    }
+    let categoryStat = [];
+    for (let i = 0; i < indicesCategory.length; i++) {
+        categoryStat.push({
+                category: indicesCategory[i],
+                total: indicesValueCategory[i],
+                quantity: indicesQuantityCategory[i]
+            }
+        );
+    }
+    console.log(categoryStat)
+///////////////////////////////////////////////////////////////////////////////
+    let product = []
+    let valueProduct = []
+    let quantityProduct = []
+    for (let i = 0; i < stats.length; i++) {
+        product.push(stats[i].nameProduct)
+        valueProduct.push(stats[i].priceInCart * stats[i].quantityCart)
+        quantityProduct.push(stats[i].quantityCart)
+    }
 
+    let indicesProduct = [...new Set(product)];
+    let indicesValueProduct = []
+    let indicesQuantityProduct = []
+    let x = 0
+    let y = 0
+    for (let i = 0; i < indicesProduct.length; i++) {
+        x = 0
+        y = 0
+        for (let j = 0; j < product.length; j++) {
+            if (product[j] === indicesProduct[i]) {
+                x += valueProduct[j]
+                y += quantityProduct[j]
+            }
+        }
+        indicesValueProduct.push(x)
+        indicesQuantityProduct.push(y)
+    }
+    let productStat = [];
+    for (let i = 0; i < indicesProduct.length; i++) {
+        productStat.push({
+                product: indicesProduct[i],
+                total: indicesValueProduct[i],
+                quantity: indicesQuantityProduct[i]
+            }
+        );
+    }
+    console.log(productStat)
+
+////////////////////////////////////////////////////////////////////////////////////////
     function handleSubmit(values) {
         if (values.week !== '' && values.month !== '' && values.quarter !== '' && values.year !== '') {
             let queryString = `week=${values.week}&month=${values.month}&quarter=${values.quarter}&year=${values.year}`
@@ -247,7 +323,8 @@ export default function DataShop() {
                                             </div>
                                             <div className="col-12">
                                                 <div className="row">
-                                                    <div className="col-2" style={{marginTop: '24px', marginLeft: '24px'}}>
+                                                    <div className="col-2"
+                                                         style={{marginTop: '24px', marginLeft: '24px'}}>
                                                         <button type={'submit'} style={{
                                                             width: '241px',
                                                             height: '80px',
@@ -255,16 +332,22 @@ export default function DataShop() {
                                                             border: '1px gray solid',
                                                             borderRadius: '5px'
                                                         }}><span className="row">
-                                                    <span className="col-12" style={{marginTop: '-10px', marginLeft: '-50px'}}>
+                                                    <span className="col-12"
+                                                          style={{marginTop: '-10px', marginLeft: '-50px'}}>
                                                        Tổng Doanh số
                                                     </span>
-                                                     <div className="col-12" style={{marginTop: '5px', fontSize: '20px', color: 'rgb(238, 77, 45)'}}>
+                                                     <div className="col-12" style={{
+                                                         marginTop: '5px',
+                                                         fontSize: '20px',
+                                                         color: 'rgb(238, 77, 45)'
+                                                     }}>
                                                        đ {sale && formatCurrency(sale)}
                                                     </div>
                                                 </span>
                                                         </button>
                                                     </div>
-                                                    <div className="col-3" style={{marginTop: '24px', marginLeft: '100px'}}>
+                                                    <div className="col-3"
+                                                         style={{marginTop: '24px', marginLeft: '100px'}}>
                                                         <button type={'submit'} style={{
                                                             width: '241px',
                                                             height: '80px',
@@ -272,11 +355,16 @@ export default function DataShop() {
                                                             border: '1px gray solid',
                                                             borderRadius: '5px'
                                                         }}><span className="row">
-                                                    <span className="col-12" style={{marginTop: '-10px', marginLeft: '-50px'}}>
+                                                    <span className="col-12"
+                                                          style={{marginTop: '-10px', marginLeft: '-50px'}}>
                                                        Tổng đơn hàng
                                                     </span>
-                                                     <div className="col-12" style={{marginTop: '5px', fontSize: '20px', color: 'rgb(238, 77, 45)'}}>
-                                                       {productQuantity && formatCurrency(productQuantity)}
+                                                     <div className="col-12" style={{
+                                                         marginTop: '5px',
+                                                         fontSize: '20px',
+                                                         color: 'rgb(238, 77, 45)'
+                                                     }}>
+                                                       {allProductQuantity && formatCurrency(allProductQuantity)}
                                                     </div>
                                                 </span>
                                                         </button>
@@ -291,7 +379,7 @@ export default function DataShop() {
                                     </div>
                                 </div>
                             </div>
-                            <div ></div>
+                            <div></div>
                         </div>
                     </div>
                     <div className="col-12" style={{background: 'none', width: '100%', height: '20px'}}>
