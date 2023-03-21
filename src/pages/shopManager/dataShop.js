@@ -106,7 +106,9 @@ export default function DataShop() {
         );
     }
     console.log(categoryStat)
+
 ///////////////////////////////////////////////////////////////////////////////
+
     let product = []
     let valueProduct = []
     let quantityProduct = []
