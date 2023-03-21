@@ -460,6 +460,7 @@ input[type="radio"]{
     float: left;
     min-width: 200px;
     margin: 0px 0%;
+    border-radius: 10px;
 }
 
 .selectdiv3:after {
@@ -475,6 +476,7 @@ input[type="radio"]{
     border-bottom: 1px solid #999;
     position: absolute;
     pointer-events: none;
+
 }
 
 .selectdiv3 select {

@@ -6,19 +6,15 @@ export const sales = createAsyncThunk(
         const res = await customAxios.get(
             "cart-details/stats/sales?" + search
         );
-        // const searchParams = new URLSearchParams(search);
-
-        // let keyword = [];
-        // let keywordExist = false;
-        // for (const [key, value] of searchParams.entries()) {
-        //     if (key === "keyword") {
-        //         keywordExist = true;
-        //         keyword[0] = value;
-        //     }
-        // }
-        // if (keywordExist === false) keyword[0] = null;
-
-        // return { search: res.data, keyword: keyword, existUrl: search[0] };
-        return res.data
+        let totalProduct = [] //Tổng tiền của các sản phẩm đã bán
+        for (let i = 0; i < res.data.length; i++) {
+            totalProduct[i] = {
+                priceInCart : res.data[i].priceInCart,
+                quantityCart : res.data[i].quantityCart,
+                nameProduct:  res.data[i].nameProduct,
+                total: res.data[i].priceInCart * res.data[i].quantityCart
+            }
+        }
+        return totalProduct
     }
 );

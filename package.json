@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@devexpress/dx-react-chart": "^4.0.3",
     "@reduxjs/toolkit": "^1.9.3",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -46,6 +47,8 @@
     ]
   },
   "devDependencies": {
+    "@devexpress/dx-react-chart-material-ui": "^4.0.3",
+    "@mui/material": "^5.11.13",
     "@react-oauth/google": "^0.8.0",
     "chart.js": "^4.2.1",
     "faker": "^6.6.6",

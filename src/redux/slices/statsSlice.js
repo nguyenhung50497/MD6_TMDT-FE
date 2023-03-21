@@ -5,7 +5,6 @@ import {sales} from "../../service/statsService";
 
 const initialState = {
     sales: [],
-    loading: true,
 };
 
 const statsSlice = createSlice({
@@ -15,7 +14,6 @@ const statsSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(sales.fulfilled, (state, action) => {
             state.sales = action.payload;
-            state.loading = false
         });
 
     },
