@@ -4,6 +4,7 @@ import { Link, Outlet, useNavigate } from "react-router-dom";
 import { showProfile } from "../../service/userService";
 import { useEffect } from "react";
 import { findByIdUserShop } from "../../service/shopService";
+import Footer from "../../components/Footer";
 
 export default function AccountUser() {
    const dispatch = useDispatch();
@@ -322,6 +323,9 @@ export default function AccountUser() {
                   </div>
                   <div className="col-2" style={{ height: "600px" }}></div>
                </div>
+            </div>
+            <div className="col-12">
+               <Footer></Footer>
             </div>
          </div>
       </>
