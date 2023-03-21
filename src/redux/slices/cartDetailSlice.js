@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { addCartDetails, getCartDetails } from "../../service/cartDetailService";
+import { addCartDetails, getCartDetails, getCartDetailsById, getCartDetailsByUser } from "../../service/cartDetailService";
 
 const initialState = {
    cartDetails: [],
+   cartDetail: [],
 };
 
 const cartDetailSlice = createSlice({
@@ -15,6 +16,12 @@ const cartDetailSlice = createSlice({
       });
       builder.addCase(addCartDetails.fulfilled, (state, action) => {
          state.cartDetails.push(action.payload);
+      });
+      builder.addCase(getCartDetailsById.fulfilled, (state, action) => {
+         state.cartDetail = action.payload;
+      });
+      builder.addCase(getCartDetailsByUser.fulfilled, (state, action) => {
+         state.cartDetails = action.payload;
       });
    },
 });

@@ -21,6 +21,7 @@ import SearchProduct from "./pages/products/SearchProduct";
 import CartManager from "./pages/shopManager/cartManager";
 import ShopManager from "./pages/shopManager/shopManager";
 import DataShop from "./pages/shopManager/dataShop";
+import Cart from "./pages/users/cart";
 
 
 function App() {
@@ -33,7 +34,7 @@ function App() {
          <Route path={"register"} element={<Register />} />
          <Route path={""} element={<Home />}>
             <Route path={""} element={<ListProduct />}></Route>
-            <Route path={"search"} element={<SearchProduct/>} />
+            <Route path={"search"} element={<SearchProduct />} />
             <Route path="address" element={<Address />} />
             <Route path={"product-detail/:id"} element={<ProductDetail />} />
          </Route>
@@ -41,13 +42,16 @@ function App() {
          {user !== null ? (
             <>
                <Route path={""} element={<Home />}>
-                  <Route path={"create-product/:id"} element={<CreateProduct />}/>
+                  <Route
+                     path={"create-product/:id"}
+                     element={<CreateProduct />}
+                  />
                   <Route path={"edit-product/:id"} element={<EditProduct />} />
                </Route>
-               <Route path="shop-manager/:id" element={<ShopManager/>}>
-                   <Route path={''} element={<ProductManager/>}/>
-                   <Route path={'cart/:id'}  element={<CartManager/>}/>
-                   <Route path={'data/:id'} element={<DataShop/>}/>
+               <Route path="shop-manager/:id" element={<ShopManager />}>
+                  <Route path={""} element={<ProductManager />} />
+                  <Route path={"cart/:id"} element={<CartManager />} />
+                  <Route path={"data/:id"} element={<DataShop />} />
                </Route>
                <Route path={"account"} element={<AccountUser />}>
                   <Route path={""} element={<ProfileUser />} />
@@ -55,6 +59,7 @@ function App() {
                   <Route path={"password/:id"} element={<Password />} />
                   <Route path={"shop/:id"} element={<CreateShop />} />
                </Route>
+               <Route path={"cart"} element={<Cart />} />
             </>
          ) : (
             <>

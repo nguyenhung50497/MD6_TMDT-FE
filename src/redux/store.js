@@ -2,11 +2,11 @@ import productReducer from "./slices/productSlice";
 import categoryReducer from "./slices/categorySlice";
 import addressReducer from "./slices/addressSlice";
 import cartDetailReducer from "./slices/cartDetailSlice";
-import {configureStore} from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import shopReducer from "./shops/shopSlice";
 import transportReducer from "./transport/transportSlice";
 import userReducer from "./users/userSlice";
-import addressUserReducer from './address/addressSlice'
+import addressUserReducer from "./address/addressSlice";
 import cartReducer from "./cart/cartSlice";
 const store = configureStore({
    reducer: {
@@ -17,7 +17,7 @@ const store = configureStore({
       transports: transportReducer,
       address: addressReducer,
       addresses: addressUserReducer,
-        carts: cartReducer,
+      carts: cartReducer,
       cartDetails: cartDetailReducer,
    },
    middleware: (getDefaultMiddleware) =>
