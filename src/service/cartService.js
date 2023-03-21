@@ -58,7 +58,7 @@ export const searchByIdCart = createAsyncThunk(
 export const getDetailCart = createAsyncThunk(
    "carts/getDetailCart",
    async (data) => {
-      const res = await customAxios.get("carts/detail-cart/" + data);
+      const res = await customAxios.post("carts/detail-cart/"+data.idCart, data);
       return res.data;
    }
 );
@@ -75,7 +75,7 @@ export const orderStatusRefunds = createAsyncThunk(
       const res = await customAxios.get("carts/order-status-refunds/" + data);
       return res.data;
    }
-);
+)
 
 export const getCartByIdUser = createAsyncThunk(
    "carts/getCartByIdUser",

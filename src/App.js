@@ -14,13 +14,14 @@ import AddressUser from "./pages/users/addressUser";
 import Password from "./pages/users/password";
 import CreateShop from "./pages/shops/createShop";
 import ShopInterface from "./pages/shops/shopInterface";
-import ProductManager from "./pages/shopManager/productManager";
 import Address from "./pages/products/address";
 import React from "react";
 import SearchProduct from "./pages/products/SearchProduct";
+import Sales from "./pages/stats/sales";
 import CartManager from "./pages/shopManager/cartManager";
 import ShopManager from "./pages/shopManager/shopManager";
 import DataShop from "./pages/shopManager/dataShop";
+import ProductManager from "./pages/shopManager/productManager";
 import Cart from "./pages/users/cart";
 
 
@@ -37,6 +38,7 @@ function App() {
             <Route path={"search"} element={<SearchProduct />} />
             <Route path="address" element={<Address />} />
             <Route path={"product-detail/:id"} element={<ProductDetail />} />
+
          </Route>
          <Route path={"shopInterface/:id"} element={<ShopInterface />} />
          {user !== null ? (
@@ -48,10 +50,10 @@ function App() {
                   />
                   <Route path={"edit-product/:id"} element={<EditProduct />} />
                </Route>
-               <Route path="shop-manager/:id" element={<ShopManager />}>
-                  <Route path={""} element={<ProductManager />} />
-                  <Route path={"cart/:id"} element={<CartManager />} />
-                  <Route path={"data/:id"} element={<DataShop />} />
+               <Route path="shop-manager/:id" element={<ShopManager/>}>
+                   <Route path={''} element={<ProductManager/>}/>
+                   <Route path={'cart/:id'}  element={<CartManager/>}/>
+                   <Route path={'data/:id'} element={<DataShop/>}/>
                </Route>
                <Route path={"account"} element={<AccountUser />}>
                   <Route path={""} element={<ProfileUser />} />

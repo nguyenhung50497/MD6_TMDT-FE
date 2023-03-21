@@ -56,7 +56,7 @@ export default function ShopManager() {
                                     </Link>
                                 </div>
                                 <div className="col-12" style={{marginTop: '15px'}}>
-                                   <Link to={'data/'+id} style={{textDecoration: "none", color: 'gray'}}>
+                                   <Link to={'data'} style={{textDecoration: "none", color: 'gray'}}>
                                        <div className="row">
                                            <div className="col-1" style={{textAlign: 'right'}}>
                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"

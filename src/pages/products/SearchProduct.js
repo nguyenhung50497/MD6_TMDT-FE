@@ -9,6 +9,7 @@ import {
 import { getProducts, search } from "../../service/productService";
 import { Field, Form, Formik } from "formik";
 
+
 export default function SearchProduct() {
    const navigate = useNavigate();
    const dispatch = useDispatch();
@@ -20,7 +21,7 @@ export default function SearchProduct() {
          return state.products.search.totalPage;
       }
    });
-   let products = useSelector((state) => {
+   let products = useSelector(( state) => {
       return state.products.search.products;
    });
    const keyword = useSelector((state) => {

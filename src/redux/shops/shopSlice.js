@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {getAllTransport} from "../../service/transportService";
-import {findByIdUserShop} from "../../service/shopService";
+import {findByIdShop, findByIdUserShop} from "../../service/shopService";
 
 const initialState = {
     shop: {}
@@ -10,6 +10,9 @@ const shopSlice = createSlice({
     initialState,
     extraReducers: builder => {
         builder.addCase(findByIdUserShop.fulfilled, (state, action) => {
+            state.shop = action.payload
+        })
+        builder.addCase(findByIdShop.fulfilled, (state, action) => {
             state.shop = action.payload
         })
     }
