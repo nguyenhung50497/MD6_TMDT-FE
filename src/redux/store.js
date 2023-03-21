@@ -7,7 +7,7 @@ import shopReducer from "./shops/shopSlice";
 import transportReducer from "./transport/transportSlice";
 import userReducer from "./users/userSlice";
 import addressUserReducer from './address/addressSlice'
-
+import cartReducer from "./cart/cartSlice";
 const store = configureStore({
    reducer: {
       products: productReducer,
@@ -17,6 +17,7 @@ const store = configureStore({
       transports: transportReducer,
       address: addressReducer,
       addresses: addressUserReducer,
+        carts: cartReducer,
       cartDetails: cartDetailReducer,
    },
    middleware: (getDefaultMiddleware) =>
