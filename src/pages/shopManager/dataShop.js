@@ -1,32 +1,23 @@
 import React, {Component} from 'react';
-import {
-    ResponsiveContainer,
-    LineChart,
-    Line,
-    XAxis,
-    YAxis,
-    CartesianGrid,
-    Tooltip,
-    Legend,
-    PieChart,
-    Pie, Cell
-} from 'recharts';
-
+import {ResponsiveContainer, BarChart, Bar, XAxis, PieChart, Pie, Cell, YAxis} from 'recharts';
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
-import {
-    Link,
-    useLocation,
-    useNavigate,
-    useSearchParams,
-} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {Field, Form, Formik} from "formik";
 import {sales} from "../../service/statsService";
+
 
 export default function DataShop() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [queryStringAPI, setQueryStringAPI] = useState("");
+    const [check, setCheck] = useState(false)
+    const stats = useSelector((state) => {
+        if (state.stats.sales !== undefined) {
+            return state.stats.sales
+        }
+    });
+
     let demoUrl = 'https://codesandbox.io/s/pie-chart-with-customized-label-dlhhj';
     const formatCurrency = (price) => {
         var DecimalSeparator = Number("1.2").toLocaleString().substr(1, 1);
@@ -56,9 +47,6 @@ export default function DataShop() {
             </text>
         );
     };
-    const stats = useSelector((state) => {
-        return state.stats.sales
-    });
 
 //////////////////////////////////////////////////////////////////////////////////
     let sale = 0 // lấy tổng doanh số
@@ -67,13 +55,12 @@ export default function DataShop() {
             sale += stats[i].priceInCart * stats[i].quantityCart
         }
     }
-////////////////////////////////////////////////////////////////////////////////
     let outp = [...stats]; // tốp sản phẩm bán chạy
     if (stats.length > 0) {
         outp.sort(function (a, b) {
             return b.quantityCart - a.quantityCart
         })
-        outp.slice(0, 3)
+        outp.splice(5)
     }
 /////////////////////////////////////////////////////////////////////////////
     let allProductQuantity = 0 //lấy tổng số sản phầm
@@ -331,7 +318,7 @@ export default function DataShop() {
                                                             background: 'none',
                                                             border: '1px gray solid',
                                                             borderRadius: '5px'
-                                                        }}><span className="row">
+                                                        }} onClick={() => setCheck(false)}><span className="row">
                                                     <span className="col-12"
                                                           style={{marginTop: '-10px', marginLeft: '-50px'}}>
                                                        Tổng Doanh số
@@ -354,7 +341,7 @@ export default function DataShop() {
                                                             background: 'none',
                                                             border: '1px gray solid',
                                                             borderRadius: '5px'
-                                                        }}><span className="row">
+                                                        }} onClick={() => setCheck(true)}><span className="row">
                                                     <span className="col-12"
                                                           style={{marginTop: '-10px', marginLeft: '-50px'}}>
                                                        Tổng đơn hàng
@@ -374,12 +361,70 @@ export default function DataShop() {
                                             <div className="col-12"></div>
                                         </div>
                                     </div>
-                                    <div className="col-12" style={{width: '100%', height: '300px'}}>
-
+                                    <div className="col-12" style={{height: '300px'}}>
+                                        {check === false ?
+                                            <>
+                                                <ResponsiveContainer width='90%' aspect={3}>
+                                                    <BarChart data={stats} width={600} height={600}>
+                                                        <XAxis dataKey='nameProduct'/>
+                                                        <YAxis/>
+                                                        <Bar dataKey='total' fill='#8883d8'/>
+                                                    </BarChart>
+                                                </ResponsiveContainer>
+                                            </>
+                                            :
+                                            <>
+                                                <ResponsiveContainer width='90%' aspect={3}>
+                                                    <BarChart data={stats} width={600} height={600}>
+                                                        <XAxis dataKey='nameProduct'/>
+                                                        <YAxis/>
+                                                        <Bar dataKey='quantityCart' fill='#8883d8'/>
+                                                    </BarChart>
+                                                </ResponsiveContainer>
+                                            </>
+                                        }
                                     </div>
                                 </div>
                             </div>
-                            <div></div>
+                            <div style={{width: '1%', height: '500px', background: 'none'}}></div>
+                            <div className="bg-light" style={{width: '39%', height: '500px'}}>
+                                <div className="col-12" style={{padding: '10px'}}>
+                                    <div className="row">
+                                        <div className="col-12" style={{
+                                            textAlign: 'center',
+                                            marginBottom: '10px',
+                                            color: 'rgb(238, 77, 45)'
+                                        }}>
+                                            <h2>Top sản phẩm bán chạy</h2>
+                                        </div>
+                                        <div className="col-12">
+                                            <table className="table table" style={{width: '100%', height: '400px'}}>
+                                                <thead>
+                                                <tr style={{
+                                                    backgroundColor: 'rgb(238, 77, 45)',
+                                                    color: 'white',
+                                                    fontSize: '20px'
+                                                }}>
+                                                    <th scope="col">Tên sản phẩm</th>
+                                                    <th scope="col">Số lượt</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {outp && outp.map(item => (
+                                                    <>
+
+                                                        <tr style={{fontSize: '18px'}}>
+                                                            <td>{item.nameProduct}</td>
+                                                            <td>{item.quantityCart}</td>
+                                                        </tr>
+                                                    </>
+                                                ))}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div className="col-12" style={{background: 'none', width: '100%', height: '20px'}}>
