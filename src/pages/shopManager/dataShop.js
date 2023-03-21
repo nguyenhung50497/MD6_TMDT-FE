@@ -9,12 +9,10 @@ import {sales} from "../../service/statsService";
 
 export default function DataShop() {
     let {id} = useParams()
-
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [queryStringAPI, setQueryStringAPI] = useState("");
     const [check, setCheck] = useState(false)
-
     const cartDetail = useSelector((state) => {
         if (state.stats.sales !== undefined) {
             return state.stats.sales
