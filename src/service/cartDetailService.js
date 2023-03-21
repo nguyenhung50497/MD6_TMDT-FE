@@ -24,8 +24,8 @@ export const getCartDetailsById = createAsyncThunk(
 );
 export const getCartDetailsByUser = createAsyncThunk(
    "cartDetails/getCartDetailsByUser",
-   async () => {
-      const res = await customAxios.get("cart-details/find-by-user");
+   async (data) => {
+      const res = await customAxios.get("cart-details/find-by-user/"+data);
       return res.data;
    }
 );

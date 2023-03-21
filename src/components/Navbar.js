@@ -243,7 +243,14 @@ export default function Navbar() {
                                                    }}>
                                                    Tài khoản của tôi
                                                 </Link>
-                                                <Link to={"/cart"} className="btn">Giỏ hàng</Link>
+                                                <a
+                                                   className="btn"
+                                                   onClick={() => {
+                                                      navigate("/cart");
+                                                      window.location.reload();
+                                                   }}>
+                                                   Giỏ hàng
+                                                </a>
                                                 <a
                                                    className="btn"
                                                    onClick={() => logOut()}>

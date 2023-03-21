@@ -9,6 +9,7 @@ import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import { Field } from "formik";
 import swal from "sweetalert";
+import { getCartByIdUser, payCart } from "../../service/cartService";
 
 export default function Cart() {
    const dispatch = useDispatch();
@@ -26,6 +27,11 @@ export default function Cart() {
          return state.users.users;
       }
    });
+   const cart = useSelector((state) => {
+      if (state.carts.cart) {
+         return state.carts.cart;
+      }
+   });
    const cartDetails = useSelector((state) => {
       if (state.cartDetails.cartDetails) {
          return state.cartDetails.cartDetails;
@@ -34,11 +40,16 @@ export default function Cart() {
    let sum = 0;
    if (cartDetails) {
       for (let i of cartDetails) {
-         sum += i.priceInCart * i.quantityCart;
+         if (i.statusCart === "chưa thanh toán") {
+            sum += i.priceInCart * i.quantityCart;
+         }
       }
    }
    useEffect(() => {
-      dispatch(getCartDetailsByUser());
+      dispatch(getCartByIdUser(user.idUser));
+   }, []);
+   useEffect(() => {
+      dispatch(getCartDetailsByUser(user.idUser));
    }, []);
    return (
       <div className="row">
@@ -143,38 +154,48 @@ export default function Cart() {
                                           </span>
                                        </div>
                                        <div className="col-1 text-center">
-                                          <a
-                                             className="btn"
-                                             onClick={() => {
-                                                swal({
-                                                   title: "Bạn có chắc chắn?",
-                                                   text: "Bạn sẽ xoá sản phẩm đã chọn!",
-                                                   icon: "warning",
-                                                   buttons: true,
-                                                   dangerMode: true,
-                                                }).then((willDelete) => {
-                                                   if (willDelete) {
-                                                      dispatch(
-                                                         deleteCartDetails(
-                                                            item.idCartDetail
-                                                         )
-                                                      ).then(() => {
+                                          {item.statusCart ===
+                                             "chưa thanh toán" && (
+                                             <a
+                                                className="btn"
+                                                onClick={() => {
+                                                   swal({
+                                                      title: "Bạn có chắc chắn?",
+                                                      text: "Bạn sẽ xoá sản phẩm đã chọn!",
+                                                      icon: "warning",
+                                                      buttons: true,
+                                                      dangerMode: true,
+                                                   }).then((willDelete) => {
+                                                      if (willDelete) {
                                                          dispatch(
-                                                            getCartDetailsByUser()
+                                                            deleteCartDetails(
+                                                               item.idCartDetail
+                                                            )
                                                          ).then(() => {
-                                                            navigate("/cart");
+                                                            dispatch(
+                                                               getCartDetailsByUser(
+                                                                  user.idUser
+                                                               )
+                                                            ).then(() => {
+                                                               navigate(
+                                                                  "/cart"
+                                                               );
+                                                            });
                                                          });
-                                                      });
-                                                      swal("Xoá thành công!", {
-                                                         icon: "success",
-                                                      });
-                                                   } else {
-                                                      swal("Đã huỷ xoá!");
-                                                   }
-                                                });
-                                             }}>
-                                             Xoá
-                                          </a>
+                                                         swal(
+                                                            "Xoá thành công!",
+                                                            {
+                                                               icon: "success",
+                                                            }
+                                                         );
+                                                      } else {
+                                                         swal("Đã huỷ xoá!");
+                                                      }
+                                                   });
+                                                }}>
+                                                Xoá
+                                             </a>
+                                          )}
                                        </div>
                                     </div>
                                  </div>
@@ -209,8 +230,16 @@ export default function Cart() {
                                  </span>
                               </div>
                               <div className="col-4">
-                                 <button className="muaHang w-100">
-                                    Mua Hàng
+                                 <button
+                                    className="muaHang w-100"
+                                    onClick={() => {
+                                       swal("Thanh toán thành công!");
+                                       dispatch(
+                                          payCart([cart.idCart, user.idUser])
+                                       );
+                                       navigate("/cart");
+                                    }}>
+                                    Thanh Toán
                                  </button>
                               </div>
                            </div>
