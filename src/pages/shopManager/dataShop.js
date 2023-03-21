@@ -25,7 +25,6 @@ export default function DataShop() {
         }
     }
 
-
     let demoUrl = 'https://codesandbox.io/s/pie-chart-with-customized-label-dlhhj';
     const formatCurrency = (price) => {
         var DecimalSeparator = Number("1.2").toLocaleString().substr(1, 1);
@@ -70,7 +69,7 @@ export default function DataShop() {
             allProductQuantity += stats[i].quantityCart
         }
     }
-///////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////
     let category = []
     let valueCategory = []
     let quantityCategory = []
