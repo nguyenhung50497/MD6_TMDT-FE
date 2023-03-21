@@ -8,7 +8,7 @@ import {
 import Navbar from "../../components/Navbar";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { findByIdUserShop } from "../../service/shopService";
+import {findByIdShop, findByIdUserShop} from "../../service/shopService";
 import Footer from "../../components/Footer";
 import { getProductByIdShop } from "../../service/productService";
 
@@ -26,7 +26,6 @@ export default function ShopInterface() {
    });
    const shop = useSelector((state) => {
       if (state !== undefined) {
-         console.log(state.shops)
          return state.shops.shop;
       }
    });
@@ -48,7 +47,7 @@ export default function ShopInterface() {
       return intPart;
    };
    useEffect(() => {
-      dispatch(findByIdUserShop(id));
+      dispatch(findByIdShop(id));
       window.scrollTo({top: 0, left: 0, behavior: "smooth"})
    }, []);
    useEffect(() => {
@@ -87,10 +86,7 @@ export default function ShopInterface() {
                                              paddingLeft: "24px",
                                           }}>
                                           <img
-                                             src={
-                                                shop !== undefined &&
-                                                shop.imageShop
-                                             }
+                                             src={shop && shop.imageShop}
                                              alt=""
                                              width={"72px"}
                                              height={"72px"}
@@ -111,7 +107,7 @@ export default function ShopInterface() {
                                                    paddingTop: "15px",
                                                 }}>
                                                 <p>
-                                                   <b>{shop.nameShop}</b>
+                                                   <b>{shop && shop.nameShop}</b>
                                                 </p>
                                              </div>
                                              <div
@@ -125,7 +121,7 @@ export default function ShopInterface() {
                                                 <p>
                                                    <b>
                                                       Địa chỉ:{" "}
-                                                      {shop.addressShop}
+                                                      {shop && shop.addressShop}
                                                    </b>
                                                 </p>
                                              </div>
@@ -133,7 +129,7 @@ export default function ShopInterface() {
                                        </div>
                                     </div>
                                  </div>
-                                 {shop !== undefined &&
+                                 {shop &&
                                  shop.idUser !== idUser ? (
                                     <>
                                        <div className="col-12">
@@ -172,7 +168,7 @@ export default function ShopInterface() {
                                              </div>
                                              <div className="col-6">
                                                 <Link
-                                                   to={`/shop-manager/${id}`}>
+                                                   to={'/shop-manager/'+id}>
                                                    <button
                                                       type={"button"}
                                                       className={
@@ -409,7 +405,7 @@ export default function ShopInterface() {
                   <strong className="text-danger">Sản Phẩm</strong>
                </div>
                <div className="row m-0 p-0">
-                  {products !== undefined &&
+                  {products &&
                      products.map((item, key) => (
                         <>
                            <div

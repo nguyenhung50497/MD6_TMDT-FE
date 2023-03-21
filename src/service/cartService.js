@@ -46,7 +46,7 @@ export const searchByIdCart = createAsyncThunk (
 export const getDetailCart = createAsyncThunk (
     "carts/getDetailCart",
     async (data) => {
-        const res = await customAxios.get("carts/detail-cart/" + data);
+        const res = await customAxios.post("carts/detail-cart/"+data.idCart, data);
         return res.data;
     }
 )
