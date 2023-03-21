@@ -24,8 +24,6 @@ export default function DataShop() {
             stats.push(cartDetail[i])
         }
     }
-
-
     let demoUrl = 'https://codesandbox.io/s/pie-chart-with-customized-label-dlhhj';
     const formatCurrency = (price) => {
         var DecimalSeparator = Number("1.2").toLocaleString().substr(1, 1);
@@ -35,7 +33,6 @@ export default function DataShop() {
         var decPart = arParts.length > 1 ? arParts[1] : "";
         return intPart;
     };
-
     const RADIAN = Math.PI / 180;
     const renderCustomizedLabel = ({cx, cy, midAngle, innerRadius, outerRadius, percent, index}) => {
         const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
@@ -48,7 +45,6 @@ export default function DataShop() {
             </text>
         );
     };
-
 //////////////////////////////////////////////////////////////////////////////////
     let sale = 0 // lấy tổng doanh số
     if (stats.length !== 0) {
