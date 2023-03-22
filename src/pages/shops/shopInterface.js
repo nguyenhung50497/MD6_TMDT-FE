@@ -107,7 +107,9 @@ export default function ShopInterface() {
                                                    paddingTop: "15px",
                                                 }}>
                                                 <p>
-                                                   <b>{shop && shop.nameShop}</b>
+                                                   <b>
+                                                      {shop && shop.nameShop}
+                                                   </b>
                                                 </p>
                                              </div>
                                              <div
@@ -116,7 +118,7 @@ export default function ShopInterface() {
                                                    color: "white",
                                                    paddingLeft: "34px",
                                                    marginTop: "-15px",
-                                                   fontSize: '12px'
+                                                   fontSize: "12px",
                                                 }}>
                                                 <p>
                                                    <b>
@@ -129,8 +131,7 @@ export default function ShopInterface() {
                                        </div>
                                     </div>
                                  </div>
-                                 {shop &&
-                                 shop.idUser !== idUser ? (
+                                 {shop && shop.idUser !== idUser ? (
                                     <>
                                        <div className="col-12">
                                           <div className="row">
@@ -168,7 +169,7 @@ export default function ShopInterface() {
                                              </div>
                                              <div className="col-6">
                                                 <Link
-                                                   to={'/shop-manager/'+id}>
+                                                   to={"/shop-manager/" + id}>
                                                    <button
                                                       type={"button"}
                                                       className={
@@ -577,8 +578,10 @@ export default function ShopInterface() {
                </div>
             </div>
             <div className="col-2"></div>
+            <div className="col-12">
+               <Footer></Footer>
+            </div>
          </div>
-         <Footer></Footer>
       </>
    );
 }

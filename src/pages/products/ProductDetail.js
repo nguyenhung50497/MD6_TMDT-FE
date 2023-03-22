@@ -3,6 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getProductById } from "../../service/productService";
 import { Field, Form, Formik } from "formik";
+import {
+   addCartDetails,
+   getCartDetails,
+   getCartDetailsByUser,
+} from "../../service/cartDetailService";
+import swal from "sweetalert";
+import { getCartByIdUser } from "../../service/cartService";
 
 export default function ProductDetail() {
    const { id } = useParams();
@@ -11,6 +18,15 @@ export default function ProductDetail() {
    const product = useSelector((state) => {
       if (state.products.product) {
          return state.products.product;
+      }
+   });
+
+   const user = useSelector((state) => {
+      return state.users.users;
+   });
+   const cart = useSelector((state) => {
+      if (state.carts.cart) {
+         return state.carts.cart;
       }
    });
 
@@ -24,16 +40,40 @@ export default function ProductDetail() {
    };
 
    const handleAddToCart = (values) => {
-      let data = {
-         ...values,
-         idProduct: product.idProduct,
-         priceInCart: product.price,
-      };
-      console.log(data);
+      if (cart) {
+         let data = {
+            ...values,
+            idCart: cart.idCart,
+            idProduct: product.idProduct,
+            priceInCart: product.price,
+         };
+         swal("Thêm vào giỏ hàng thành công!");
+         dispatch(addCartDetails(data)).then(() => {
+            dispatch(getCartDetailsByUser(user.idUser)).then(() => {
+               navigate(`/product-detail/${id}`);
+            });
+         });
+      }
+   };
+
+   const handleFastBuy = (values) => {
+      if (cart) {
+         let data = {
+            ...values,
+            idCart: cart.idCart,
+            idProduct: product.idProduct,
+            priceInCart: product.price,
+         };
+         // dispatch(addCartDetails(data));
+         // dispatch(getCartDetails());
+      }
    };
 
    useEffect(() => {
       dispatch(getProductById(id));
+   }, []);
+   useEffect(() => {
+      dispatch(getCartByIdUser(user.idUser));
    }, []);
    return (
       <div className="container-fluid row mt-3 mb-3">
@@ -212,46 +252,47 @@ export default function ProductDetail() {
                         </div>
                      </div>
                   </div>
-                  <Formik
-                     initialValues={{
-                        quantityCart: 1,
-                        idCart: 1,
-                        timeCartDetail: new Date().toLocaleDateString(),
-                     }}
-                     onSubmit={(values) => {
-                        handleAddToCart(values);
-                     }}>
-                     <Form>
-                        <div className="row mb-5">
-                           <div className="col-3 text-secondary pl-5">
-                              <span>Số Lượng</span>
+                  {product.idUser !== user.idUser && (
+                     <Formik
+                        initialValues={{
+                           quantityCart: 1,
+                           timeCartDetail: new Date().toLocaleDateString(),
+                        }}
+                        onSubmit={(values) => {
+                           handleAddToCart(values);
+                        }}>
+                        <Form>
+                           <div className="row mb-5">
+                              <div className="col-3 text-secondary pl-5">
+                                 <span>Số Lượng</span>
+                              </div>
+                              <div className="col-3 text-secondary pl-0">
+                                 <Field
+                                    className="text-center"
+                                    type="number"
+                                    name={"quantityCart"}
+                                    style={{ width: "80%" }}
+                                 />
+                              </div>
+                              <div className="col-6 text-secondary pl-0">
+                                 <span>{product.quantity} sản phẩm có sẵn</span>
+                              </div>
                            </div>
-                           <div className="col-3 text-secondary pl-0">
-                              <Field
-                                 className="text-center"
-                                 type="number"
-                                 name={"quantityCart"}
-                                 style={{ width: "80%" }}
-                              />
+                           <div className="row">
+                              <div className="col-4 pl-5">
+                                 <button className="themGioHang" type="submit">
+                                    Thêm Vào Giỏ Hàng
+                                 </button>
+                              </div>
+                              <div className="col-8 pl-0">
+                                 <button className="muaHang" type="button">
+                                    Mua Ngay
+                                 </button>
+                              </div>
                            </div>
-                           <div className="col-6 text-secondary pl-0">
-                              <span>{product.quantity} sản phẩm có sẵn</span>
-                           </div>
-                        </div>
-                        <div className="row">
-                           <div className="col-4 pl-5">
-                              <button className="themGioHang" type="submit">
-                                 Thêm Vào Giỏ Hàng
-                              </button>
-                           </div>
-                           <div className="col-8 pl-0">
-                              <button className="muaHang" type="button">
-                                 Mua Ngay
-                              </button>
-                           </div>
-                        </div>
-                     </Form>
-                  </Formik>
+                        </Form>
+                     </Formik>
+                  )}
                </div>
             </div>
             <div className="bg-light p-4 pl-5" style={{ height: "125px" }}>

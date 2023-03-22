@@ -1,6 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {
     getAllCartShop,
+    getCartByIdUser,
     getCartByStatus,
     getDetailCart, searchByCategory,
     searchByIdCart,
@@ -10,7 +11,8 @@ import {
 
 const initialState = {
     carts: [],
-    detailCart: []
+    detailCart: [],
+    cart: {}
 }
 const cartSlice = createSlice({
     name: 'carts',
@@ -37,6 +39,9 @@ const cartSlice = createSlice({
         builder.addCase(getDetailCart.fulfilled,(state, action) => {
             state.detailCart = action.payload
         })
+        builder.addCase(getCartByIdUser.fulfilled, (state, action) => {
+           state.cart = action.payload;
+        });
     }
 })
 export default cartSlice.reducer;

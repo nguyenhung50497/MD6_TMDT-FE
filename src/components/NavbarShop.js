@@ -163,7 +163,10 @@ export default function NavbarShop() {
                                                 </Link>
                                                 <a
                                                    className="btn"
-                                                   type={"submit"}>
+                                                   onClick={() => {
+                                                      navigate("/cart");
+                                                      window.location.reload();
+                                                   }}>
                                                    Giỏ hàng
                                                 </a>
                                                 <a
