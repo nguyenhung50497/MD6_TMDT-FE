@@ -316,7 +316,7 @@ export default function Cart() {
                                                       }
                                                    });
                                                 }}>
-                                                Xoá
+                                                Huỷ
                                              </a>
                                           )}
                                        </div>
@@ -362,10 +362,52 @@ export default function Cart() {
                                           swal("Thanh toán thành công!");
                                           dispatch(
                                              payCart([cart.idCart, user.idUser])
-                                          );
-                                          navigate("/cart");
+                                          ).then(() => {
+                                             dispatch(
+                                                getCartDetailsByStatus(
+                                                   "chờ xác nhận"
+                                                )
+                                             ).then(() => {
+                                                navigate("/cart");
+                                             });
+                                          });
                                        }}>
                                        Thanh Toán
+                                    </button>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  )}
+                  {status === "đang xử lý" && (
+                     <div
+                        className="col-12 bg-light"
+                        style={{ height: "80px" }}>
+                        <div className="row p-3">
+                           <div className="col-6"></div>
+                           <div className="col-6">
+                              <div className="row">
+                                 <div className="col-8 pt-2">
+                                 </div>
+                                 <div className="col-4">
+                                    <button
+                                       className="muaHang w-100"
+                                       onClick={() => {
+                                          swal("Thanh toán thành công!");
+                                          dispatch(
+                                             
+                                          ).then(() => {
+                                             dispatch(
+                                                getCartDetailsByStatus(
+                                                   "chờ xác nhận"
+                                                )
+                                             ).then(() => {
+                                                navigate("/cart");
+                                             });
+                                          });
+                                       }}>
+                                       Đã nhận hàng
                                     </button>
                                  </div>
                               </div>
