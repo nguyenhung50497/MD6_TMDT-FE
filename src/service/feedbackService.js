@@ -6,7 +6,7 @@ import customAxios from "./api";
 export const getFeedbacksByIdProduct = createAsyncThunk(
     "feedbacks/getFeedbacks",
     async (data) => {
-        const res = await customAxios.get("feedbackUser"+ data.idProduct + + "?page=" + data.page);
+        const res = await customAxios.get("feedbackUser/"+ data);
         return res.data;
     }
 );
