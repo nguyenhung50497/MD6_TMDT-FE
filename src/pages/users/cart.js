@@ -9,7 +9,13 @@ import {
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import swal from "sweetalert";
-import { getCartByIdUser, payCart } from "../../service/cartService";
+import {
+   getCartByIdUser,
+   getCartByIdUserDone,
+   payCart,
+   updateCart,
+} from "../../service/cartService";
+import { getAllAddress } from "../../service/addressUser";
 
 export default function Cart() {
    const dispatch = useDispatch();
@@ -23,14 +29,25 @@ export default function Cart() {
       var decPart = arParts.length > 1 ? arParts[1] : "";
       return intPart;
    };
+   const [addressCart, setAddressCart] = useState(0);
    const user = useSelector((state) => {
       if (state.users.users) {
          return state.users.users;
       }
    });
+   const address = useSelector((state) => {
+      if (state !== undefined) {
+         return state.addresses.listAddress;
+      }
+   });
    const cart = useSelector((state) => {
       if (state.carts.cart) {
          return state.carts.cart;
+      }
+   });
+   const cartDone = useSelector((state) => {
+      if (state.carts.cartDone) {
+         return state.carts.cartDone;
       }
    });
    const cartDetails = useSelector((state) => {
@@ -50,7 +67,15 @@ export default function Cart() {
       dispatch(getCartByIdUser(user.idUser));
    }, []);
    useEffect(() => {
+      dispatch(getCartByIdUserDone(user.idUser));
+   }, []);
+   useEffect(() => {
       dispatch(getCartDetailsByStatus("chưa thanh toán"));
+   }, []);
+   useEffect(() => {
+      dispatch(getAllAddress(user.idUser)).then((e) => {
+         setAddressCart(e.payload[0].idAddress);
+      });
    }, []);
    return (
       <div className="row">
@@ -236,16 +261,15 @@ export default function Cart() {
                                                             quantityCart:
                                                                +e.target.value,
                                                          })
-                                                      );
-                                                      // .then(() => {
-                                                      //    dispatch(
-                                                      //       getCartDetailsByStatus(
-                                                      //          "chưa thanh toán"
-                                                      //       )
-                                                      //    ).then(() => {
-                                                      //       navigate("/cart");
-                                                      //    });
-                                                      // });
+                                                      ).then(() => {
+                                                         dispatch(
+                                                            getCartDetailsByStatus(
+                                                               "chưa thanh toán"
+                                                            )
+                                                         ).then(() => {
+                                                            navigate("/cart");
+                                                         });
+                                                      });
                                                    }
                                                 }}
                                              />
@@ -326,12 +350,30 @@ export default function Cart() {
                            </div>
                         </>
                      ))}
-                  {status === "chưa thanh toán" && (
+                  {status === "chưa thanh toán" && cartDetails.length > 0 && (
                      <div
                         className="col-12 bg-light"
                         style={{ height: "80px" }}>
                         <div className="row p-3">
-                           <div className="col-6"></div>
+                           <div className="col-6 pt-3 pl-5">
+                              <div>
+                                 <select
+                                    onChange={(e) => {
+                                       setAddressCart(e.target.value);
+                                    }}>
+                                    {address &&
+                                       address.map((item, key) => (
+                                          <>
+                                             <option value={item.idAddress}>
+                                                {item.province} -{" "}
+                                                {item.district} -{" "}
+                                                {item.descriptionAddress}
+                                             </option>
+                                          </>
+                                       ))}
+                                 </select>
+                              </div>
+                           </div>
                            <div className="col-6">
                               <div className="row">
                                  <div
@@ -360,8 +402,9 @@ export default function Cart() {
                                        className="muaHang w-100"
                                        onClick={() => {
                                           swal("Thanh toán thành công!");
+                                          setStatus("chờ xác nhận");
                                           dispatch(
-                                             payCart([cart.idCart, user.idUser])
+                                             payCart({idCart: cart.idCart, idAddress: addressCart})
                                           ).then(() => {
                                              dispatch(
                                                 getCartDetailsByStatus(
@@ -380,7 +423,7 @@ export default function Cart() {
                         </div>
                      </div>
                   )}
-                  {status === "đang xử lý" && (
+                  {status === "đang xử lý" && cartDetails.length > 0 && (
                      <div
                         className="col-12 bg-light"
                         style={{ height: "80px" }}>
@@ -388,19 +431,24 @@ export default function Cart() {
                            <div className="col-6"></div>
                            <div className="col-6">
                               <div className="row">
-                                 <div className="col-8 pt-2">
-                                 </div>
+                                 <div className="col-8 pt-2"></div>
                                  <div className="col-4">
                                     <button
                                        className="muaHang w-100"
                                        onClick={() => {
                                           swal("Thanh toán thành công!");
                                           dispatch(
-                                             
+                                             updateCart([
+                                                {
+                                                   idCart: cartDone.idCart,
+                                                   statusCart: "hoàn thành",
+                                                },
+                                                user.idUser,
+                                             ])
                                           ).then(() => {
                                              dispatch(
                                                 getCartDetailsByStatus(
-                                                   "chờ xác nhận"
+                                                   "hoàn thành"
                                                 )
                                              ).then(() => {
                                                 navigate("/cart");
