@@ -23,6 +23,7 @@ import ShopManager from "./pages/shopManager/shopManager";
 import DataShop from "./pages/shopManager/dataShop";
 import ProductManager from "./pages/shopManager/productManager";
 import Cart from "./pages/users/cart";
+import EditShop from "./pages/shops/editShop";
 
 
 function App() {
@@ -60,6 +61,7 @@ function App() {
                   <Route path={"address/:id"} element={<AddressUser />} />
                   <Route path={"password/:id"} element={<Password />} />
                   <Route path={"shop/:id"} element={<CreateShop />} />
+                  <Route path={"edit-shop/:id"} element={<EditShop />} />
                </Route>
                <Route path={"cart"} element={<Cart />} />
             </>

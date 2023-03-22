@@ -21,3 +21,8 @@ export const findByIdShop = createAsyncThunk (
         return res.data;
     }
 )
+
+export const editShop = createAsyncThunk("shops/editShop", async (data) => {
+   const res = await customAxios.put("shops/" + data.idShop, data);
+   return res.data;
+});
