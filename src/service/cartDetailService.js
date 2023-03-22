@@ -51,9 +51,7 @@ export const deleteCartDetails = createAsyncThunk(
 export const getCartDetailsByStatus = createAsyncThunk(
    "cartDetails/getCartDetailsByStatus",
    async (data) => {
-      const res = await customAxios.get(
-         "cart-details/find-by-status?status=" + data
-      );
+      const res = await customAxios.get("cart-details/find-by-status?status=" + data);
       return res.data;
    }
 );
