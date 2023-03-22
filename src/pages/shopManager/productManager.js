@@ -193,8 +193,8 @@ export default function ProductManager() {
                                                    }}
                                                    onClick={() => {
                                                       swal({
-                                                         title: "Are you sure?",
-                                                         text: "Once deleted, you will not be able to recover this imaginary file!",
+                                                         title: "Bạn có chắc chắn?",
+                                                         text: "Xoá sản phẩm này",
                                                          icon: "warning",
                                                          buttons: true,
                                                          dangerMode: true,
@@ -220,14 +220,14 @@ export default function ProductManager() {
                                                                });
                                                             });
                                                             swal(
-                                                               "Poof! Your imaginary file has been deleted!",
+                                                               "Sản phẩm đã được xoá!",
                                                                {
                                                                   icon: "success",
                                                                }
                                                             );
                                                          } else {
                                                             swal(
-                                                               "Your imaginary file is safe!"
+                                                               "Đã huỷ xoá!"
                                                             );
                                                          }
                                                       });
