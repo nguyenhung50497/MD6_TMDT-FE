@@ -15,9 +15,11 @@ export default function DataShop() {
     const [month, setMonth] = useState("");
     const [week, setWeek] = useState("");
     const [queryStringAPI, setQueryStringAPI] = useState("");
+    const [productByCategory, setProductByCategory] = useState([])
+    const [productDetail, setProductDetail] = useState([])
     const [check, setCheck] = useState(false);
     const handleAll = (values) => {
-        console.log(values)
+
     }
     const cartDetail = useSelector((state) => {
         if (state.stats.sales !== undefined) {
@@ -78,7 +80,7 @@ export default function DataShop() {
             allProductQuantity += stats[i].quantityCart;
         }
     }
-    ///////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////
     let category = [];
     let valueCategory = [];
     let quantityCategory = [];
@@ -114,6 +116,7 @@ export default function DataShop() {
             }
         );
     }
+    //////////////////////////////////////////////////////////////////////////////////
     const COLORS = [];
     const getRandomIntInclusive = (min, max) => {
         return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -136,17 +139,21 @@ export default function DataShop() {
     let product = [];
     let valueProduct = [];
     let quantityProduct = [];
+    let categoryProduct = []
     for (let i = 0; i < stats.length; i++) {
         product.push(stats[i].nameProduct);
         valueProduct.push(stats[i].priceInCart * stats[i].quantityCart);
-        quantityProduct.push(stats[i].quantityCart);
+        quantityProduct.push(stats[i].quantityCart)
+        categoryProduct.push(stats[i].nameCategory);
     }
 
     let indicesProduct = [...new Set(product)];
     let indicesValueProduct = [];
     let indicesQuantityProduct = [];
+    let indicesCategoryProduct = [...new Set(categoryProduct)]
     let x = 0;
     let y = 0;
+
     for (let i = 0; i < indicesProduct.length; i++) {
         x = 0;
         y = 0;
@@ -165,9 +172,9 @@ export default function DataShop() {
             product: indicesProduct[i],
             total: indicesValueProduct[i],
             quantity: indicesQuantityProduct[i],
+            category: indicesCategoryProduct[i]
         });
     }
-
     ////////////////////////////////////////////////////////////////////////////////////////
     function handleSubmit() {
         if (
@@ -206,17 +213,41 @@ export default function DataShop() {
             let queryString = `year=${year}`;
             setQueryStringAPI(queryString);
         }
-        if (
-            week === "" &&
-            month === "" &&
-            quarter === "" &&
-            year === ""
-        ) {
+        if ((week === "" && month === "" && quarter === "" && year === "") ||
+            (week !== "" && month !== "" && quarter !== "" && year === "")||
+            (week !== "" && month !== "" && quarter === "" && year === "") ||
+            (week !== "" && month === "" && quarter === "" && year === "") ){
             let queryString = undefined;
             setQueryStringAPI(queryString);
         }
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////
+    let productCategory = []
+    function handleChange(value){
+        for (let i = 0; i < productStat.length; i++) {
+            if(productStat[i].category === value){
+                productCategory.push(productStat[i])
+            }
+        }
+        setProductByCategory(productCategory)
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////
+    let products = []
+    function handleProduct(value) {
+        console.log(value)
+
+        for (let i = 0; i < stats.length; i++) {
+            if(stats[i].nameProduct === value){
+                products.push(stats[i])
+            }
+        }
+        setProductDetail(products)
+    }
+
+    console.log(productDetail)
+    /////////////////////////////////////////////////////////////////////////////////////
     useEffect(() => {
         if (queryStringAPI) {
             navigate("?" + queryStringAPI);
@@ -512,7 +543,7 @@ export default function DataShop() {
                                                         <div className="row">
                                                             {categoryStat.map(item => (
                                                                 <>
-                                                                    <div className="col-12" style={{marginTop: '6px'}}>{item.name}</div>
+                                                                    <div  className="col-12" onClick={()=>handleChange(item.name)} style={{marginTop: '6px'}}>{item.name}</div>
                                                                 </>
                                                             ))}
                                                         </div>
@@ -534,15 +565,17 @@ export default function DataShop() {
                                                 <tr style={{backgroundColor: "rgb(238, 77, 45)", color: "white", fontSize: "20px",}}>
                                                     <th scope="col" style={{textAlign: 'left'}}>Tên sản phẩm</th>
                                                     <th scope="col" >Số lượt</th>
+                                                    <th scope="col" >Tổng doanh thu</th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                {outp &&
-                                                    outp.map((item) => (
+                                                {productByCategory &&
+                                                    productByCategory.map((item) => (
                                                         <>
-                                                            <tr style={{fontSize: "18px"}}>
-                                                                <td  style={{textAlign: 'left'}}>{item.nameProduct}</td>
-                                                                <td>{item.quantityCart}</td>
+                                                            <tr onClick={()=>handleProduct(item.product)} style={{fontSize: "18px"}}>
+                                                                <td  style={{textAlign: 'left'}}>{item.product}</td>
+                                                                <td>{item.quantity}</td>
+                                                                <td>{item.total}</td>
                                                             </tr>
                                                         </>
                                                     ))}
