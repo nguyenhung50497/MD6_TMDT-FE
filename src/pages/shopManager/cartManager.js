@@ -86,46 +86,23 @@ export default function CartManager() {
     }, [statusCart])
     return (
         <>
-            <div className="col-10 bg-light" style={{width: '100%'}}>
+            <div className="col-10 bg-light" style={{width: '100%', height: '700px'}}>
                 <div className="row">
-                    <div className="col-12">
-                        <div className="row">
-                            <div className="col-2" style={{marginTop: '20px', marginLeft: '20px'}}>
-                                <button type={'submit'} onClick={() => setStatusCart('')}
-                                        style={{border: 'none', background: 'none'}}>Tất cả
-                                </button>
-                            </div>
-                            <div className="col-2" style={{marginTop: '20px', marginLeft: '-100px'}}>
-                                <button type={'submit'} onClick={() => setStatusCart('chờ xác nhận')}
-                                        style={{border: 'none', background: 'none'}}>Chờ xác nhận
-                                </button>
-                            </div>
-                            <div className="col-2" style={{marginTop: '20px', marginLeft: '-40px'}}>
-                                <button type={'submit'} onClick={() => setStatusCart('đang xử lý')}
-                                        style={{border: 'none', background: 'none'}}>Đang giao hàng
-                                </button>
-                            </div>
-                            <div className="col-2" style={{marginTop: '20px', marginLeft: '-20px'}}>
-                                <button type={'submit'} onClick={() => setStatusCart('hoàn thành')}
-                                        style={{border: 'none', background: 'none'}}>Đã giao
-                                </button>
-                            </div>
-                            <div className="col-2" style={{marginTop: '20px', marginLeft: '-70px'}}>
-                                <button type={'submit'} onClick={() => setStatusCart('hủy đơn')}
-                                        style={{border: 'none', background: 'none'}}>Đã hủy
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                    <div className="col-12" style={{
+                        marginTop: '20px',
+                        marginLeft: '25px',
+                        marginBottom: '20px',
+                        color: "rgb(238, 77, 45)"
+                    }}><h4>Quản lý đơn hàng</h4></div>
                     <div className="col-12"
                          style={{backgroundColor: 'rgb(231, 229, 229)', height: '1px', width: '100%'}}></div>
-                    <div className="col-12" style={{marginTop: '20px'}}>
+                    <div className="col-12" style={{paddingTop: '31px', height: '100px'}}>
                         <Formik initialValues={{idShop: '', valueInput: ''}} onSubmit={values => {
                             handleSearch(values)
                         }}>
                             <Form>
                                 <div className="row">
-                                    <div className="col-10" style={{marginLeft: '150px', marginRight: '-200px'}}>
+                                    <div className="col-10" style={{marginLeft: '250px', marginRight: '-200px'}}>
                                         <div className="input-group mb-3">
                                             <div className="input-group-prepend">
                                                 <Field as={'select'} onChange={e => setType(e.target.value)}
@@ -141,7 +118,7 @@ export default function CartManager() {
                                                    placeholder={type}/>
                                         </div>
                                     </div>
-                                    <div className="col-2">
+                                    <div className="col-2" style={{marginLeft: '-300px'}}>
                                         <button type={'submit'} style={{
                                             backgroundColor: 'rgb(238, 77, 45)',
                                             color: 'white',
@@ -157,7 +134,128 @@ export default function CartManager() {
                     </div>
                     <div className="col-12"
                          style={{backgroundColor: 'rgb(231, 229, 229)', height: '1px', width: '100%'}}></div>
-                    <div className="col-12">
+                    <div className="col-12" style={{width: '100%', height: '80px'}}>
+                        <div className="row">
+                            <div className="col-2" style={{marginTop: '24px', marginLeft: '20px'}}>
+                                {statusCart === "" ?
+                                    <>
+                                        <button type={'submit'} onClick={() => setStatusCart('')}
+                                                style={{border: 'none', background: 'none', color: 'rgb(238, 77, 45)', width: '150px'}}>
+                                            <span className="row">
+                                                <span style={{width: '80%',marginLeft: '-25px'}}><p style={{fontSize: '20px'}}>Tất cả</p></span>
+                                                <span style={{width: '20%',marginLeft: '-25px', fontSize: '20px'}}><p style={{color: "rgb(238, 77, 45)"}}><b>{carts && carts.length}</b></p></span>
+                                            </span>
+                                        </button>
+                                    </>
+                                    :
+                                    <>
+                                        <button type={'submit'} onClick={() => setStatusCart('')}
+                                                style={{border: 'none', background: 'none', width: '150px'}}>
+                                            <span className="row">
+                                                <span style={{width: '80%',marginLeft: '-25px'}}><p style={{fontSize: '20px'}}>Tất cả</p></span>
+                                                <span style={{width: '20%',marginLeft: '-25px', fontSize: '20px'}}></span>
+                                            </span>
+                                        </button>
+                                    </>
+                                }
+                            </div>
+                            <div className="col-2" style={{marginTop: '24px', marginLeft: '-100px'}}>
+                                {statusCart === "chờ xác nhận" ?
+                                    <>
+                                        <button type={'submit'} onClick={() => setStatusCart('chờ xác nhận')}
+                                                style={{border: 'none', background: 'none', color: 'rgb(238, 77, 45)', width: '150px'}}>
+                                            <span className="row">
+                                                <span style={{width: '80%',marginLeft: '-25px'}}><p style={{fontSize: '20px'}}>Chờ xác nhận</p></span>
+                                                <span style={{width: '20%',marginLeft: '10px', fontSize: '20px'}}><p style={{color: "rgb(238, 77, 45)"}}><b>{carts && carts.length}</b></p></span>
+                                            </span>
+                                        </button>
+                                    </>
+                                    :
+                                    <>
+                                        <button type={'submit'} onClick={() => setStatusCart('chờ xác nhận')}
+                                                style={{border: 'none', background: 'none', width: '150px'}}>
+                                            <span className="row">
+                                                <span style={{width: '80%',marginLeft: '-25px'}}><p style={{fontSize: '20px'}}>Chờ xác nhận</p></span>
+                                                <span style={{width: '20%',marginLeft: '-25px', fontSize: '20px'}}></span>
+                                            </span>
+                                        </button>
+                                    </>
+                                }
+                            </div>
+                            <div className="col-2" style={{marginTop: '24px', marginLeft: '-40px'}}>
+                                {statusCart === "đang xử lý" ?
+                                    <>
+                                        <button type={'submit'} onClick={() => setStatusCart('đang xử lý')}
+                                                style={{border: 'none', background: 'none', color: 'rgb(238, 77, 45)', width: '150px'}}>
+                                            <span className="row">
+                                                <span style={{width: '90%',marginLeft: '-25px'}}><p style={{fontSize: '20px'}}>Đang giao hàng</p></span>
+                                                <span style={{width: '10%',marginLeft: '20px', fontSize: '20px'}}><p style={{color: "rgb(238, 77, 45)"}}><b>{carts && carts.length}</b></p></span>
+                                            </span>
+                                        </button>
+                                    </>
+                                    :
+                                    <>
+                                        <button type={'submit'} onClick={() => setStatusCart('đang xử lý')}
+                                                style={{border: 'none', background: 'none', width: '150px'}}>
+                                            <span className="row">
+                                                <span style={{width: '90%',marginLeft: '-25px'}}><p style={{fontSize: '20px'}}>Đang giao hàng</p></span>
+                                                <span style={{width: '10%',marginLeft: '-25px', fontSize: '20px'}}></span>
+                                            </span>
+                                        </button>
+                                    </>
+                                }
+                            </div>
+                            <div className="col-2" style={{marginTop: '24px', marginLeft: '-20px'}}>
+                                {statusCart === "hoàn thành" ?
+                                    <>
+                                        <button type={'submit'} onClick={() => setStatusCart('hoàn thành')}
+                                                style={{border: 'none', background: 'none', color: 'rgb(238, 77, 45)', width: '150px'}}>
+                                            <span className="row">
+                                                <span style={{width: '80%',marginLeft: '-25px'}}><p style={{fontSize: '20px'}}>Đã giao</p></span>
+                                                <span style={{width: '20%',marginLeft: '-10px', fontSize: '20px'}}><p style={{color: "rgb(238, 77, 45)"}}><b>{carts && carts.length}</b></p></span>
+                                            </span>
+                                        </button>
+                                    </>
+                                    :
+                                    <>
+                                        <button type={'submit'} onClick={() => setStatusCart('hoàn thành')}
+                                                style={{border: 'none', background: 'none', width: '150px'}}>
+                                            <span className="row">
+                                                <span style={{width: '80%',marginLeft: '-25px'}}><p style={{fontSize: '20px'}}>Đã giao</p></span>
+                                                <span style={{width: '20%',marginLeft: '-10px', fontSize: '20px'}}></span>
+                                            </span>
+                                        </button>
+                                    </>
+                                }
+                            </div>
+                            <div className="col-2" style={{marginTop: '24px', marginLeft: '-70px'}}>
+                                {statusCart === "hủy đơn" ?
+                                    <>
+                                        <button type={'submit'} onClick={() => setStatusCart('hủy đơn')}
+                                                style={{border: 'none', background: 'none', color: 'rgb(238, 77, 45)', width: '150px'}}>
+                                            <span className="row">
+                                                <span style={{width: '80%',marginLeft: '-25px'}}><p style={{fontSize: '20px'}}>Đã hủy</p></span>
+                                                <span style={{width: '20%',marginLeft: '-10px', fontSize: '20px'}}><p style={{color: "rgb(238, 77, 45)"}}><b>{carts && carts.length}</b></p></span>
+                                            </span>
+                                        </button>
+                                    </>
+                                    :
+                                    <>
+                                        <button type={'submit'} onClick={() => setStatusCart('hủy đơn')}
+                                                style={{border: 'none', background: 'none', width: '150px'}}>
+                                            <span className="row">
+                                                <span style={{width: '80%',marginLeft: '-25px'}}><p style={{fontSize: '20px'}}>Đã hủy</p></span>
+                                                <span style={{width: '20%',marginLeft: '-10px', fontSize: '20px'}}></span>
+                                            </span>
+                                        </button>
+                                    </>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-12"
+                         style={{backgroundColor: 'rgb(231, 229, 229)', height: '1px', width: '100%'}}></div>
+                    <div className="col-12" style={{marginLeft: '-5px'}}>
                         <table className="table table-borderless">
                             <thead>
                             <tr>
