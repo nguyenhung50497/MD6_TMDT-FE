@@ -165,7 +165,6 @@ export default function NavbarShop() {
                                                    className="btn"
                                                    onClick={() => {
                                                       navigate("/cart");
-                                                      window.location.reload();
                                                    }}>
                                                    Giỏ hàng
                                                 </a>

@@ -109,8 +109,8 @@ export default function Navbar() {
       window.location.reload();
    };
    const cartDetails = useSelector((state) => {
-      if (state.cartDetails.cartDetails) {
-         return state.cartDetails.cartDetails;
+      if (state.cartDetails.cart) {
+         return state.cartDetails.cart;
       }
    });
    let sum = 0;
@@ -265,7 +265,6 @@ export default function Navbar() {
                                                    className="btn"
                                                    onClick={() => {
                                                       navigate("/cart");
-                                                      window.location.reload();
                                                    }}>
                                                    Giỏ hàng
                                                 </a>
@@ -386,7 +385,6 @@ export default function Navbar() {
                                        className="btn text-light"
                                        onClick={() => {
                                           navigate("/cart");
-                                          window.location.reload();
                                        }}>
                                        <div className="badge-block">
                                           <svg
