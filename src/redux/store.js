@@ -8,6 +8,7 @@ import transportReducer from "./transport/transportSlice";
 import userReducer from "./users/userSlice";
 import addressUserReducer from "./address/addressSlice";
 import statsReducer from "./slices/statsSlice";
+import feedbackReducer from "./feedback/feedbackSlice";
 
 import cartReducer from "./cart/cartSlice";
 const store = configureStore({
@@ -22,6 +23,7 @@ const store = configureStore({
       carts: cartReducer,
       stats: statsReducer,
       cartDetails: cartDetailReducer,
+      feedbacks: feedbackReducer
    },
    middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({

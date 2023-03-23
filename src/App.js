@@ -22,7 +22,9 @@ import CartManager from "./pages/shopManager/cartManager";
 import ShopManager from "./pages/shopManager/shopManager";
 import DataShop from "./pages/shopManager/dataShop";
 import ProductManager from "./pages/shopManager/productManager";
+import AddFeedBack from "./pages/feedBack/addFeedBack";
 import Cart from "./pages/users/cart";
+import EditShop from "./pages/shops/editShop";
 
 
 function App() {
@@ -55,11 +57,13 @@ function App() {
                    <Route path={'cart/:id'}  element={<CartManager/>}/>
                    <Route path={'data'} element={<DataShop/>}/>
                </Route>
+                <Route path={'feedback'} element={<AddFeedBack/>}/>
                <Route path={"account"} element={<AccountUser />}>
                   <Route path={""} element={<ProfileUser />} />
                   <Route path={"address/:id"} element={<AddressUser />} />
                   <Route path={"password/:id"} element={<Password />} />
                   <Route path={"shop/:id"} element={<CreateShop />} />
+                  <Route path={"edit-shop/:id"} element={<EditShop />} />
                </Route>
                <Route path={"cart"} element={<Cart />} />
             </>
@@ -73,5 +77,3 @@ function App() {
 }
 
 export default App;
-
-

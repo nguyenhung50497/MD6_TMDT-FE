@@ -58,10 +58,8 @@ export const searchByIdCart = createAsyncThunk(
 export const getDetailCart = createAsyncThunk(
    "carts/getDetailCart",
    async (data) => {
-      const res = await customAxios.post(
-         "carts/detail-cart/" + data.idCart,
-         data
-      );
+       console.log(data)
+      const res = await customAxios.post("carts/all/detail-cart", data);
       return res.data;
    }
 );
@@ -88,8 +86,23 @@ export const getCartByIdUser = createAsyncThunk(
    }
 );
 
+export const getCartByIdUserDone = createAsyncThunk(
+   "carts/getCartByIdUserDone",
+   async (data) => {
+      const res = await customAxios.get("carts/find-by-idUser-done/" + data);
+      return res.data;
+   }
+);
+
 export const payCart = createAsyncThunk("carts/payCart", async (data) => {
-   await customAxios.put("carts/pay-cart/" + data[0]);
-   const res = await customAxios.get("cart-details/find-by-user/" + data[1]);
+   await customAxios.put("carts/pay-cart/" + data.idCart, data);
+   const res = await customAxios.get(
+      "cart-details/find-by-status?status=chờ+xác+nhận"
+   );
+   return res.data;
+});
+export const updateCart = createAsyncThunk("carts/updateCart", async (data) => {
+   await customAxios.put("carts/edit-cart/" + data[0].idCart, data[0]);
+   const res = await customAxios.get("carts/find-by-idUser/" + data[1]);
    return res.data;
 });

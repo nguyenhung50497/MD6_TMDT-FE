@@ -157,7 +157,7 @@ export default function ShopInterface() {
                                        <div className="col-12">
                                           <div className="row">
                                              <div className="col-6">
-                                                <Link to={"/account"}>
+                                                <Link to={`/account/edit-shop/${id}`}>
                                                    <button
                                                       className={
                                                          "shopInterface"

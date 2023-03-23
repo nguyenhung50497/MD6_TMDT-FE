@@ -14,6 +14,7 @@
     "formik": "^2.2.9",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-numeric-input": "^2.2.3",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.8.2",
     "react-scripts": "5.0.1",
@@ -59,6 +60,7 @@
     "react-bootstrap": "^2.7.2",
     "react-chartjs-2": "^5.2.0",
     "react-native": "^0.71.4",
+    "react-simple-star-rating": "^5.1.7",
     "tw-daterange": "^1.1.24",
     "yup": "^1.0.2"
   }

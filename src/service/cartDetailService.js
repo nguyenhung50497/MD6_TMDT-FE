@@ -15,6 +15,16 @@ export const addCartDetails = createAsyncThunk(
       return res.data;
    }
 );
+export const editCartDetails = createAsyncThunk(
+   "cartDetails/editCartDetails",
+   async (data) => {
+      await customAxios.put("cart-details/" + data.idCartDetail, data);
+      const res = await customAxios.get(
+         "cart-details/find-by-status?status=chưa+thanh+toán"
+      );
+      return res.data;
+   }
+);
 export const getCartDetailsById = createAsyncThunk(
    "cartDetails/getCartDetailsById",
    async (data) => {
@@ -25,7 +35,7 @@ export const getCartDetailsById = createAsyncThunk(
 export const getCartDetailsByUser = createAsyncThunk(
    "cartDetails/getCartDetailsByUser",
    async (data) => {
-      const res = await customAxios.get("cart-details/find-by-user/"+data);
+      const res = await customAxios.get("cart-details/find-by-user/" + data);
       return res.data;
    }
 );
@@ -34,6 +44,14 @@ export const deleteCartDetails = createAsyncThunk(
    "cartDetails/deleteCartDetails",
    async (data) => {
       const res = await customAxios.delete("cart-details/" + data);
+      return res.data;
+   }
+);
+
+export const getCartDetailsByStatus = createAsyncThunk(
+   "cartDetails/getCartDetailsByStatus",
+   async (data) => {
+      const res = await customAxios.get("cart-details/find-by-status?status=" + data);
       return res.data;
    }
 );

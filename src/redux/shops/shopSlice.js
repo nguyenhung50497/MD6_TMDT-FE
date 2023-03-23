@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {getAllTransport} from "../../service/transportService";
-import {findByIdShop, findByIdUserShop} from "../../service/shopService";
+import {editShop, findByIdShop, findByIdUserShop} from "../../service/shopService";
 
 const initialState = {
     shop: {}

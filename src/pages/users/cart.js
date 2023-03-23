@@ -1,19 +1,37 @@
-import { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import {
    deleteCartDetails,
-   getCartDetailsByUser,
+   editCartDetails,
+   getCartDetailsByStatus,
 } from "../../service/cartDetailService";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
-import { Field } from "formik";
 import swal from "sweetalert";
-import { getCartByIdUser, payCart } from "../../service/cartService";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import * as Yup from "yup";
+import { addFeedback } from "../../service/feedbackService";
+import { Rating } from "react-simple-star-rating";
+import {
+   getCartByIdUser,
+   getCartByIdUserDone,
+   payCart,
+   updateCart,
+} from "../../service/cartService";
+import { getAllAddress } from "../../service/addressUser";
 
+const SignupSchema = Yup.object().shape({
+   reviews: Yup.string()
+      .min(50, "Nhập tối thiểu 50 kí tự")
+      .max(200, "Quá Dài")
+      .required("Vui lòng điền vào mục này"),
+});
 export default function Cart() {
    const dispatch = useDispatch();
    const navigate = useNavigate();
+   const [status, setStatus] = useState("chưa thanh toán");
+   const [star, setStar] = useState(0);
    const formatCurrency = (price) => {
       var DecimalSeparator = Number("1.2").toLocaleString().substr(1, 1);
       var priceWithCommas = price.toLocaleString();
@@ -22,14 +40,28 @@ export default function Cart() {
       var decPart = arParts.length > 1 ? arParts[1] : "";
       return intPart;
    };
+   const handleRating = (rate) => {
+      setStar(rate);
+   };
+   const [addressCart, setAddressCart] = useState(0);
    const user = useSelector((state) => {
       if (state.users.users) {
          return state.users.users;
       }
    });
+   const address = useSelector((state) => {
+      if (state !== undefined) {
+         return state.addresses.listAddress;
+      }
+   });
    const cart = useSelector((state) => {
       if (state.carts.cart) {
          return state.carts.cart;
+      }
+   });
+   const cartDone = useSelector((state) => {
+      if (state.carts.cartDone) {
+         return state.carts.cartDone;
       }
    });
    const cartDetails = useSelector((state) => {
@@ -45,11 +77,33 @@ export default function Cart() {
          }
       }
    }
+   const handleFeedback = async (values) => {
+      let data = { ...values };
+      data.assessment = star;
+      data.idUser = user.idUser;
+      dispatch(addFeedback(data)).then((check) => {
+         if (check.payload === "success") {
+            swal("Gửi đánh giá thành công");
+            window.location.reload();
+         } else if (check.payload === undefined) {
+            swal("Bạn đã gửi đánh giá cho sản phẩm này rồi");
+            window.location.reload();
+         }
+      });
+   };
    useEffect(() => {
       dispatch(getCartByIdUser(user.idUser));
    }, []);
    useEffect(() => {
-      dispatch(getCartDetailsByUser(user.idUser));
+      dispatch(getCartByIdUserDone(user.idUser));
+   }, []);
+   useEffect(() => {
+      dispatch(getCartDetailsByStatus("chưa thanh toán"));
+   }, []);
+   useEffect(() => {
+      dispatch(getAllAddress(user.idUser)).then((e) => {
+         setAddressCart(e.payload[0].idAddress);
+      });
    }, []);
    return (
       <div className="row">
@@ -60,6 +114,81 @@ export default function Cart() {
             <div className="row">
                <div className="col-2"></div>
                <div className="col-8">
+                  <div className="col-12 bg-light mb-2">
+                     <div className="row">
+                        <div className="col-12">
+                           <div className="row mb-3 mt-2 pl-3">
+                              <div className="col-3">
+                                 <a
+                                    className="btn"
+                                    onClick={() => {
+                                       setStatus("chưa thanh toán");
+                                       dispatch(
+                                          getCartDetailsByStatus(
+                                             "chưa thanh toán"
+                                          )
+                                       );
+                                       navigate("/cart");
+                                    }}>
+                                    Chưa thanh toán
+                                 </a>
+                              </div>
+                              <div className="col-3">
+                                 <a
+                                    className="btn"
+                                    onClick={() => {
+                                       setStatus("chờ xác nhận");
+                                       dispatch(
+                                          getCartDetailsByStatus("chờ xác nhận")
+                                       );
+                                       navigate("/cart");
+                                    }}>
+                                    Chờ xác nhận
+                                 </a>
+                              </div>
+                              <div className="col-2">
+                                 <a
+                                    className="btn"
+                                    onClick={() => {
+                                       setStatus("đang xử lý");
+                                       dispatch(
+                                          getCartDetailsByStatus("đang xử lý")
+                                       );
+                                       navigate("/cart");
+                                    }}>
+                                    Đang giao hàng
+                                 </a>
+                              </div>
+                              <div className="col-2">
+                                 <a
+                                    className="btn"
+                                    onClick={() => {
+                                       setStatus("hoàn thành");
+                                       dispatch(
+                                          getCartDetailsByStatus("hoàn thành")
+                                       );
+                                       navigate("/cart");
+                                    }}>
+                                    Đã giao
+                                 </a>
+                              </div>
+                              <div className="col-2">
+                                 <a
+                                    className="btn"
+                                    onClick={() => {
+                                       setStatus("huỷ đơn");
+                                       dispatch(
+                                          getCartDetailsByStatus("huỷ đơn")
+                                       );
+                                       navigate("/cart");
+                                    }}>
+                                    Đã huỷ
+                                 </a>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
                   <div className="col-12 bg-light mb-2">
                      <div className="row">
                         <div className="col-12">
@@ -135,14 +264,55 @@ export default function Cart() {
                                           </span>
                                        </div>
                                        <div className="col-1">
-                                          <input
-                                             type="number"
-                                             value={item.quantityCart}
-                                             style={{
-                                                textAlign: "center",
-                                                width: "90px",
-                                             }}
-                                          />
+                                          {item.statusCart ===
+                                             "chưa thanh toán" && (
+                                             <input
+                                                type="number"
+                                                placeholder={item.quantityCart}
+                                                style={{
+                                                   width: "70px",
+                                                   textAlign: "center",
+                                                }}
+                                                onKeyUp={(e) => {
+                                                   if (e.target.value) {
+                                                      dispatch(
+                                                         editCartDetails({
+                                                            idCartDetail:
+                                                               item.idCartDetail,
+                                                            idCart: item.idCart,
+                                                            idProduct:
+                                                               item.idProduct,
+                                                            priceInCart:
+                                                               item.priceInCart,
+                                                            timeCartDetail:
+                                                               item.timeCartDetail,
+                                                            quantityCart:
+                                                               +e.target.value,
+                                                         })
+                                                      );
+                                                      // .then(() => {
+                                                      //    dispatch(
+                                                      //       getCartDetailsByStatus(
+                                                      //          "chưa thanh toán"
+                                                      //       )
+                                                      //    ).then(() => {
+                                                      //       navigate("/cart");
+                                                      //    });
+                                                      // });
+                                                   }
+                                                }}
+                                             />
+                                          )}
+                                          {item.statusCart !==
+                                             "chưa thanh toán" && (
+                                             <p
+                                                style={{
+                                                   textAlign: "center",
+                                                   width: "90px",
+                                                }}>
+                                                {item.quantityCart}
+                                             </p>
+                                          )}
                                        </div>
                                        <div className="col-2 text-danger text-center">
                                           <span
@@ -161,14 +331,13 @@ export default function Cart() {
                                           </span>
                                        </div>
                                        <div className="col-1 text-center">
-                                          {item.statusCart ===
-                                             "chưa thanh toán" && (
+                                          {item.statusCart !== "hoàn thành" && (
                                              <a
                                                 className="btn"
                                                 onClick={() => {
                                                    swal({
                                                       title: "Bạn có chắc chắn?",
-                                                      text: "Bạn sẽ xoá sản phẩm đã chọn!",
+                                                      text: "Bạn sẽ huỷ sản phẩm đã chọn!",
                                                       icon: "warning",
                                                       buttons: true,
                                                       dangerMode: true,
@@ -180,8 +349,8 @@ export default function Cart() {
                                                             )
                                                          ).then(() => {
                                                             dispatch(
-                                                               getCartDetailsByUser(
-                                                                  user.idUser
+                                                               getCartDetailsByStatus(
+                                                                  "chưa hoàn thành"
                                                                )
                                                             ).then(() => {
                                                                navigate(
@@ -190,18 +359,225 @@ export default function Cart() {
                                                             });
                                                          });
                                                          swal(
-                                                            "Xoá thành công!",
+                                                            "Huỷ thành công!",
                                                             {
                                                                icon: "success",
                                                             }
                                                          );
                                                       } else {
-                                                         swal("Đã huỷ xoá!");
+                                                         swal("Đã huỷ!");
                                                       }
                                                    });
                                                 }}>
-                                                Xoá
+                                                Huỷ
                                              </a>
+                                          )}
+                                          {item.statusCart === "hoàn thành" && (
+                                             <>
+                                                <button
+                                                   type="button"
+                                                   className="btn btn"
+                                                   data-toggle="modal"
+                                                   data-target={
+                                                      "#exampleModal" +
+                                                      item.idProduct
+                                                   }
+                                                   style={{
+                                                      marginTop: "-20px",
+                                                      color: "rgb(238, 77, 45)",
+                                                   }}>
+                                                   Đánh giá
+                                                </button>
+
+                                                <div
+                                                   className="modal fade"
+                                                   id={
+                                                      "exampleModal" +
+                                                      item.idProduct
+                                                   }
+                                                   tabindex="-1"
+                                                   aria-labelledby="exampleModalLabel"
+                                                   aria-hidden="true">
+                                                   <div className="modal-dialog modal-dialog-centered modal-lg">
+                                                      <div className="modal-content">
+                                                         <div className="modal-header">
+                                                            <h5
+                                                               className="modal-title"
+                                                               id="exampleModalLabel">
+                                                               Đánh Giá Sản Phẩm
+                                                            </h5>
+                                                         </div>
+                                                         <Formik
+                                                            initialValues={{
+                                                               assessment: "",
+                                                               reviews: "",
+                                                               idProduct:
+                                                                  item.idProduct,
+                                                               idUser: "",
+                                                            }}
+                                                            validationSchema={
+                                                               SignupSchema
+                                                            }
+                                                            onSubmit={(
+                                                               values
+                                                            ) => {
+                                                               handleFeedback(
+                                                                  values
+                                                               ).then();
+                                                            }}>
+                                                            <Form>
+                                                               <div className="modal-body">
+                                                                  <div className="row">
+                                                                     <div className="col-12">
+                                                                        <div className="row">
+                                                                           <div className="col-4">
+                                                                              <p
+                                                                                 style={{
+                                                                                    fontSize:
+                                                                                       "18px",
+                                                                                    marginTop:
+                                                                                       "8px",
+                                                                                 }}>
+                                                                                 Chất
+                                                                                 lượng
+                                                                                 sản
+                                                                                 phẩm
+                                                                              </p>
+                                                                           </div>
+                                                                           <div
+                                                                              className="col-4"
+                                                                              style={{
+                                                                                 marginTop:
+                                                                                    "-50px",
+                                                                                 marginLeft:
+                                                                                    "-100px",
+                                                                              }}>
+                                                                              <div className="wrapper5">
+                                                                                 <Rating
+                                                                                    onClick={
+                                                                                       handleRating
+                                                                                    }
+                                                                                 />
+                                                                              </div>
+                                                                           </div>
+                                                                           <div
+                                                                              className="col-4"
+                                                                              style={{
+                                                                                 marginTop:
+                                                                                    "6px",
+                                                                                 fontSize:
+                                                                                    "20px",
+                                                                                 color: "rgb(238, 77, 45)",
+                                                                              }}>
+                                                                              <p>
+                                                                                 {star ==
+                                                                                 5 ? (
+                                                                                    <>
+                                                                                       Tuyệt
+                                                                                       vời
+                                                                                    </>
+                                                                                 ) : star ==
+                                                                                   4 ? (
+                                                                                    <>
+                                                                                       Tốt
+                                                                                    </>
+                                                                                 ) : star ==
+                                                                                   3 ? (
+                                                                                    <>
+                                                                                       Bình
+                                                                                       thường
+                                                                                    </>
+                                                                                 ) : star ==
+                                                                                   2 ? (
+                                                                                    <>
+                                                                                       Chưa
+                                                                                       tốt
+                                                                                    </>
+                                                                                 ) : star ==
+                                                                                   1 ? (
+                                                                                    <>
+                                                                                       Tệ
+                                                                                    </>
+                                                                                 ) : (
+                                                                                    <>
+
+                                                                                    </>
+                                                                                 )}
+                                                                              </p>
+                                                                           </div>
+                                                                        </div>
+                                                                     </div>
+                                                                     <div className="col-12">
+                                                                        <label
+                                                                           htmlFor="exampleFormControlTextarea1"
+                                                                           style={{
+                                                                              color: "gray",
+                                                                           }}>
+                                                                           Hãy
+                                                                           chia
+                                                                           sẻ
+                                                                           những
+                                                                           điều
+                                                                           bạn
+                                                                           thích
+                                                                           về
+                                                                           sản
+                                                                           phẩm
+                                                                           này
+                                                                           với
+                                                                           những
+                                                                           người
+                                                                           khác
+                                                                        </label>
+                                                                        <Field
+                                                                           as={
+                                                                              "textarea"
+                                                                           }
+                                                                           className="form-control"
+                                                                           id="exampleFormControlTextarea1"
+                                                                           name={
+                                                                              "reviews"
+                                                                           }
+                                                                           rows="3"></Field>
+                                                                     </div>
+                                                                     <div className="col-12">
+                                                                        <div
+                                                                           style={{
+                                                                              color: "red",
+                                                                           }}>
+                                                                           <ErrorMessage
+                                                                              name={
+                                                                                 "reviews"
+                                                                              }
+                                                                           />
+                                                                        </div>
+                                                                     </div>
+                                                                  </div>
+                                                               </div>
+                                                               <div className="modal-footer">
+                                                                  <button
+                                                                     type="button"
+                                                                     className="btn btn-secondary"
+                                                                     data-dismiss="modal">
+                                                                     Close
+                                                                  </button>
+                                                                  <button
+                                                                     type="submit"
+                                                                     className="btn btn"
+                                                                     style={{
+                                                                        backgroundColor:
+                                                                           "rgb(238, 77, 45)",
+                                                                        color: "white",
+                                                                     }}>
+                                                                     Hoàn thành
+                                                                  </button>
+                                                               </div>
+                                                            </Form>
+                                                         </Formik>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                             </>
                                           )}
                                        </div>
                                     </div>
@@ -210,50 +586,128 @@ export default function Cart() {
                            </div>
                         </>
                      ))}
-
-                  <div className="col-12 bg-light" style={{ height: "80px" }}>
-                     <div className="row p-3">
-                        <div className="col-6"></div>
-                        <div className="col-6">
-                           <div className="row">
-                              <div
-                                 className="col-8 pt-2"
-                                 style={{ fontSize: "24px" }}>
-                                 Tổng Thanh Toán:{" "}
-                                 <span
-                                    style={{
-                                       fontSize: "20px",
-                                       textDecoration: "underline",
-                                       color: "red",
-                                    }}>
-                                    đ
-                                 </span>{" "}
-                                 <span
-                                    style={{
-                                       fontSize: "24px",
-                                       color: "red",
-                                    }}>
-                                    {sum != 0 && formatCurrency(sum)}
-                                    {(sum = 0 && sum)}
-                                 </span>
+                  {status === "chưa thanh toán" && cartDetails.length > 0 && (
+                     <div
+                        className="col-12 bg-light"
+                        style={{ height: "80px" }}>
+                        <div className="row p-3">
+                           <div className="col-6 pt-3 pl-5">
+                              <div>
+                                 {address.length > 0 && (
+                                    <select
+                                       onChange={(e) => {
+                                          setAddressCart(e.target.value);
+                                       }}>
+                                       {address.map((item, key) => (
+                                          <>
+                                             <option value={item.idAddress}>
+                                                {item.province} -{" "}
+                                                {item.district} -{" "}
+                                                {item.descriptionAddress}
+                                             </option>
+                                          </>
+                                       ))}
+                                    </select>
+                                 )}
                               </div>
-                              <div className="col-4">
-                                 <button
-                                    className="muaHang w-100"
-                                    onClick={() => {
-                                       swal("Thanh toán thành công!");
-                                       dispatch(
-                                          payCart([cart.idCart, user.idUser])
-                                       );
-                                       navigate("/cart");
-                                    }}>
-                                    Thanh Toán
-                                 </button>
+                           </div>
+                           <div className="col-6">
+                              <div className="row">
+                                 <div
+                                    className="col-8 pt-2"
+                                    style={{ fontSize: "24px" }}>
+                                    Tổng Thanh Toán:{" "}
+                                    <span
+                                       style={{
+                                          fontSize: "20px",
+                                          textDecoration: "underline",
+                                          color: "red",
+                                       }}>
+                                       đ
+                                    </span>{" "}
+                                    <span
+                                       style={{
+                                          fontSize: "24px",
+                                          color: "red",
+                                       }}>
+                                       {sum != 0 && formatCurrency(sum)}
+                                       {(sum = 0 && sum)}
+                                    </span>
+                                 </div>
+                                 <div className="col-4">
+                                    <button
+                                       className="muaHang w-100"
+                                       onClick={() => {
+                                        if (addressCart !== 0) {
+                                          swal("Thanh toán thành công!");
+                                          setStatus("chờ xác nhận");
+                                          dispatch(
+                                             payCart({
+                                                idCart: cart.idCart,
+                                                idAddress: addressCart,
+                                             })
+                                          ).then(() => {
+                                             dispatch(
+                                                getCartDetailsByStatus(
+                                                   "chờ xác nhận"
+                                                )
+                                             ).then(() => {
+                                                navigate("/cart");
+                                             });
+                                          });
+                                        } else {
+                                            navigate(`/account/address/${user.idUser}`)
+                                            swal("Bạn chưa có địa chỉ, hãy tạo địa chỉ nhận hàng!")
+                                        }
+                                       }}>
+                                       Thanh Toán
+                                    </button>
+                                 </div>
                               </div>
                            </div>
                         </div>
                      </div>
-                  </div>
+                  )}
+                  {status === "đang xử lý" && cartDetails.length > 0 && (
+                     <div
+                        className="col-12 bg-light"
+                        style={{ height: "80px" }}>
+                        <div className="row p-3">
+                           <div className="col-6"></div>
+                           <div className="col-6">
+                              <div className="row">
+                                 <div className="col-8 pt-2"></div>
+                                 <div className="col-4">
+                                    <button
+                                       className="muaHang w-100"
+                                       onClick={() => {
+                                          swal("Thanh toán thành công!");
+                                          dispatch(
+                                             updateCart([
+                                                {
+                                                   idCart: cartDone.idCart,
+                                                   statusCart: "hoàn thành",
+                                                },
+                                                user.idUser,
+                                             ])
+                                          ).then(() => {
+                                             dispatch(
+                                                getCartDetailsByStatus(
+                                                   "hoàn thành"
+                                                )
+                                             ).then(() => {
+                                                navigate("/cart");
+                                             });
+                                          });
+                                       }}>
+                                       Đã nhận hàng
+                                    </button>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  )}
                </div>
                <div className="col-2"></div>
             </div>
