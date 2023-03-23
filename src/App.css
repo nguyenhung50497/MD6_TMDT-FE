@@ -550,3 +550,23 @@ input[type="radio"]{
 .wrapper5 label:hover:before {
     color: #FFC107;
 }
+.notification {
+    background: none;
+    color: black;
+    font-size: 20px;
+    text-decoration: none;
+    padding: 10px 20px;
+    position: relative;
+    display: inline-block;
+    border-radius: 2px;
+}
+
+.notification .badge {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    padding: 5px 10px;
+    border-radius: 50%;
+    background-color:rgb(238, 77, 45);
+    color: white;
+}
