@@ -1,14 +1,5 @@
 import React, {Component} from "react";
-import {
-    ResponsiveContainer,
-    BarChart,
-    Bar,
-    XAxis,
-    PieChart,
-    Pie,
-    Cell,
-    YAxis,
-} from "recharts";
+import {ResponsiveContainer, BarChart, Bar, XAxis, PieChart, Pie, Cell, YAxis,} from "recharts";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
@@ -25,6 +16,9 @@ export default function DataShop() {
     const [week, setWeek] = useState("");
     const [queryStringAPI, setQueryStringAPI] = useState("");
     const [check, setCheck] = useState(false);
+    const handleAll = (values) => {
+        console.log(values)
+    }
     const cartDetail = useSelector((state) => {
         if (state.stats.sales !== undefined) {
             return state.stats.sales;
@@ -47,15 +41,7 @@ export default function DataShop() {
         return intPart;
     };
     const RADIAN = Math.PI / 180;
-    const renderCustomizedLabel = ({
-                                       cx,
-                                       cy,
-                                       midAngle,
-                                       innerRadius,
-                                       outerRadius,
-                                       percent,
-                                       index,
-                                   }) => {
+    const renderCustomizedLabel = ({cx, cy, midAngle, innerRadius, outerRadius, percent, index,}) => {
         const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
         const x = cx + radius * Math.cos(-midAngle * RADIAN);
         const y = cy + radius * Math.sin(-midAngle * RADIAN);
@@ -250,7 +236,7 @@ export default function DataShop() {
     };
     return (
         <>
-            <div className="col-10" style={{width: "100%", height: "1000px"}}>
+            <div className="col-10" style={{width: "100%"}}>
                 <div className="row">
                     <div className="col-12  bg-light">
                         <div className="row">
@@ -476,9 +462,102 @@ export default function DataShop() {
                         }}></div>
                     <div className="col-12">
                         <div className="row">
-                            <div
-                                className="bg-light"
-                                style={{width: "69%", height: "500px"}}>
+                            <div className="bg-light" style={{width: "39%", height: "500px"}}>
+                                <div className="row">
+                                    <div style={{width: "70%", marginTop: '50px'}}>
+                                        <h4 style={{textAlign: "center", marginBottom: '10px'}}>
+                                            Doanh số theo các ngành
+                                        </h4>
+                                        <ResponsiveContainer width="100%" height="90%">
+                                            <PieChart width={100} height={100}>
+                                                <Pie
+                                                    data={categoryStat}
+                                                    cx="50%"
+                                                    cy="50%"
+                                                    labelLine={false}
+                                                    label={renderCustomizedLabel}
+                                                    outerRadius={150}
+                                                    fill="#8884d8"
+                                                    dataKey="value"
+                                                >
+                                                    {categoryStat && categoryStat.map((entry, index) => (
+                                                        <Cell type={'submit'} key={`cell-${index}`} fill={COLORS[index % COLORS.length]} onClick={() => handleAll(entry)}/>
+                                                    ))}
+                                                </Pie>
+                                            </PieChart>
+                                        </ResponsiveContainer>
+                                    </div>
+                                    <div style={{width: "30%", marginLeft: '-20px'}}>
+                                        <div className="row">
+                                            <div className="col-12" style={{marginTop: '55px'}}><p><b>Chú thích</b></p>
+                                            </div>
+                                            <div className="col-12">
+                                                <div className="row">
+                                                    <div className="col-1">
+                                                        <div className="row">
+                                                            {COLORS.map(item => (
+                                                                <>
+                                                                    <div className="col-2" style={{
+                                                                        width: '20px',
+                                                                        height: '20px',
+                                                                        marginTop: '10px',
+                                                                        backgroundColor: `${item}`
+                                                                    }}></div>
+
+                                                                </>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-10">
+                                                        <div className="row">
+                                                            {categoryStat.map(item => (
+                                                                <>
+                                                                    <div className="col-12" style={{marginTop: '6px'}}>{item.name}</div>
+                                                                </>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style={{width: "2%", height: "500px", background: "none"}}></div>
+                            <div className="bg-light" style={{width: "59%", height: "500px"}}>
+                                <div className="col-12" style={{padding: "10px"}}>
+                                    <div className="row">
+                                        <div className="col-12" style={{textAlign: "center", marginBottom: "10px", color: "rgb(238, 77, 45)",}}><h2>Nhóm sản phẩm của ngành</h2></div>
+                                        <div className="col-12">
+                                            <table className="table table" style={{width: "100%", height: "400px"}}>
+                                                <thead>
+                                                <tr style={{backgroundColor: "rgb(238, 77, 45)", color: "white", fontSize: "20px",}}>
+                                                    <th scope="col" style={{textAlign: 'left'}}>Tên sản phẩm</th>
+                                                    <th scope="col" >Số lượt</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {outp &&
+                                                    outp.map((item) => (
+                                                        <>
+                                                            <tr style={{fontSize: "18px"}}>
+                                                                <td  style={{textAlign: 'left'}}>{item.nameProduct}</td>
+                                                                <td>{item.quantityCart}</td>
+                                                            </tr>
+                                                        </>
+                                                    ))}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-12" style={{background: "none", width: "100%", height: "40px",}}></div>
+                    <div className="col-12" style={{width: "100%"}}>
+                        <div className="row">
+                            <div className="bg-light" style={{width: "100%", height: "680px"}}>
                                 <div className="row">
                                     <div
                                         className="col-12"
@@ -585,8 +664,8 @@ export default function DataShop() {
                                                     aspect={3}>
                                                     <BarChart
                                                         data={productStat}
-                                                        width={600}
-                                                        height={600}
+                                                        width={700}
+                                                        height={700}
                                                         style={{fontSize: "15px"}}>
                                                         <XAxis dataKey="product"/>
                                                         <YAxis/>
@@ -620,139 +699,6 @@ export default function DataShop() {
                                                 </ResponsiveContainer>
                                             </>
                                         )}
-                                    </div>
-                                </div>
-                            </div>
-                            <div
-                                style={{
-                                    width: "1%",
-                                    height: "500px",
-                                    background: "none",
-                                }}></div>
-                            <div
-                                className="bg-light"
-                                style={{width: "29%", height: "500px"}}>
-                                <div className="col-12" style={{padding: "10px"}}>
-                                    <div className="row">
-                                        <div
-                                            className="col-12"
-                                            style={{
-                                                textAlign: "center",
-                                                marginBottom: "10px",
-                                                color: "rgb(238, 77, 45)",
-                                            }}>
-                                            <h2>Top sản phẩm bán chạy</h2>
-                                        </div>
-                                        <div className="col-12">
-                                            <table
-                                                className="table table"
-                                                style={{width: "100%", height: "400px"}}>
-                                                <thead>
-                                                <tr
-                                                    style={{
-                                                        backgroundColor:
-                                                            "rgb(238, 77, 45)",
-                                                        color: "white",
-                                                        fontSize: "20px",
-                                                    }}>
-                                                    <th scope="col">Tên sản phẩm</th>
-                                                    <th scope="col">Số lượt</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                {outp &&
-                                                    outp.map((item) => (
-                                                        <>
-                                                            <tr
-                                                                style={{fontSize: "18px"}}>
-                                                                <td>{item.nameProduct}</td>
-                                                                <td>{item.quantityCart}</td>
-                                                            </tr>
-                                                        </>
-                                                    ))}
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div
-                        className="col-12"
-                        style={{
-                            background: "none",
-                            width: "100%",
-                            height: "20px",
-                        }}></div>
-                    <div className="col-12  bg-light" style={{width: "100%"}}>
-                        <div className="row">
-                            <div style={{width: "60%", height: "400px"}}>
-                            </div>
-                            <div
-                                style={{
-                                    background: "rgb(231, 229, 229)",
-                                    width: "1%",
-                                    height: "400px",
-                                }}></div>
-                            <div style={{width: "39%", height: "400px"}}>
-                                <div className="row">
-                                    <div style={{width: "60%"}}>
-                                        <h4 style={{textAlign: "center"}}>
-                                            Doanh số theo các ngành
-                                        </h4>
-                                        <ResponsiveContainer width="100%" height="90%">
-                                            <PieChart width={800} height={800}>
-                                                <Pie
-                                                    data={categoryStat}
-                                                    cx="50%"
-                                                    cy="50%"
-                                                    labelLine={false}
-                                                    label={renderCustomizedLabel}
-                                                    outerRadius={150}
-                                                    fill="#8884d8"
-                                                    dataKey="value"
-                                                >
-                                                    {categoryStat && categoryStat.map((entry, index) => (
-                                                        <Cell key={`cell-${index}`}
-                                                              fill={COLORS[index % COLORS.length]}/>
-                                                    ))}
-                                                </Pie>
-                                            </PieChart>
-                                        </ResponsiveContainer>
-                                    </div>
-                                    <div style={{width: "40%", paddingLeft: "50px"}}>
-                                        <div className="row">
-                                            <div className="col-10" style={{marginTop: '50px'}}><p><b>Chú thích</b></p>
-                                            </div>
-                                            <div className="row">
-                                                <div className="col-2">
-                                                    <div className="row">
-                                                        {COLORS.map(item => (
-                                                            <>
-                                                                <div className="col-2" style={{
-                                                                    width: '20px',
-                                                                    height: '20px',
-                                                                    marginTop: '10px',
-                                                                    backgroundColor: `${item}`
-                                                                }}></div>
-
-                                                            </>
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                                <div className="col-10">
-                                                    <div className="row">
-                                                        {categoryStat.map(item => (
-                                                            <>
-                                                                <div className="col-12"
-                                                                     style={{marginTop: '6px'}}>{item.name}</div>
-                                                            </>
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
