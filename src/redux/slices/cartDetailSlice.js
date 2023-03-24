@@ -5,6 +5,8 @@ import { payCart } from "../../service/cartService";
 const initialState = {
    cartDetails: [],
    cartDetail: [],
+   count: [],
+   cart: [],
 };
 
 const cartDetailSlice = createSlice({
@@ -25,10 +27,11 @@ const cartDetailSlice = createSlice({
          state.cartDetail = action.payload;
       });
       builder.addCase(getCartDetailsByUser.fulfilled, (state, action) => {
-         state.cartDetails = action.payload;
+         state.cart = action.payload;
       });
       builder.addCase(getCartDetailsByStatus.fulfilled, (state, action) => {
-         state.cartDetails = action.payload;
+         state.cartDetails = action.payload.cartDetails;
+         state.count = action.payload.count;
       });
       builder.addCase(payCart.fulfilled, (state, action) => {
          state.cartDetails = action.payload;

@@ -69,6 +69,11 @@ export default function Cart() {
          return state.cartDetails.cartDetails;
       }
    });
+   const count = useSelector((state) => {
+      if (state.cartDetails.count) {
+         return state.cartDetails.count;
+      }
+   });
    let sum = 0;
    if (cartDetails) {
       for (let i of cartDetails) {
@@ -117,73 +122,146 @@ export default function Cart() {
                   <div className="col-12 bg-light mb-2">
                      <div className="row">
                         <div className="col-12">
-                           <div className="row mb-3 mt-2 pl-3">
+                           <div className="row mb-3 mt-2 pl-3 text-center">
                               <div className="col-3">
-                                 <a
-                                    className="btn"
-                                    onClick={() => {
-                                       setStatus("chưa thanh toán");
-                                       dispatch(
-                                          getCartDetailsByStatus(
-                                             "chưa thanh toán"
-                                          )
-                                       );
-                                       navigate("/cart");
-                                    }}>
-                                    Chưa thanh toán
-                                 </a>
+                                 {status === "chưa thanh toán" ? (
+                                    <a
+                                       className="btn"
+                                       style={{
+                                          color: "#ee4d2d",
+                                          fontWeight: "bold",
+                                       }}
+                                       onClick={() => {
+                                          setStatus("chưa thanh toán");
+                                          dispatch(
+                                             getCartDetailsByStatus(
+                                                "chưa thanh toán"
+                                             )
+                                          );
+                                          navigate("/cart");
+                                       }}>
+                                       Chưa thanh toán({count && count})
+                                    </a>
+                                 ) : (
+                                    <a
+                                       className="btn"
+                                       onClick={() => {
+                                          setStatus("chưa thanh toán");
+                                          dispatch(
+                                             getCartDetailsByStatus(
+                                                "chưa thanh toán"
+                                             )
+                                          );
+                                          navigate("/cart");
+                                       }}>
+                                       Chưa thanh toán
+                                    </a>
+                                 )}
                               </div>
                               <div className="col-3">
-                                 <a
-                                    className="btn"
-                                    onClick={() => {
-                                       setStatus("chờ xác nhận");
-                                       dispatch(
-                                          getCartDetailsByStatus("chờ xác nhận")
-                                       );
-                                       navigate("/cart");
-                                    }}>
-                                    Chờ xác nhận
-                                 </a>
+                                 {status === "chờ xác nhận" ? (
+                                    <a
+                                       className="btn"
+                                       style={{
+                                          color: "#ee4d2d",
+                                          fontWeight: "bold",
+                                       }}
+                                       onClick={() => {
+                                          setStatus("chờ xác nhận");
+                                          dispatch(
+                                             getCartDetailsByStatus(
+                                                "chờ xác nhận"
+                                             )
+                                          );
+                                          navigate("/cart");
+                                       }}>
+                                       Chờ xác nhận({count !== 0 && count})
+                                    </a>
+                                 ) : (
+                                    <a
+                                       className="btn"
+                                       onClick={() => {
+                                          setStatus("chờ xác nhận");
+                                          dispatch(
+                                             getCartDetailsByStatus(
+                                                "chờ xác nhận"
+                                             )
+                                          );
+                                          navigate("/cart");
+                                       }}>
+                                       Chờ xác nhận
+                                    </a>
+                                 )}
                               </div>
-                              <div className="col-2">
-                                 <a
-                                    className="btn"
-                                    onClick={() => {
-                                       setStatus("đang xử lý");
-                                       dispatch(
-                                          getCartDetailsByStatus("đang xử lý")
-                                       );
-                                       navigate("/cart");
-                                    }}>
-                                    Đang giao hàng
-                                 </a>
+                              <div className="col-3">
+                                 {status === "đang xử lý" ? (
+                                    <a
+                                       className="btn"
+                                       style={{
+                                          color: "#ee4d2d",
+                                          fontWeight: "bold",
+                                       }}
+                                       onClick={() => {
+                                          setStatus("đang xử lý");
+                                          dispatch(
+                                             getCartDetailsByStatus(
+                                                "đang xử lý"
+                                             )
+                                          );
+                                          navigate("/cart");
+                                       }}>
+                                       Đang giao hàng({count !== 0 && count})
+                                    </a>
+                                 ) : (
+                                    <a
+                                       className="btn"
+                                       onClick={() => {
+                                          setStatus("đang xử lý");
+                                          dispatch(
+                                             getCartDetailsByStatus(
+                                                "đang xử lý"
+                                             )
+                                          );
+                                          navigate("/cart");
+                                       }}>
+                                       Đang giao hàng
+                                    </a>
+                                 )}
                               </div>
-                              <div className="col-2">
-                                 <a
-                                    className="btn"
-                                    onClick={() => {
-                                       setStatus("hoàn thành");
-                                       dispatch(
-                                          getCartDetailsByStatus("hoàn thành")
-                                       );
-                                       navigate("/cart");
-                                    }}>
-                                    Đã giao
-                                 </a>
-                              </div>
-                              <div className="col-2">
-                                 <a
-                                    className="btn"
-                                    onClick={() => {
-                                       setStatus("huỷ đơn");
-                                       dispatch(
-                                          getCartDetailsByStatus("huỷ đơn")
-                                       );
-                                       navigate("/cart");
-                                    }}>
-                                    Đã huỷ
-                                 </a>
+                              <div className="col-3">
+                                 {status === "hoàn thành" ? (
+                                    <a
+                                       className="btn"
+                                       style={{
+                                          color: "#ee4d2d",
+                                          fontWeight: "bold",
+                                       }}
+                                       onClick={() => {
+                                          setStatus("hoàn thành");
+                                          dispatch(
+                                             getCartDetailsByStatus(
+                                                "hoàn thành"
+                                             )
+                                          );
+                                          navigate("/cart");
+                                       }}>
+                                       Đã giao({count !== 0 && count})
+                                    </a>
+                                 ) : (
+                                    <a
+                                       className="btn"
+                                       onClick={() => {
+                                          setStatus("hoàn thành");
+                                          dispatch(
+                                             getCartDetailsByStatus(
+                                                "hoàn thành"
+                                             )
+                                          );
+                                          navigate("/cart");
+                                       }}>
+                                       Đã giao
+                                    </a>
+                                 )}
                               </div>
                            </div>
                         </div>
@@ -638,27 +716,31 @@ export default function Cart() {
                                     <button
                                        className="muaHang w-100"
                                        onClick={() => {
-                                        if (addressCart !== 0) {
-                                          swal("Thanh toán thành công!");
-                                          setStatus("chờ xác nhận");
-                                          dispatch(
-                                             payCart({
-                                                idCart: cart.idCart,
-                                                idAddress: addressCart,
-                                             })
-                                          ).then(() => {
+                                          if (addressCart !== 0) {
+                                             swal("Thanh toán thành công!");
+                                             setStatus("chờ xác nhận");
                                              dispatch(
-                                                getCartDetailsByStatus(
-                                                   "chờ xác nhận"
-                                                )
+                                                payCart({
+                                                   idCart: cart.idCart,
+                                                   idAddress: addressCart,
+                                                })
                                              ).then(() => {
-                                                navigate("/cart");
+                                                dispatch(
+                                                   getCartDetailsByStatus(
+                                                      "chờ xác nhận"
+                                                   )
+                                                ).then(() => {
+                                                   navigate("/cart");
+                                                });
                                              });
-                                          });
-                                        } else {
-                                            navigate(`/account/address/${user.idUser}`)
-                                            swal("Bạn chưa có địa chỉ, hãy tạo địa chỉ nhận hàng!")
-                                        }
+                                          } else {
+                                             navigate(
+                                                `/account/address/${user.idUser}`
+                                             );
+                                             swal(
+                                                "Bạn chưa có địa chỉ, hãy tạo địa chỉ nhận hàng!"
+                                             );
+                                          }
                                        }}>
                                        Thanh Toán
                                     </button>
