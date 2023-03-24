@@ -1,27 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import customAxios from "./api";
 
-export const getNotifications = createAsyncThunk(
-    "notifications/getNotifications",
-    async () => {
-        const res = await customAxios.get("notification");
-        return res.data;
-    }
-);
 
-export const getNotificationsByUser = createAsyncThunk(
-    "notifications/getNotificationsByUser",
-    async (idUser) => {
-        const res = await customAxios.get("notification/find-by-user/" + idUser);
-        return res.data;
-    }
-);
-
-
-export const getNotificationsByShop = createAsyncThunk(
+export const getNotificationsByReceiver = createAsyncThunk(
     "notifications/getNotificationsByShop",
-    async (idShop) => {
-        const res = await customAxios.get("notification/find-by-shop/" + idShop);
+    async (idReceiver) => {
+        const res = await customAxios.get("notification/find-by-receiver/" + idReceiver);
         return res.data;
     }
 );
