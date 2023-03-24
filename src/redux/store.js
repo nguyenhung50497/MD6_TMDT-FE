@@ -1,6 +1,7 @@
 import productReducer from "./slices/productSlice";
 import categoryReducer from "./slices/categorySlice";
 import addressReducer from "./slices/addressSlice";
+import vouchersReducer from "./slices/voucherSlice";
 import cartDetailReducer from "./slices/cartDetailSlice";
 import { configureStore } from "@reduxjs/toolkit";
 import shopReducer from "./shops/shopSlice";
@@ -23,7 +24,8 @@ const store = configureStore({
       carts: cartReducer,
       stats: statsReducer,
       cartDetails: cartDetailReducer,
-      feedbacks: feedbackReducer
+      feedbacks: feedbackReducer,
+      vouchers: vouchersReducer,
    },
    middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
