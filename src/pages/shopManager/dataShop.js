@@ -17,6 +17,8 @@ export default function DataShop() {
     const [queryStringAPI, setQueryStringAPI] = useState("");
     const [productByCategory, setProductByCategory] = useState([])
     const [productDetail, setProductDetail] = useState([])
+    const [totalSaleProduct,setTotalSaleProduct] = useState(0)
+    const [totalQuantityProduct,setTotalQuantityProduct] = useState(0)
     const [check, setCheck] = useState(false);
     const [check2, setCheck2] = useState(false);
     const handleAll = (values) => {
@@ -241,33 +243,39 @@ export default function DataShop() {
 
     function handleProduct(value) {
         for (let i = 0; i < stats.length; i++) {
-            if (stats[i].nameProduct === value) {
+            if(stats[i].nameProduct === value){
                 products.push({
                     product: stats[i].nameProduct,
-                    total: stats[i].priceInCart * stats[i].quantityCart,
+                    total: stats[i].priceInCart*stats[i].quantityCart,
                     quantity: stats[i].quantityCart,
                     date: stats[i].timeCartDetail
                 })
             }
         }
         let a = []
+        let b = 0
+        let c = 0
         for (let i = 0; i < products.length; i++) {
-            for (let j = i + 1; j < products.length; j++) {
-                if (products[j].date === products[i].date) {
+            for (let j = i+1; j < products.length; j++) {
+                if(products[j].date === products[i].date){
                     products[i].total += products[j].total;
                     products[i].quantity += products[j].quantity
-                    products[j].product = ''
+                    products[j].product= ''
                 }
             }
         }
         for (let i = 0; i < products.length; i++) {
-            if (products[i].product !== '') {
+            if(products[i].product !== ''){
+                b+= products[i].total
+                c+= products[i].quantity
                 a.push(products[i])
             }
-
         }
-        setCheck2(true)
+
+        setTotalSaleProduct(b)
+        setTotalQuantityProduct(c)
         setProductDetail(a)
+        setCheck2(true)
     }
 
     /////////////////////////////////////////////////////////////////////////////////////
@@ -290,7 +298,6 @@ export default function DataShop() {
     };
     return (
         <>
-            {console.log(productDetail)}
             <div className="col-10" style={{width: "100%"}}>
                 <div className="row">
                     <div className="col-12  bg-light">
@@ -507,6 +514,7 @@ export default function DataShop() {
                             </div>
                         </div>
                     </div>
+
                     <div
                         className="col-12"
                         style={{
@@ -700,9 +708,9 @@ export default function DataShop() {
                                                         fontSize: "20px",
                                                         color: "rgb(238, 77, 45)",
                                                     }}>
-                                                   {allProductQuantity &&
+                                                   {totalQuantityProduct &&
                                                        formatCurrency(
-                                                           allProductQuantity
+                                                           totalQuantityProduct
                                                        )}
                                                 </p>
                                              </span>
