@@ -27,11 +27,6 @@ export default function CartManager() {
             return state.carts.carts.carts
         }
     });
-    const totalCart = useSelector((state) => {
-        if (state !== undefined) {
-            return state.carts.carts.tong
-        }
-    })
     const detailCart = useSelector((state) => {
         if (state !== undefined) {
             return state.carts.detailCart
@@ -165,7 +160,7 @@ export default function CartManager() {
                                             <a type={'submit'} onClick={() => setStatusCart('')}
                                                className="notification" style={{textDecoration: 'none'}}>
                                                 <span style={{color: 'rgb(238, 77, 45)'}}>Tất cả</span>
-                                                <span className="badge">{totalCart && totalCart}</span>
+                                                <span className="badge">{carts && carts.length}</span>
                                             </a>
                                         </>
                                         :
@@ -184,7 +179,7 @@ export default function CartManager() {
                                             <a type={'submit'} onClick={() => setStatusCart('chờ xác nhận')}
                                                className="notification" style={{textDecoration: 'none'}}>
                                                 <span style={{color: 'rgb(238, 77, 45)'}}>Chờ xác nhận</span>
-                                                <span className="badge">{totalCart && totalCart}</span>
+                                                <span className="badge">{carts && carts.length}</span>
                                             </a>
                                         </>
                                         :
@@ -203,7 +198,7 @@ export default function CartManager() {
                                             <a type={'submit'} onClick={() => setStatusCart('đang xử lý')}
                                                className="notification" style={{textDecoration: 'none'}}>
                                                 <span style={{color: 'rgb(238, 77, 45)'}}>Đang giao hàng</span>
-                                                <span className="badge">{totalCart && totalCart}</span>
+                                                <span className="badge">{carts && carts.length}</span>
                                             </a>
                                         </>
                                         :
@@ -222,7 +217,7 @@ export default function CartManager() {
                                             <a type={'submit'} onClick={() => setStatusCart('hoàn thành')}
                                                className="notification" style={{textDecoration: 'none'}}>
                                                 <span style={{color: 'rgb(238, 77, 45)'}}>Đã giao</span>
-                                                <span className="badge">{totalCart && totalCart}</span>
+                                                <span className="badge">{carts && carts.length}</span>
                                             </a>
                                         </>
                                         :
@@ -241,7 +236,7 @@ export default function CartManager() {
                                             <a type={'submit'} onClick={() => setStatusCart('hủy đơn')}
                                                className="notification" style={{textDecoration: 'none'}}>
                                                 <span style={{color: 'rgb(238, 77, 45)'}}>Đã hủy</span>
-                                                <span className="badge">{totalCart && totalCart}</span>
+                                                <span className="badge">{carts && carts.length}</span>
                                             </a>
                                         </>
                                         :

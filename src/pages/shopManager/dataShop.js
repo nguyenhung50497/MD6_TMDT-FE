@@ -21,6 +21,7 @@ export default function DataShop() {
     const [totalQuantityProduct,setTotalQuantityProduct] = useState(0)
     const [check, setCheck] = useState(false);
     const [check2, setCheck2] = useState(false);
+    const [nameCategory, setNameCategory] = useState('')
     const handleAll = (values) => {
 
     }
@@ -230,6 +231,7 @@ export default function DataShop() {
     let productCategory = []
 
     function handleChange(value) {
+        setNameCategory(value)
         for (let i = 0; i < productStat.length; i++) {
             if (productStat[i].category === value) {
                 productCategory.push(productStat[i])
@@ -597,7 +599,7 @@ export default function DataShop() {
                                             textAlign: "center",
                                             marginBottom: "10px",
                                             color: "rgb(238, 77, 45)",
-                                        }}><h2>Nhóm sản phẩm của ngành</h2></div>
+                                        }}><h2>Nhóm sản phẩm của ngành {nameCategory}</h2></div>
                                         <div className="col-12">
                                             <table className="table table" style={{width: "100%", height: "400px"}}>
                                                 <thead>
@@ -619,7 +621,7 @@ export default function DataShop() {
                                                                 style={{fontSize: "18px"}}>
                                                                 <td style={{textAlign: 'left'}}>{item.product}</td>
                                                                 <td>{item.quantity}</td>
-                                                                <td>{item.total}</td>
+                                                                <td>{item.total && formatCurrency(item.total)}</td>
                                                             </tr>
                                                         </>
                                                     ))}
@@ -708,10 +710,7 @@ export default function DataShop() {
                                                         fontSize: "20px",
                                                         color: "rgb(238, 77, 45)",
                                                     }}>
-                                                   {totalQuantityProduct &&
-                                                       formatCurrency(
-                                                           totalQuantityProduct
-                                                       )}
+                                                     {allProductQuantity && formatCurrency(allProductQuantity)}
                                                 </p>
                                              </span>
                                                                 </button>
@@ -815,7 +814,7 @@ export default function DataShop() {
                                                                             fontSize: "20px",
                                                                             color: "rgb(238, 77, 45)",
                                                                         }}>
-                                                                        đ {sale && formatCurrency(sale)}
+                                                                        đ {totalSaleProduct && formatCurrency(totalSaleProduct)}
                                                                     </p>
                                                                 </button>
                                                             </div>
@@ -848,7 +847,10 @@ export default function DataShop() {
                                                         fontSize: "20px",
                                                         color: "rgb(238, 77, 45)",
                                                     }}>
-                                                   {allProductQuantity && formatCurrency(allProductQuantity)}
+                                                    {totalQuantityProduct &&
+                                                        formatCurrency(
+                                                            totalQuantityProduct
+                                                        )}
                                                 </p>
                                              </span>
                                                                 </button>
