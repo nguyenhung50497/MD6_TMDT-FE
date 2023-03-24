@@ -220,7 +220,7 @@ export default function ShopInterface() {
                                                          marginLeft: "-200px",
                                                          color: "rgb(238,77,45)",
                                                       }}>
-                                                      195
+                                                      {products && products.length}
                                                    </div>
                                                 </div>
                                              </div>

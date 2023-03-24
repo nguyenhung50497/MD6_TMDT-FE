@@ -4,61 +4,48 @@ import customAxios from "./api";
 export const getAllCartShop = createAsyncThunk(
    "carts/getAllCartShop",
    async (data) => {
-      const res = await customAxios.get("carts/" + data);
+      const res = await customAxios.get("carts/" + data.idShop + "?page=" + data.page);
       return res.data;
    }
 );
 export const getCartByStatus = createAsyncThunk(
    "carts/getCartByStatus",
    async (data) => {
-      const res = await customAxios.post("carts/" + data.id, data);
+      const res = await customAxios.post("carts/" + data.idShop + "?page=" + data.page, data);
       return res.data;
    }
 );
 export const searchByName = createAsyncThunk(
    "carts/searchByName",
    async (data) => {
-      const res = await customAxios.post(
-         "carts/search-by-name/" + data.idShop,
-         data
-      );
+      const res = await customAxios.post("carts/search-by-name/" + data.idShop + "?page=" + data.page, data);
       return res.data;
    }
 );
 export const searchByPhone = createAsyncThunk(
    "carts/searchByPhone",
    async (data) => {
-      const res = await customAxios.post(
-         "carts/search-by-phone/" + data.idShop,
-         data
-      );
+      const res = await customAxios.post("carts/search-by-phone/" + data.idShop + "?page=" + data.page, data);
       return res.data;
    }
 );
 export const searchByCategory = createAsyncThunk(
    "carts/searchByCategory",
    async (data) => {
-      const res = await customAxios.post(
-         "carts/search-by-category/" + data.idShop,
-         data
-      );
+      const res = await customAxios.post("carts/search-by-category/" + data.idShop + "?page=" + data.page, data);
       return res.data;
    }
 );
 export const searchByIdCart = createAsyncThunk(
    "carts/searchByIdCart",
    async (data) => {
-      const res = await customAxios.post(
-         "carts/search-by-idCart/" + data.idShop,
-         data
-      );
+      const res = await customAxios.post("carts/search-by-idCart/" + data.idShop + "?page=" + data.page, data);
       return res.data;
    }
 );
 export const getDetailCart = createAsyncThunk(
    "carts/getDetailCart",
    async (data) => {
-       console.log(data)
       const res = await customAxios.post("carts/all/detail-cart", data);
       return res.data;
    }
