@@ -17,6 +17,8 @@ export default function DataShop() {
     const [queryStringAPI, setQueryStringAPI] = useState("");
     const [productByCategory, setProductByCategory] = useState([])
     const [productDetail, setProductDetail] = useState([])
+    const [totalSaleProduct,setTotalSaleProduct] = useState(0)
+    const [totalQuantityProduct,setTotalQuantityProduct] = useState(0)
     const [check, setCheck] = useState(false);
     const handleAll = (values) => {
 
@@ -236,14 +238,40 @@ export default function DataShop() {
     /////////////////////////////////////////////////////////////////////////////////////////
     let products = []
     function handleProduct(value) {
-        console.log(value)
-
         for (let i = 0; i < stats.length; i++) {
             if(stats[i].nameProduct === value){
-                products.push(stats[i])
+                products.push({
+                    product: stats[i].nameProduct,
+                    total: stats[i].priceInCart*stats[i].quantityCart,
+                    quantity: stats[i].quantityCart,
+                    date: stats[i].timeCartDetail
+                })
             }
         }
-        setProductDetail(products)
+        let a = []
+        let b = 0
+        let c = 0
+        for (let i = 0; i < products.length; i++) {
+            for (let j = i+1; j < products.length; j++) {
+                if(products[j].date === products[i].date){
+                    products[i].total += products[j].total;
+                    products[i].quantity += products[j].quantity
+                    products[j].product= ''
+                }
+            }
+        }
+        for (let i = 0; i < products.length; i++) {
+            if(products[i].product !== ''){
+                b+= products[i].total
+                c+= products[i].quantity
+                a.push(products[i])
+            }
+        }
+
+        setTotalSaleProduct(b)
+        setTotalQuantityProduct(c)
+        setProductDetail(a)
+
     }
 
     console.log(productDetail)
@@ -631,7 +659,7 @@ export default function DataShop() {
                                                                     fontSize: "20px",
                                                                     color: "rgb(238, 77, 45)",
                                                                 }}>
-                                                                đ {sale && formatCurrency(sale)}
+                                                                đ {totalSaleProduct && formatCurrency(totalSaleProduct)}
                                                             </p>
                                                         </button>
                                                     </div>
@@ -664,9 +692,9 @@ export default function DataShop() {
                                                         fontSize: "20px",
                                                         color: "rgb(238, 77, 45)",
                                                     }}>
-                                                   {allProductQuantity &&
+                                                   {totalQuantityProduct &&
                                                        formatCurrency(
-                                                           allProductQuantity
+                                                           totalQuantityProduct
                                                        )}
                                                 </p>
                                              </span>
