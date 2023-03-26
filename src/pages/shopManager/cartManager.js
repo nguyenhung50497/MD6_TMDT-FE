@@ -12,12 +12,14 @@ import {
 } from "../../service/cartService";
 import swal from "sweetalert";
 import {getProducts} from "../../service/productService";
+import userSlice from "../../redux/users/userSlice";
+import {addNotification} from "../../service/notificationService";
 
 export default function CartManager() {
     const [type, setType] = useState('Mã đơn hàng')
     const [statusCart, setStatusCart] = useState('')
     const [page, setPage] = useSearchParams();
-    const [search ,setSearch] = useState('')
+    const [search, setSearch] = useState('')
     const page1 = page.get("page") || 1;
     let {id} = useParams()
     const dispatch = useDispatch();
@@ -25,6 +27,11 @@ export default function CartManager() {
     const carts = useSelector((state) => {
         if (state !== undefined) {
             return state.carts.carts.carts
+        }
+    });
+    const user = useSelector((state) => {
+        if (state !== undefined) {
+            return state.users.users.idUser
         }
     });
     const detailCart = useSelector((state) => {
@@ -71,17 +78,22 @@ export default function CartManager() {
         var decPart = arParts.length > 1 ? arParts[1] : "";
         return intPart;
     };
-    const handleOrderStatusSending = (idCart) => {
-        dispatch(orderStatusSending(idCart)).then(check => {
+    const handleOrderStatusSending = async (idCart,idUser) => {
+        let data = {contentNotification: 'waiting', idSender: user, idReceiver: idUser, idCart: idCart}
+       dispatch(addNotification(data))
+       dispatch(orderStatusSending(idCart)).then(check => {
             if (check.payload === 'đang xử lý') {
                 swal('Chuyển trạng thái thành công')
                 window.location.reload()
             }
         })
     }
-    const handleOrderStatusRefunds = (idCart) => {
+    const handleOrderStatusRefunds = async (idCart, idUser) => {
+        let data = {contentNotification: 'delete', idSender: user, idReceiver: idUser, idCart: idCart}
+
         dispatch(orderStatusRefunds(idCart)).then(check => {
             if (check.payload === 'hủy đơn') {
+                dispatch(addNotification(data))
                 swal('Đã hủy đơn hàng thành công')
                 window.location.reload()
             }
@@ -89,7 +101,7 @@ export default function CartManager() {
     }
     useEffect(() => {
         if (statusCart !== '') {
-            let data = {idShop:id, statusCart:statusCart, page: 1}
+            let data = {idShop: id, statusCart: statusCart, page: 1}
             dispatch(getCartByStatus(data))
         } else {
             dispatch(getAllCartShop({idShop: id, page: 1}))
@@ -295,7 +307,7 @@ export default function CartManager() {
                                             <td>{item.statusCart === 'chờ xác nhận' ?
                                                 <>
                                                     <button type={'submit'}
-                                                            onClick={() => handleOrderStatusSending(item.idCart)}
+                                                            onClick={() => handleOrderStatusSending(item.idCart, item.idUser)}
                                                             style={{
                                                                 background: 'none',
                                                                 color: 'green',
@@ -320,7 +332,7 @@ export default function CartManager() {
                                                         textAlign: 'center'
                                                     }} type="button" data-toggle="modal"
                                                             data-target={"#exampleModal" + item.idCart}
-                                                            onClick={() => handleOrderStatusRefunds(item.idCart)}>
+                                                            onClick={() => handleOrderStatusRefunds(item.idCart, item.idUser)}>
                                                         Hủy đơn
                                                     </button>
                                                 </>
@@ -335,7 +347,7 @@ export default function CartManager() {
                                                             textAlign: 'center'
                                                         }} type="button" data-toggle="modal"
                                                                 data-target={"#exampleModal" + item.idCart}
-                                                                onClick={() => handleOrderStatusRefunds(item.idCart)}>
+                                                                onClick={() => handleOrderStatusRefunds(item.idCart, item.idUser)}>
                                                             Hủy đơn
                                                         </button>
                                                     </>
@@ -444,25 +456,29 @@ export default function CartManager() {
                                             <button
                                                 className="page-link"
                                                 onClick={() => {
-                                                   if (search !== '') {
-                                                       let data = {idShop: id, valueInput: search, page: (page1 - 1)}
-                                                       if (type === 'Tên khách hàng') {
-                                                           dispatch(searchByName(data))
-                                                       } else if (type === 'Số điện thoại') {
-                                                           dispatch(searchByPhone(data))
-                                                       } else if (type === "Mã đơn hàng") {
-                                                           dispatch(searchByIdCart(data))
-                                                       } else if (type === 'Loại hàng') {
-                                                           dispatch(searchByCategory(data))
-                                                       }
-                                                   } else {
-                                                       if (statusCart !== '') {
-                                                           let data = {idShop:id, statusCart:statusCart, page: (page1 - 1)}
-                                                           dispatch(getCartByStatus(data))
-                                                       } else {
-                                                           dispatch(getAllCartShop({idShop: id, page: (page1 - 1)}))
-                                                       }
-                                                   }
+                                                    if (search !== '') {
+                                                        let data = {idShop: id, valueInput: search, page: (page1 - 1)}
+                                                        if (type === 'Tên khách hàng') {
+                                                            dispatch(searchByName(data))
+                                                        } else if (type === 'Số điện thoại') {
+                                                            dispatch(searchByPhone(data))
+                                                        } else if (type === "Mã đơn hàng") {
+                                                            dispatch(searchByIdCart(data))
+                                                        } else if (type === 'Loại hàng') {
+                                                            dispatch(searchByCategory(data))
+                                                        }
+                                                    } else {
+                                                        if (statusCart !== '') {
+                                                            let data = {
+                                                                idShop: id,
+                                                                statusCart: statusCart,
+                                                                page: (page1 - 1)
+                                                            }
+                                                            dispatch(getCartByStatus(data))
+                                                        } else {
+                                                            dispatch(getAllCartShop({idShop: id, page: (page1 - 1)}))
+                                                        }
+                                                    }
                                                     navigate("/shop-manager/" + id + "/cart/" + id + "?page=" + (page1 - 1));
                                                     window.scrollTo({
                                                         top: 900,
@@ -501,7 +517,11 @@ export default function CartManager() {
                                                 className="page-link"
                                                 onClick={() => {
                                                     if (search !== '') {
-                                                        let data = {idShop: id, valueInput: search, page: (Number(page1) + 1)}
+                                                        let data = {
+                                                            idShop: id,
+                                                            valueInput: search,
+                                                            page: (Number(page1) + 1)
+                                                        }
                                                         if (type === 'Tên khách hàng') {
                                                             dispatch(searchByName(data))
                                                         } else if (type === 'Số điện thoại') {
@@ -513,7 +533,11 @@ export default function CartManager() {
                                                         }
                                                     } else {
                                                         if (statusCart !== '') {
-                                                            let data = {idShop:id, statusCart:statusCart, page: (page1 - 1)}
+                                                            let data = {
+                                                                idShop: id,
+                                                                statusCart: statusCart,
+                                                                page: (page1 - 1)
+                                                            }
                                                             dispatch(getCartByStatus(data))
                                                         } else {
                                                             dispatch(getAllCartShop({idShop: id, page: (page1 - 1)}))

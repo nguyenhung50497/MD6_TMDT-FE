@@ -17,8 +17,8 @@ export default function DataShop() {
     const [queryStringAPI, setQueryStringAPI] = useState("");
     const [productByCategory, setProductByCategory] = useState([])
     const [productDetail, setProductDetail] = useState([])
-    const [totalSaleProduct,setTotalSaleProduct] = useState(0)
-    const [totalQuantityProduct,setTotalQuantityProduct] = useState(0)
+    const [totalSaleProduct, setTotalSaleProduct] = useState(0)
+    const [totalQuantityProduct, setTotalQuantityProduct] = useState(0)
     const [check, setCheck] = useState(false);
     const [check2, setCheck2] = useState(false);
     const [nameCategory, setNameCategory] = useState('')
@@ -245,10 +245,10 @@ export default function DataShop() {
 
     function handleProduct(value) {
         for (let i = 0; i < stats.length; i++) {
-            if(stats[i].nameProduct === value){
+            if (stats[i].nameProduct === value) {
                 products.push({
                     product: stats[i].nameProduct,
-                    total: stats[i].priceInCart*stats[i].quantityCart,
+                    total: stats[i].priceInCart * stats[i].quantityCart,
                     quantity: stats[i].quantityCart,
                     date: stats[i].timeCartDetail
                 })
@@ -258,18 +258,18 @@ export default function DataShop() {
         let b = 0
         let c = 0
         for (let i = 0; i < products.length; i++) {
-            for (let j = i+1; j < products.length; j++) {
-                if(products[j].date === products[i].date){
+            for (let j = i + 1; j < products.length; j++) {
+                if (products[j].date === products[i].date) {
                     products[i].total += products[j].total;
                     products[i].quantity += products[j].quantity
-                    products[j].product= ''
+                    products[j].product = ''
                 }
             }
         }
         for (let i = 0; i < products.length; i++) {
-            if(products[i].product !== ''){
-                b+= products[i].total
-                c+= products[i].quantity
+            if (products[i].product !== '') {
+                b += products[i].total
+                c += products[i].quantity
                 a.push(products[i])
             }
         }
@@ -642,64 +642,61 @@ export default function DataShop() {
                                         <>
                                             <div className="col-12" style={{width: "100%", height: "100px"}}>
                                                 <div className="row">
-                                                    <div
-                                                        className="col-12"
-                                                        style={{
-                                                            marginTop: "14px",
-                                                            marginLeft: "14px",
-                                                        }}>
+                                                    <div className="col-12"
+                                                         style={{marginTop: "14px", marginLeft: "14px",}}>
                                                         <div className="row">
-                                                            <div
-                                                                className="col-2"
-                                                                style={{marginLeft: "24px"}}>
-                                                                <button
-                                                                    type={"submit"}
-                                                                    style={{
-                                                                        width: "300px",
-                                                                        height: "50px",
-                                                                        background: "none",
-                                                                        border: "1px gray solid",
-                                                                        borderRadius: "5px",
-                                                                    }}
-                                                                    onClick={() => setCheck(false)}>
-                                                                    <p
-                                                                        className="col-12"
-                                                                        style={{
-                                                                            marginTop: "10px",
-                                                                            marginLeft: "-60px",
-                                                                        }}>
-                                                                        Tổng doanh thu
-                                                                    </p>
-                                                                    <p
-                                                                        style={{
-                                                                            marginTop: "-42px",
-                                                                            marginLeft: "150px",
-                                                                            fontSize: "20px",
-                                                                            color: "rgb(238, 77, 45)",
-                                                                        }}>
-                                                                        đ {sale && formatCurrency(sale)}
-                                                                    </p>
-                                                                </button>
-                                                            </div>
-                                                            <div
-                                                                className="col-3"
-                                                                style={{marginLeft: "200px"}}>
-                                                                <button
-                                                                    type={"submit"}
-                                                                    style={{
-                                                                        width: "300px",
-                                                                        height: "50px",
-                                                                        background: "none",
-                                                                        border: "1px gray solid",
-                                                                        borderRadius: "5px",
-                                                                    }}
-                                                                    onClick={() => setCheck(true)}>
+                                                            {check === true ?
+                                                                <>
+                                                                    <div className="col-2" style={{marginLeft: "24px"}}>
+                                                                        <button
+                                                                            type={"submit"}
+                                                                            style={{
+                                                                                width: "300px",
+                                                                                height: "50px",
+                                                                                background: "none",
+                                                                                border: "1px gray solid",
+                                                                                borderRadius: "5px",
+                                                                            }}
+                                                                            onClick={() => setCheck(false)}>
+                                                                            <p
+                                                                                className="col-12"
+                                                                                style={{
+                                                                                    marginTop: "8px",
+                                                                                    marginLeft: "-60px",
+                                                                                    fontSize: "20px",
+                                                                                }}>
+                                                                                Tổng doanh thu
+                                                                            </p>
+                                                                            <p
+                                                                                style={{
+                                                                                    marginTop: "-48px",
+                                                                                    marginLeft: "150px",
+                                                                                    fontSize: "20px",
+                                                                                    color: "rgb(238, 77, 45)",
+                                                                                }}>
+                                                                                đ {sale && formatCurrency(sale)}
+                                                                            </p>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div className="col-3" style={{marginLeft: "200px"}}>
+                                                                        <button
+                                                                            type={"submit"}
+                                                                            style={{
+                                                                                width: "300px",
+                                                                                height: "50px",
+                                                                                background: "none",
+                                                                                border: "1px gray solid",
+                                                                                borderRadius: "5px",
+                                                                            }}
+                                                                            onClick={() => setCheck(true)}>
                                              <span className="row">
                                                 <p
                                                     className="col-12"
                                                     style={{
-                                                        marginTop: "10px",
+                                                        marginTop: "8px",
                                                         marginLeft: "-50px",
+                                                        fontSize: "20px",
+                                                        color: "rgb(238, 77, 45)",
                                                     }}>
                                                    Tổng sản phẩm bán
                                                 </p>
@@ -713,8 +710,78 @@ export default function DataShop() {
                                                      {allProductQuantity && formatCurrency(allProductQuantity)}
                                                 </p>
                                              </span>
-                                                                </button>
-                                                            </div>
+                                                                        </button>
+                                                                    </div>
+                                                                </>
+                                                                :
+                                                                <>
+                                                                    <div className="col-2" style={{marginLeft: "24px"}}>
+                                                                        <button
+                                                                            type={"submit"}
+                                                                            style={{
+                                                                                width: "300px",
+                                                                                height: "50px",
+                                                                                background: "none",
+                                                                                border: "1px gray solid",
+                                                                                borderRadius: "5px",
+                                                                            }}
+                                                                            onClick={() => setCheck(false)}>
+                                                                            <p
+                                                                                className="col-12"
+                                                                                style={{
+                                                                                    marginTop: "8px",
+                                                                                    marginLeft: "-60px",
+                                                                                    color: "rgb(238, 77, 45)",
+                                                                                    fontSize: '20px'
+                                                                                }}>
+                                                                                Tổng doanh thu
+                                                                            </p>
+                                                                            <p
+                                                                                style={{
+                                                                                    marginTop: "-48px",
+                                                                                    marginLeft: "150px",
+                                                                                    fontSize: "20px",
+                                                                                    color: "rgb(238, 77, 45)",
+                                                                                }}>
+                                                                                đ {sale && formatCurrency(sale)}
+                                                                            </p>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div className="col-3" style={{marginLeft: "200px"}}>
+                                                                        <button
+                                                                            type={"submit"}
+                                                                            style={{
+                                                                                width: "300px",
+                                                                                height: "50px",
+                                                                                background: "none",
+                                                                                border: "1px gray solid",
+                                                                                borderRadius: "5px",
+                                                                            }}
+                                                                            onClick={() => setCheck(true)}>
+                                             <span className="row">
+                                                <p
+                                                    className="col-12"
+                                                    style={{
+                                                        marginTop: "8px",
+                                                        marginLeft: "-50px",
+                                                        fontSize: "20px",
+                                                    }}>
+                                                   Tổng sản phẩm bán
+                                                </p>
+                                                <p
+                                                    style={{
+                                                        marginTop: "8px",
+                                                        marginLeft: "-20px",
+                                                        fontSize: "20px",
+                                                        color: "rgb(238, 77, 45)",
+                                                    }}>
+                                                     {allProductQuantity && formatCurrency(allProductQuantity)}
+                                                </p>
+                                             </span>
+                                                                        </button>
+                                                                    </div>
+                                                                </>
+                                                            }
                                                         </div>
                                                     </div>
                                                     <div className="col-12"></div>
