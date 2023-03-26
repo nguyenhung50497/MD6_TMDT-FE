@@ -95,10 +95,7 @@ export const getCartByIdUserDone = createAsyncThunk(
 );
 
 export const payCart = createAsyncThunk("carts/payCart", async (data) => {
-   await customAxios.put("carts/pay-cart/" + data.idCart, data);
-   const res = await customAxios.get(
-      "cart-details/find-by-status?status=chờ+xác+nhận"
-   );
+   const res = await customAxios.put("carts/pay-cart/" + data.idCart, data);
    return res.data;
 });
 export const updateCart = createAsyncThunk("carts/updateCart", async (data) => {
