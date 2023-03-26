@@ -13,7 +13,7 @@ export const getNotificationsByReceiver = createAsyncThunk(
 export const addNotification = createAsyncThunk(
     "notifications/addNotifications",
     async (data) => {
-        const res = await customAxios.post("notification", data);
+        const res = await customAxios.post("notifications", data);
         return res.data;
     }
 );
