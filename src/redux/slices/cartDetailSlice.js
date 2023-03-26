@@ -20,9 +20,6 @@ const cartDetailSlice = createSlice({
       builder.addCase(addCartDetails.fulfilled, (state, action) => {
          state.cartDetails.push(action.payload);
       });
-      builder.addCase(editCartDetails.fulfilled, (state, action) => {
-         state.cartDetails = action.payload;
-      });
       builder.addCase(getCartDetailsById.fulfilled, (state, action) => {
          state.cartDetail = action.payload;
       });

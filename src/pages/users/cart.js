@@ -367,16 +367,15 @@ export default function Cart() {
                                                             quantityCart:
                                                                +e.target.value,
                                                          })
-                                                      );
-                                                      // .then(() => {
-                                                      //    dispatch(
-                                                      //       getCartDetailsByStatus(
-                                                      //          "chưa thanh toán"
-                                                      //       )
-                                                      //    ).then(() => {
-                                                      //       navigate("/cart");
-                                                      //    });
-                                                      // });
+                                                      ).then(() => {
+                                                         dispatch(
+                                                            getCartDetailsByStatus(
+                                                               "chưa thanh toán"
+                                                            )
+                                                         ).then(() => {
+                                                            navigate("/cart");
+                                                         });
+                                                      });
                                                    }
                                                 }}
                                              />
@@ -410,7 +409,7 @@ export default function Cart() {
                                        </div>
                                        <div className="col-1 text-center">
                                           {item.statusCart !== "hoàn thành" && (
-                                             <a
+                                             <span
                                                 className="btn"
                                                 onClick={() => {
                                                    swal({
@@ -448,7 +447,7 @@ export default function Cart() {
                                                    });
                                                 }}>
                                                 Huỷ
-                                             </a>
+                                             </span>
                                           )}
                                           {item.statusCart === "hoàn thành" && (
                                              <>
