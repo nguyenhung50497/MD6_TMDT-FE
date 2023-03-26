@@ -33,9 +33,6 @@ const cartDetailSlice = createSlice({
          state.cartDetails = action.payload.cartDetails;
          state.count = action.payload.count;
       });
-      builder.addCase(payCart.fulfilled, (state, action) => {
-         state.cartDetails = action.payload;
-      });
    },
 });
 
