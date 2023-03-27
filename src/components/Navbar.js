@@ -342,7 +342,7 @@ export default function Navbar() {
                                     </div>
                                  </Link>
                               </div>
-                              <div className="col-7">
+                              <div className="col-8">
                                  <div className="row">
                                     <div className="col-12">
                                        <Formik
@@ -394,7 +394,7 @@ export default function Navbar() {
                               </div>
                               <div
                                  className="col-1"
-                                 style={{ marginLeft: "50px" }}>
+                                 style={{ marginLeft: "0px" }}>
                                  <div
                                     title={"giỏ hàng"}
                                     style={{
@@ -402,11 +402,16 @@ export default function Navbar() {
                                        height: "40px",
                                        left: "45%",
                                        position: "absolute",
-                                       top: "25%",
+                                       marginTop: "28px",
                                        width: "30%",
                                     }}>
-                                    <a
-                                       className="btn text-light"
+                                    <button
+                                       className="text-light"
+                                       style={{
+                                          border: "none",
+                                          background: "none",
+                                          color: "white",
+                                       }}
                                        onClick={() => {
                                           navigate("/cart");
                                        }}>
@@ -426,14 +431,14 @@ export default function Navbar() {
                                              {sum && sum}
                                           </span>
                                        </div>
-                                    </a>
+                                    </button>
                                  </div>
                               </div>
                               <div
                                  className="col-1"
                                  style={{
                                     marginTop: "28px",
-                                    marginLeft: "40px",
+                                    marginLeft: "-20px",
                                  }}>
                                  <div className="dropdown-menu1">
                                     <span className="e-badge e-badge-light e-badge-overlap e-badge-notification text-danger">
@@ -458,6 +463,7 @@ export default function Navbar() {
                                     </button>
                                     <div className="noidung_dropdown1">
                                        {notifications &&
+                                       notifications.length > 0 ? (
                                           notifications.map((item) => (
                                              <>
                                                 {item.contentNotification ===
@@ -564,7 +570,16 @@ export default function Navbar() {
                                                    <></>
                                                 )}
                                              </>
-                                          ))}
+                                          ))
+                                       ) : (
+                                          <span
+                                             className="btn"
+                                             style={{
+                                                color: "#8f8f8f",
+                                             }}>
+                                             Bạn không có thông báo
+                                          </span>
+                                       )}
                                     </div>
                                  </div>
                               </div>
