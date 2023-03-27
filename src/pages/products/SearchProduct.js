@@ -296,6 +296,7 @@ export default function SearchProduct() {
                   <div className="col-8">
                      <div className="row">
                         <div className="col-3">
+                           <h2 className="text-center">Bộ Lọc Tìm Kiếm</h2>
                            <div className="contact-form">
                               <h5
                                  style={{
@@ -326,7 +327,7 @@ export default function SearchProduct() {
                                  </option>
                                  <option value="discount">Đang giảm giá</option>
                               </select>
-
+                              <hr />
                               <h5
                                  style={{
                                     marginBottom: "15px",
