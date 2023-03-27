@@ -1,14 +1,5 @@
 import React, {Component} from "react";
-import {
-    ResponsiveContainer,
-    BarChart,
-    Bar,
-    XAxis,
-    PieChart,
-    Pie,
-    Cell,
-    YAxis,
-} from "recharts";
+import {ResponsiveContainer, BarChart, Bar, XAxis, PieChart, Pie, Cell, YAxis,} from "recharts";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
@@ -24,7 +15,16 @@ export default function DataShop() {
     const [month, setMonth] = useState("");
     const [week, setWeek] = useState("");
     const [queryStringAPI, setQueryStringAPI] = useState("");
+    const [productByCategory, setProductByCategory] = useState([])
+    const [productDetail, setProductDetail] = useState([])
+    const [totalSaleProduct, setTotalSaleProduct] = useState(0)
+    const [totalQuantityProduct, setTotalQuantityProduct] = useState(0)
     const [check, setCheck] = useState(false);
+    const [check2, setCheck2] = useState(false);
+    const [nameCategory, setNameCategory] = useState('')
+    const handleAll = (values) => {
+
+    }
     const cartDetail = useSelector((state) => {
         if (state.stats.sales !== undefined) {
             return state.stats.sales;
@@ -47,15 +47,7 @@ export default function DataShop() {
         return intPart;
     };
     const RADIAN = Math.PI / 180;
-    const renderCustomizedLabel = ({
-                                       cx,
-                                       cy,
-                                       midAngle,
-                                       innerRadius,
-                                       outerRadius,
-                                       percent,
-                                       index,
-                                   }) => {
+    const renderCustomizedLabel = ({cx, cy, midAngle, innerRadius, outerRadius, percent, index,}) => {
         const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
         const x = cx + radius * Math.cos(-midAngle * RADIAN);
         const y = cy + radius * Math.sin(-midAngle * RADIAN);
@@ -92,7 +84,7 @@ export default function DataShop() {
             allProductQuantity += stats[i].quantityCart;
         }
     }
-    ///////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////
     let category = [];
     let valueCategory = [];
     let quantityCategory = [];
@@ -128,6 +120,7 @@ export default function DataShop() {
             }
         );
     }
+    //////////////////////////////////////////////////////////////////////////////////
     const COLORS = [];
     const getRandomIntInclusive = (min, max) => {
         return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -150,17 +143,21 @@ export default function DataShop() {
     let product = [];
     let valueProduct = [];
     let quantityProduct = [];
+    let categoryProduct = []
     for (let i = 0; i < stats.length; i++) {
         product.push(stats[i].nameProduct);
         valueProduct.push(stats[i].priceInCart * stats[i].quantityCart);
-        quantityProduct.push(stats[i].quantityCart);
+        quantityProduct.push(stats[i].quantityCart)
+        categoryProduct.push(stats[i].nameCategory);
     }
 
     let indicesProduct = [...new Set(product)];
     let indicesValueProduct = [];
     let indicesQuantityProduct = [];
+    let indicesCategoryProduct = [...new Set(categoryProduct)]
     let x = 0;
     let y = 0;
+
     for (let i = 0; i < indicesProduct.length; i++) {
         x = 0;
         y = 0;
@@ -179,6 +176,7 @@ export default function DataShop() {
             product: indicesProduct[i],
             total: indicesValueProduct[i],
             quantity: indicesQuantityProduct[i],
+            category: indicesCategoryProduct[i]
         });
     }
 
@@ -220,17 +218,69 @@ export default function DataShop() {
             let queryString = `year=${year}`;
             setQueryStringAPI(queryString);
         }
-        if (
-            week === "" &&
-            month === "" &&
-            quarter === "" &&
-            year === ""
-        ) {
+        if ((week === "" && month === "" && quarter === "" && year === "") ||
+            (week !== "" && month !== "" && quarter !== "" && year === "") ||
+            (week !== "" && month !== "" && quarter === "" && year === "") ||
+            (week !== "" && month === "" && quarter === "" && year === "")) {
             let queryString = undefined;
             setQueryStringAPI(queryString);
         }
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////
+    let productCategory = []
+
+    function handleChange(value) {
+        setNameCategory(value)
+        for (let i = 0; i < productStat.length; i++) {
+            if (productStat[i].category === value) {
+                productCategory.push(productStat[i])
+            }
+        }
+        setProductByCategory(productCategory)
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////
+    let products = []
+
+    function handleProduct(value) {
+        for (let i = 0; i < stats.length; i++) {
+            if (stats[i].nameProduct === value) {
+                products.push({
+                    product: stats[i].nameProduct,
+                    total: stats[i].priceInCart * stats[i].quantityCart,
+                    quantity: stats[i].quantityCart,
+                    date: stats[i].timeCartDetail
+                })
+            }
+        }
+        let a = []
+        let b = 0
+        let c = 0
+        for (let i = 0; i < products.length; i++) {
+            for (let j = i + 1; j < products.length; j++) {
+                if (products[j].date === products[i].date) {
+                    products[i].total += products[j].total;
+                    products[i].quantity += products[j].quantity
+                    products[j].product = ''
+                }
+            }
+        }
+        for (let i = 0; i < products.length; i++) {
+            if (products[i].product !== '') {
+                b += products[i].total
+                c += products[i].quantity
+                a.push(products[i])
+            }
+        }
+
+        setTotalSaleProduct(b)
+        setTotalQuantityProduct(c)
+        setProductDetail(a)
+        setCheck2(true)
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////
     useEffect(() => {
         if (queryStringAPI) {
             navigate("?" + queryStringAPI);
@@ -250,7 +300,7 @@ export default function DataShop() {
     };
     return (
         <>
-            <div className="col-10" style={{width: "100%", height: "1000px"}}>
+            <div className="col-10" style={{width: "100%"}}>
                 <div className="row">
                     <div className="col-12  bg-light">
                         <div className="row">
@@ -476,66 +526,378 @@ export default function DataShop() {
                         }}></div>
                     <div className="col-12">
                         <div className="row">
-                            <div
-                                className="bg-light"
-                                style={{width: "69%", height: "500px"}}>
+                            <div className="bg-light" style={{width: "39%", height: "500px"}}>
                                 <div className="row">
-                                    <div
-                                        className="col-12"
-                                        style={{width: "100%", height: "100px"}}>
+                                    <div style={{width: "70%", marginTop: '50px'}}>
+                                        <h4 style={{textAlign: "center", marginBottom: '10px'}}>
+                                            Doanh số theo các ngành
+                                        </h4>
+                                        <ResponsiveContainer width="100%" height="90%">
+                                            <PieChart width={100} height={100}>
+                                                <Pie
+                                                    data={categoryStat}
+                                                    cx="50%"
+                                                    cy="50%"
+                                                    labelLine={false}
+                                                    label={renderCustomizedLabel}
+                                                    outerRadius={150}
+                                                    fill="#8884d8"
+                                                    dataKey="value"
+                                                >
+                                                    {categoryStat && categoryStat.map((entry, index) => (
+                                                        <Cell type={'submit'} key={`cell-${index}`}
+                                                              fill={COLORS[index % COLORS.length]}
+                                                              onClick={() => handleChange(entry.name)}/>
+                                                    ))}
+                                                </Pie>
+                                            </PieChart>
+                                        </ResponsiveContainer>
+                                    </div>
+                                    <div style={{width: "30%", marginLeft: '-20px'}}>
                                         <div className="row">
-                                            <div
-                                                className="col-12"
-                                                style={{
-                                                    marginTop: "14px",
-                                                    marginLeft: "14px",
+                                            <div className="col-12" style={{marginTop: '55px'}}><p><b>Chú thích</b></p>
+                                            </div>
+                                            <div className="col-12">
+                                                <div className="row">
+                                                    <div className="col-1">
+                                                        <div className="row">
+                                                            {COLORS.map(item => (
+                                                                <>
+                                                                    <div className="col-2" style={{
+                                                                        width: '20px',
+                                                                        height: '20px',
+                                                                        marginTop: '10px',
+                                                                        backgroundColor: `${item}`
+                                                                    }}></div>
+
+                                                                </>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-10">
+                                                        <div className="row">
+                                                            {categoryStat.map(item => (
+                                                                <>
+                                                                    <div className="col-12"
+                                                                         onClick={() => handleChange(item.name)}
+                                                                         style={{marginTop: '6px'}}>{item.name}</div>
+                                                                </>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style={{width: "2%", height: "500px", background: "none"}}></div>
+                            <div className="bg-light" style={{width: "59%", height: "500px"}}>
+                                <div className="col-12" style={{padding: "10px"}}>
+                                    <div className="row">
+                                        <div className="col-12" style={{
+                                            textAlign: "center",
+                                            marginBottom: "10px",
+                                            color: "rgb(238, 77, 45)",
+                                        }}><h2>Nhóm sản phẩm của ngành {nameCategory}</h2></div>
+                                        <div className="col-12">
+                                            <table className="table table" style={{width: "100%", height: "400px"}}>
+                                                <thead>
+                                                <tr style={{
+                                                    backgroundColor: "rgb(238, 77, 45)",
+                                                    color: "white",
+                                                    fontSize: "20px",
                                                 }}>
+                                                    <th scope="col" style={{textAlign: 'left'}}>Tên sản phẩm</th>
+                                                    <th scope="col">Số lượt</th>
+                                                    <th scope="col">Tổng doanh thu</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {productByCategory &&
+                                                    productByCategory.map((item) => (
+                                                        <>
+                                                            <tr onClick={() => handleProduct(item.product)}
+                                                                style={{fontSize: "18px"}}>
+                                                                <td style={{textAlign: 'left'}}>{item.product}</td>
+                                                                <td>{item.quantity}</td>
+                                                                <td>{item.total && formatCurrency(item.total)}</td>
+                                                            </tr>
+                                                        </>
+                                                    ))}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-12" style={{background: "none", width: "100%", height: "40px",}}></div>
+                    <div className="col-12" style={{width: "100%"}}>
+                        <div className="row">
+                            <div className="bg-light" style={{width: "100%", height: "680px"}}>
+                                <div className="row">
+                                    {check2 === false ?
+                                        <>
+                                            <div className="col-12" style={{width: "100%", height: "100px"}}>
+                                                <div className="row">
+                                                    <div className="col-12"
+                                                         style={{marginTop: "14px", marginLeft: "14px",}}>
+                                                        <div className="row">
+                                                            {check === true ?
+                                                                <>
+                                                                    <div className="col-2" style={{marginLeft: "24px"}}>
+                                                                        <button
+                                                                            type={"submit"}
+                                                                            style={{
+                                                                                width: "300px",
+                                                                                height: "50px",
+                                                                                background: "none",
+                                                                                border: "1px gray solid",
+                                                                                borderRadius: "5px",
+                                                                            }}
+                                                                            onClick={() => setCheck(false)}>
+                                                                            <p
+                                                                                className="col-12"
+                                                                                style={{
+                                                                                    marginTop: "8px",
+                                                                                    marginLeft: "-60px",
+                                                                                    fontSize: "20px",
+                                                                                }}>
+                                                                                Tổng doanh thu
+                                                                            </p>
+                                                                            <p
+                                                                                style={{
+                                                                                    marginTop: "-48px",
+                                                                                    marginLeft: "150px",
+                                                                                    fontSize: "20px",
+                                                                                    color: "rgb(238, 77, 45)",
+                                                                                }}>
+                                                                                đ {sale && formatCurrency(sale)}
+                                                                            </p>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div className="col-3" style={{marginLeft: "200px"}}>
+                                                                        <button
+                                                                            type={"submit"}
+                                                                            style={{
+                                                                                width: "300px",
+                                                                                height: "50px",
+                                                                                background: "none",
+                                                                                border: "1px gray solid",
+                                                                                borderRadius: "5px",
+                                                                            }}
+                                                                            onClick={() => setCheck(true)}>
+                                             <span className="row">
+                                                <p
+                                                    className="col-12"
+                                                    style={{
+                                                        marginTop: "8px",
+                                                        marginLeft: "-50px",
+                                                        fontSize: "20px",
+                                                        color: "rgb(238, 77, 45)",
+                                                    }}>
+                                                   Tổng sản phẩm bán
+                                                </p>
+                                                <p
+                                                    style={{
+                                                        marginTop: "8px",
+                                                        marginLeft: "-20px",
+                                                        fontSize: "20px",
+                                                        color: "rgb(238, 77, 45)",
+                                                    }}>
+                                                     {allProductQuantity && formatCurrency(allProductQuantity)}
+                                                </p>
+                                             </span>
+                                                                        </button>
+                                                                    </div>
+                                                                </>
+                                                                :
+                                                                <>
+                                                                    <div className="col-2" style={{marginLeft: "24px"}}>
+                                                                        <button
+                                                                            type={"submit"}
+                                                                            style={{
+                                                                                width: "300px",
+                                                                                height: "50px",
+                                                                                background: "none",
+                                                                                border: "1px gray solid",
+                                                                                borderRadius: "5px",
+                                                                            }}
+                                                                            onClick={() => setCheck(false)}>
+                                                                            <p
+                                                                                className="col-12"
+                                                                                style={{
+                                                                                    marginTop: "8px",
+                                                                                    marginLeft: "-60px",
+                                                                                    color: "rgb(238, 77, 45)",
+                                                                                    fontSize: '20px'
+                                                                                }}>
+                                                                                Tổng doanh thu
+                                                                            </p>
+                                                                            <p
+                                                                                style={{
+                                                                                    marginTop: "-48px",
+                                                                                    marginLeft: "150px",
+                                                                                    fontSize: "20px",
+                                                                                    color: "rgb(238, 77, 45)",
+                                                                                }}>
+                                                                                đ {sale && formatCurrency(sale)}
+                                                                            </p>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div className="col-3" style={{marginLeft: "200px"}}>
+                                                                        <button
+                                                                            type={"submit"}
+                                                                            style={{
+                                                                                width: "300px",
+                                                                                height: "50px",
+                                                                                background: "none",
+                                                                                border: "1px gray solid",
+                                                                                borderRadius: "5px",
+                                                                            }}
+                                                                            onClick={() => setCheck(true)}>
+                                             <span className="row">
+                                                <p
+                                                    className="col-12"
+                                                    style={{
+                                                        marginTop: "8px",
+                                                        marginLeft: "-50px",
+                                                        fontSize: "20px",
+                                                    }}>
+                                                   Tổng sản phẩm bán
+                                                </p>
+                                                <p
+                                                    style={{
+                                                        marginTop: "8px",
+                                                        marginLeft: "-20px",
+                                                        fontSize: "20px",
+                                                        color: "rgb(238, 77, 45)",
+                                                    }}>
+                                                     {allProductQuantity && formatCurrency(allProductQuantity)}
+                                                </p>
+                                             </span>
+                                                                        </button>
+                                                                    </div>
+                                                                </>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                    <div className="col-12"></div>
+                                                </div>
+                                            </div>
+                                            <div className="col-12" style={{height: "300px", marginTop: "-10px"}}>
+                                                {check === false ? (
+                                                    <>
+                                                        <p
+                                                            style={{
+                                                                fontSize: "20px",
+                                                                textAlign: "center",
+                                                            }}>
+                                                            Biểu đồ doanh thu tổng của sản phẩm
+                                                            <b style={{color: "rgb(238, 77, 45)"}}>
+                                                                (đơn vị VNĐ)
+                                                            </b>
+                                                        </p>
+                                                        <ResponsiveContainer
+                                                            width="100%"
+                                                            aspect={3}>
+                                                            <BarChart
+                                                                data={productStat}
+                                                                width={700}
+                                                                height={700}
+                                                                style={{fontSize: "15px"}}>
+                                                                <XAxis dataKey="category"/>
+                                                                <YAxis/>
+                                                                <Bar dataKey="total" fill="#8883d8"/>
+                                                            </BarChart>
+                                                        </ResponsiveContainer>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <p
+                                                            style={{
+                                                                fontSize: "20px",
+                                                                textAlign: "center",
+                                                            }}>
+                                                            Biểu đồ tổng đã bán của sản phẩm
+                                                        </p>
+                                                        <ResponsiveContainer
+                                                            width="100%"
+                                                            aspect={3}>
+                                                            <BarChart
+                                                                data={productStat}
+                                                                width={600}
+                                                                height={600}>
+                                                                <XAxis dataKey="category"/>
+                                                                <YAxis/>
+                                                                <Bar
+                                                                    dataKey="quantity"
+                                                                    fill="#8883d8"
+                                                                />
+                                                            </BarChart>
+                                                        </ResponsiveContainer>
+                                                    </>
+                                                )}
+                                            </div>
+                                        </>
+                                        :
+                                        <>
+                                            <div className="col-12" style={{width: "100%", height: "100px"}}>
                                                 <div className="row">
                                                     <div
-                                                        className="col-2"
-                                                        style={{marginLeft: "24px"}}>
-                                                        <button
-                                                            type={"submit"}
-                                                            style={{
-                                                                width: "300px",
-                                                                height: "50px",
-                                                                background: "none",
-                                                                border: "1px gray solid",
-                                                                borderRadius: "5px",
-                                                            }}
-                                                            onClick={() => setCheck(false)}>
-                                                            <p
-                                                                className="col-12"
-                                                                style={{
-                                                                    marginTop: "10px",
-                                                                    marginLeft: "-60px",
-                                                                }}>
-                                                                Tổng doanh thu
-                                                            </p>
-                                                            <p
-                                                                style={{
-                                                                    marginTop: "-42px",
-                                                                    marginLeft: "150px",
-                                                                    fontSize: "20px",
-                                                                    color: "rgb(238, 77, 45)",
-                                                                }}>
-                                                                đ {sale && formatCurrency(sale)}
-                                                            </p>
-                                                        </button>
-                                                    </div>
-                                                    <div
-                                                        className="col-3"
-                                                        style={{marginLeft: "200px"}}>
-                                                        <button
-                                                            type={"submit"}
-                                                            style={{
-                                                                width: "300px",
-                                                                height: "50px",
-                                                                background: "none",
-                                                                border: "1px gray solid",
-                                                                borderRadius: "5px",
-                                                            }}
-                                                            onClick={() => setCheck(true)}>
+                                                        className="col-12"
+                                                        style={{
+                                                            marginTop: "14px",
+                                                            marginLeft: "14px",
+                                                        }}>
+                                                        <div className="row">
+                                                            <div
+                                                                className="col-2"
+                                                                style={{marginLeft: "24px"}}>
+                                                                <button
+                                                                    type={"submit"}
+                                                                    style={{
+                                                                        width: "300px",
+                                                                        height: "50px",
+                                                                        background: "none",
+                                                                        border: "1px gray solid",
+                                                                        borderRadius: "5px",
+                                                                    }}
+                                                                    onClick={() => setCheck(false)}>
+                                                                    <p
+                                                                        className="col-12"
+                                                                        style={{
+                                                                            marginTop: "10px",
+                                                                            marginLeft: "-60px",
+                                                                        }}>
+                                                                        Tổng doanh thu
+                                                                    </p>
+                                                                    <p
+                                                                        style={{
+                                                                            marginTop: "-42px",
+                                                                            marginLeft: "150px",
+                                                                            fontSize: "20px",
+                                                                            color: "rgb(238, 77, 45)",
+                                                                        }}>
+                                                                        đ {totalSaleProduct && formatCurrency(totalSaleProduct)}
+                                                                    </p>
+                                                                </button>
+                                                            </div>
+                                                            <div
+                                                                className="col-3"
+                                                                style={{marginLeft: "200px"}}>
+                                                                <button
+                                                                    type={"submit"}
+                                                                    style={{
+                                                                        width: "300px",
+                                                                        height: "50px",
+                                                                        background: "none",
+                                                                        border: "1px gray solid",
+                                                                        borderRadius: "5px",
+                                                                    }}
+                                                                    onClick={() => setCheck(true)}>
                                              <span className="row">
                                                 <p
                                                     className="col-12"
@@ -552,208 +914,75 @@ export default function DataShop() {
                                                         fontSize: "20px",
                                                         color: "rgb(238, 77, 45)",
                                                     }}>
-                                                   {allProductQuantity &&
-                                                       formatCurrency(
-                                                           allProductQuantity
-                                                       )}
+                                                    {totalQuantityProduct &&
+                                                        formatCurrency(
+                                                            totalQuantityProduct
+                                                        )}
                                                 </p>
                                              </span>
-                                                        </button>
+                                                                </button>
+                                                            </div>
+                                                        </div>
                                                     </div>
+                                                    <div className="col-12"></div>
                                                 </div>
                                             </div>
-                                            <div className="col-12"></div>
-                                        </div>
-                                    </div>
-                                    <div
-                                        className="col-12"
-                                        style={{height: "300px", marginTop: "-10px"}}>
-                                        {check === false ? (
-                                            <>
-                                                <p
-                                                    style={{
-                                                        fontSize: "20px",
-                                                        textAlign: "center",
-                                                    }}>
-                                                    Biểu đồ doanh thu tổng của sản phẩm
-                                                    <b style={{color: "rgb(238, 77, 45)"}}>
-                                                        (đơn vị VNĐ)
-                                                    </b>
-                                                </p>
-                                                <ResponsiveContainer
-                                                    width="100%"
-                                                    aspect={3}>
-                                                    <BarChart
-                                                        data={productStat}
-                                                        width={600}
-                                                        height={600}
-                                                        style={{fontSize: "15px"}}>
-                                                        <XAxis dataKey="product"/>
-                                                        <YAxis/>
-                                                        <Bar dataKey="total" fill="#8883d8"/>
-                                                    </BarChart>
-                                                </ResponsiveContainer>
-                                            </>
-                                        ) : (
-                                            <>
-                                                <p
-                                                    style={{
-                                                        fontSize: "20px",
-                                                        textAlign: "center",
-                                                    }}>
-                                                    Biểu đồ tổng đã bán của sản phẩm
-                                                </p>
-                                                <ResponsiveContainer
-                                                    width="100%"
-                                                    aspect={3}>
-                                                    <BarChart
-                                                        data={productStat}
-                                                        width={600}
-                                                        height={600}>
-                                                        <XAxis dataKey="product"/>
-                                                        <YAxis/>
-                                                        <Bar
-                                                            dataKey="quantity"
-                                                            fill="#8883d8"
-                                                        />
-                                                    </BarChart>
-                                                </ResponsiveContainer>
-                                            </>
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
-                            <div
-                                style={{
-                                    width: "1%",
-                                    height: "500px",
-                                    background: "none",
-                                }}></div>
-                            <div
-                                className="bg-light"
-                                style={{width: "29%", height: "500px"}}>
-                                <div className="col-12" style={{padding: "10px"}}>
-                                    <div className="row">
-                                        <div
-                                            className="col-12"
-                                            style={{
-                                                textAlign: "center",
-                                                marginBottom: "10px",
-                                                color: "rgb(238, 77, 45)",
-                                            }}>
-                                            <h2>Top sản phẩm bán chạy</h2>
-                                        </div>
-                                        <div className="col-12">
-                                            <table
-                                                className="table table"
-                                                style={{width: "100%", height: "400px"}}>
-                                                <thead>
-                                                <tr
-                                                    style={{
-                                                        backgroundColor:
-                                                            "rgb(238, 77, 45)",
-                                                        color: "white",
-                                                        fontSize: "20px",
-                                                    }}>
-                                                    <th scope="col">Tên sản phẩm</th>
-                                                    <th scope="col">Số lượt</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                {outp &&
-                                                    outp.map((item) => (
-                                                        <>
-                                                            <tr
-                                                                style={{fontSize: "18px"}}>
-                                                                <td>{item.nameProduct}</td>
-                                                                <td>{item.quantityCart}</td>
-                                                            </tr>
-                                                        </>
-                                                    ))}
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div
-                        className="col-12"
-                        style={{
-                            background: "none",
-                            width: "100%",
-                            height: "20px",
-                        }}></div>
-                    <div className="col-12  bg-light" style={{width: "100%"}}>
-                        <div className="row">
-                            <div style={{width: "60%", height: "400px"}}>
-                            </div>
-                            <div
-                                style={{
-                                    background: "rgb(231, 229, 229)",
-                                    width: "1%",
-                                    height: "400px",
-                                }}></div>
-                            <div style={{width: "39%", height: "400px"}}>
-                                <div className="row">
-                                    <div style={{width: "60%"}}>
-                                        <h4 style={{textAlign: "center"}}>
-                                            Doanh số theo các ngành
-                                        </h4>
-                                        <ResponsiveContainer width="100%" height="90%">
-                                            <PieChart width={800} height={800}>
-                                                <Pie
-                                                    data={categoryStat}
-                                                    cx="50%"
-                                                    cy="50%"
-                                                    labelLine={false}
-                                                    label={renderCustomizedLabel}
-                                                    outerRadius={150}
-                                                    fill="#8884d8"
-                                                    dataKey="value"
-                                                >
-                                                    {categoryStat && categoryStat.map((entry, index) => (
-                                                        <Cell key={`cell-${index}`}
-                                                              fill={COLORS[index % COLORS.length]}/>
-                                                    ))}
-                                                </Pie>
-                                            </PieChart>
-                                        </ResponsiveContainer>
-                                    </div>
-                                    <div style={{width: "40%", paddingLeft: "50px"}}>
-                                        <div className="row">
-                                            <div className="col-10" style={{marginTop: '50px'}}><p><b>Chú thích</b></p>
+                                            <div className="col-12" style={{height: "300px", marginTop: "-10px"}}>
+                                                {check === false ? (
+                                                    <>
+                                                        <p
+                                                            style={{
+                                                                fontSize: "20px",
+                                                                textAlign: "center",
+                                                            }}>
+                                                            Biểu đồ doanh thu tổng của {productDetail[0].product}
+                                                            <b style={{color: "rgb(238, 77, 45)"}}>
+                                                                (đơn vị VNĐ)
+                                                            </b>
+                                                        </p>
+                                                        <ResponsiveContainer
+                                                            width="100%"
+                                                            aspect={3}>
+                                                            <BarChart
+                                                                data={productDetail}
+                                                                width={700}
+                                                                height={700}
+                                                                style={{fontSize: "15px"}}>
+                                                                <XAxis dataKey="date"/>
+                                                                <YAxis/>
+                                                                <Bar dataKey="total" fill="#8883d8"/>
+                                                            </BarChart>
+                                                        </ResponsiveContainer>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <p
+                                                            style={{
+                                                                fontSize: "20px",
+                                                                textAlign: "center",
+                                                            }}>
+                                                            Biểu đồ tổng đã bán của {productDetail[0].product}
+                                                        </p>
+                                                        <ResponsiveContainer
+                                                            width="100%"
+                                                            aspect={3}>
+                                                            <BarChart
+                                                                data={productDetail}
+                                                                width={600}
+                                                                height={600}>
+                                                                <XAxis dataKey="date"/>
+                                                                <YAxis/>
+                                                                <Bar
+                                                                    dataKey="quantity"
+                                                                    fill="#8883d8"
+                                                                />
+                                                            </BarChart>
+                                                        </ResponsiveContainer>
+                                                    </>
+                                                )}
                                             </div>
-                                            <div className="row">
-                                                <div className="col-2">
-                                                    <div className="row">
-                                                        {COLORS.map(item => (
-                                                            <>
-                                                                <div className="col-2" style={{
-                                                                    width: '20px',
-                                                                    height: '20px',
-                                                                    marginTop: '10px',
-                                                                    backgroundColor: `${item}`
-                                                                }}></div>
-
-                                                            </>
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                                <div className="col-10">
-                                                    <div className="row">
-                                                        {categoryStat.map(item => (
-                                                            <>
-                                                                <div className="col-12"
-                                                                     style={{marginTop: '6px'}}>{item.name}</div>
-                                                            </>
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                        </>
+                                    }
                                 </div>
                             </div>
                         </div>
