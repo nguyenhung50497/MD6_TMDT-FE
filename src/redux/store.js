@@ -10,6 +10,7 @@ import userReducer from "./users/userSlice";
 import addressUserReducer from "./address/addressSlice";
 import statsReducer from "./slices/statsSlice";
 import feedbackReducer from "./feedback/feedbackSlice";
+import notificationsReducer from "./notifications/notificationsSlice";
 
 import cartReducer from "./cart/cartSlice";
 const store = configureStore({
@@ -26,6 +27,7 @@ const store = configureStore({
       cartDetails: cartDetailReducer,
       feedbacks: feedbackReducer,
       vouchers: vouchersReducer,
+      notifications: notificationsReducer
    },
    middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({

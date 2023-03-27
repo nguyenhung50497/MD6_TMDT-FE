@@ -7,6 +7,7 @@ const initialState = {
    cartDetail: [],
    count: [],
    cart: [],
+   loading: false
 };
 
 const cartDetailSlice = createSlice({
@@ -16,25 +17,21 @@ const cartDetailSlice = createSlice({
    extraReducers: (builder) => {
       builder.addCase(getCartDetails.fulfilled, (state, action) => {
          state.cartDetails = action.payload;
+         state.loading = true;
       });
       builder.addCase(addCartDetails.fulfilled, (state, action) => {
          state.cartDetails.push(action.payload);
-      });
-      builder.addCase(editCartDetails.fulfilled, (state, action) => {
-         state.cartDetails = action.payload;
       });
       builder.addCase(getCartDetailsById.fulfilled, (state, action) => {
          state.cartDetail = action.payload;
       });
       builder.addCase(getCartDetailsByUser.fulfilled, (state, action) => {
          state.cart = action.payload;
+         state.loading = true;
       });
       builder.addCase(getCartDetailsByStatus.fulfilled, (state, action) => {
          state.cartDetails = action.payload.cartDetails;
          state.count = action.payload.count;
-      });
-      builder.addCase(payCart.fulfilled, (state, action) => {
-         state.cartDetails = action.payload;
       });
    },
 });

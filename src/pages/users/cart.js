@@ -20,6 +20,7 @@ import {
    updateCart,
 } from "../../service/cartService";
 import { getAllAddress } from "../../service/addressUser";
+import {addNotification} from "../../service/notificationService";
 
 const SignupSchema = Yup.object().shape({
    reviews: Yup.string()
@@ -86,6 +87,8 @@ export default function Cart() {
       let data = { ...values };
       data.assessment = star;
       data.idUser = user.idUser;
+      let data1 = {contentNotification: 'feedback', idSender: user.idUser, idReceiver: 0, idProduct: data.idProduct, idCart: 0}
+      dispatch(addNotification(data1))
       dispatch(addFeedback(data)).then((check) => {
          if (check.payload === "success") {
             swal("Gửi đánh giá thành công");
@@ -110,6 +113,7 @@ export default function Cart() {
          setAddressCart(e.payload[0].idAddress);
       });
    }, []);
+   console.log(cartDetails)
    return (
       <div className="row">
          <div className="col-12">
@@ -367,16 +371,15 @@ export default function Cart() {
                                                             quantityCart:
                                                                +e.target.value,
                                                          })
-                                                      );
-                                                      // .then(() => {
-                                                      //    dispatch(
-                                                      //       getCartDetailsByStatus(
-                                                      //          "chưa thanh toán"
-                                                      //       )
-                                                      //    ).then(() => {
-                                                      //       navigate("/cart");
-                                                      //    });
-                                                      // });
+                                                      ).then(() => {
+                                                         dispatch(
+                                                            getCartDetailsByStatus(
+                                                               "chưa thanh toán"
+                                                            )
+                                                         ).then(() => {
+                                                            navigate("/cart");
+                                                         });
+                                                      });
                                                    }
                                                 }}
                                              />
@@ -410,7 +413,7 @@ export default function Cart() {
                                        </div>
                                        <div className="col-1 text-center">
                                           {item.statusCart !== "hoàn thành" && (
-                                             <a
+                                             <span
                                                 className="btn"
                                                 onClick={() => {
                                                    swal({
@@ -448,7 +451,7 @@ export default function Cart() {
                                                    });
                                                 }}>
                                                 Huỷ
-                                             </a>
+                                             </span>
                                           )}
                                           {item.statusCart === "hoàn thành" && (
                                              <>

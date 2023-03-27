@@ -5,7 +5,7 @@ import customAxios from "./api";
 export const getNotificationsByReceiver = createAsyncThunk(
     "notifications/getNotificationsByShop",
     async (idReceiver) => {
-        const res = await customAxios.get("notification/find-by-receiver/" + idReceiver);
+        const res = await customAxios.get("notifications/find-by-receiver/" + idReceiver);
         return res.data;
     }
 );
@@ -21,7 +21,7 @@ export const addNotification = createAsyncThunk(
 export const editNotification = createAsyncThunk(
     "notifications/editNotifications",
     async (data) => {
-        const res = await customAxios.put("notifications/" + data.idNotification, data);
+        const res = await customAxios.put("notifications/" + data);
         return res.data;
     }
 );

@@ -6,6 +6,10 @@ import { showProfile } from "../service/userService";
 import { search } from "../service/productService";
 import { Field, Form, Formik } from "formik";
 import { getCartDetailsByUser } from "../service/cartDetailService";
+import {
+   editNotification,
+   getNotificationsByReceiver,
+} from "../service/notificationService";
 
 export default function Navbar() {
    const dispatch = useDispatch();
@@ -113,6 +117,17 @@ export default function Navbar() {
          return state.cartDetails.cart;
       }
    });
+   const notifications = useSelector((state) => {
+      if (state.notifications.notifications !== undefined) {
+         return state.notifications.notifications;
+      }
+   });
+   let total = 0;
+   for (let i = 0; i < notifications.length; i++) {
+      if (notifications[i].statusNotification === "chuadoc") {
+         total++;
+      }
+   }
    let sum = 0;
    if (cartDetails) {
       for (let i of cartDetails) {
@@ -121,8 +136,14 @@ export default function Navbar() {
          }
       }
    }
+   const handleStatusNotification = (values) => {
+      dispatch(editNotification(values)).then(() => {
+         window.location.reload();
+      });
+   };
    useEffect(() => {
       if (user) {
+         dispatch(getNotificationsByReceiver(user.idUser));
          dispatch(getCartDetailsByUser(user.idUser));
       }
    }, []);
@@ -370,7 +391,9 @@ export default function Navbar() {
                                     </div>
                                  </div>
                               </div>
-                              <div className="col-1" style={{marginLeft: '50px'}}>
+                              <div
+                                 className="col-1"
+                                 style={{ marginLeft: "50px" }}>
                                  <div
                                     title={"giỏ hàng"}
                                     style={{
@@ -386,7 +409,9 @@ export default function Navbar() {
                                        onClick={() => {
                                           navigate("/cart");
                                        }}>
-                                       <div className="badge-block" style={{marginLeft:'-20px'}}>
+                                       <div
+                                          className="badge-block"
+                                          style={{ marginLeft: "-20px" }}>
                                           <svg
                                              xmlns="http://www.w3.org/2000/svg"
                                              width="30"
@@ -403,25 +428,151 @@ export default function Navbar() {
                                     </a>
                                  </div>
                               </div>
-                              <div className="col-1" style={{marginTop: '28px', marginLeft: '40px'}}>
+                              <div
+                                 className="col-1"
+                                 style={{
+                                    marginTop: "28px",
+                                    marginLeft: "40px",
+                                 }}>
                                  <div className="dropdown-menu1">
-                                    <button className="nut_dropdown1" style={{border: 'none', background: 'none', color: "white"}}>
-                                       <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
-                                            fill="currentColor" className="bi bi-bell" viewBox="0 0 16 16">
-                                          <path
-                                              d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
+                                    <span className="e-badge e-badge-light e-badge-overlap e-badge-notification text-danger">
+                                       {total}
+                                    </span>
+                                    <button
+                                       className="nut_dropdown1"
+                                       style={{
+                                          border: "none",
+                                          background: "none",
+                                          color: "white",
+                                       }}>
+                                       <svg
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          width="30"
+                                          height="30"
+                                          fill="currentColor"
+                                          className="bi bi-bell"
+                                          viewBox="0 0 16 16">
+                                          <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z" />
                                        </svg>
                                     </button>
                                     <div className="noidung_dropdown1">
-                                       <p>
-                                          Tài khoản của tôi
-                                       </p>
-                                       <p>
-                                          Giỏ hàng
-                                       </p>
-                                       <p>
-                                          Đăng xuất
-                                       </p>
+                                       {notifications &&
+                                          notifications.map((item) => (
+                                             <>
+                                                {item.contentNotification ===
+                                                "waiting" ? (
+                                                   <>
+                                                      {item.statusNotification ===
+                                                      "chuadoc" ? (
+                                                         <>
+                                                            <span
+                                                               className="btn"
+                                                               style={{
+                                                                  color: "red",
+                                                               }}
+                                                               onClick={() =>
+                                                                  handleStatusNotification(
+                                                                     item.idNotification
+                                                                  )
+                                                               }>
+                                                               Đơn hàng{" "}
+                                                               {item.idCart} của
+                                                               bạn đã được xác
+                                                               nhận
+                                                            </span>
+                                                         </>
+                                                      ) : (
+                                                         <>
+                                                            <span
+                                                               className="btn"
+                                                               style={{
+                                                                  color: "gray",
+                                                               }}>
+                                                               Đơn hàng{" "}
+                                                               {item.idCart} của
+                                                               bạn đã được xác
+                                                               nhận
+                                                            </span>
+                                                         </>
+                                                      )}
+                                                   </>
+                                                ) : item.contentNotification ===
+                                                  "delete" ? (
+                                                   <>
+                                                      {item.statusNotification ===
+                                                      "chuadoc" ? (
+                                                         <>
+                                                            <span
+                                                               className="btn"
+                                                               style={{
+                                                                  color: "red",
+                                                               }}
+                                                               onClick={() =>
+                                                                  handleStatusNotification(
+                                                                     item.idNotification
+                                                                  )
+                                                               }>
+                                                               Đơn hàng{" "}
+                                                               {item.idCart} của
+                                                               bạn đã bị hủy
+                                                            </span>
+                                                         </>
+                                                      ) : (
+                                                         <>
+                                                            <span
+                                                               className="btn"
+                                                               style={{
+                                                                  color: "gray",
+                                                               }}>
+                                                               Đơn hàng{" "}
+                                                               {item.idCart} của
+                                                               bạn đã bị hủy
+                                                            </span>
+                                                         </>
+                                                      )}
+                                                   </>
+                                                ) : item.contentNotification ===
+                                                  "feedback" ? (
+                                                   <>
+                                                      {item.statusNotification ===
+                                                      "chuadoc" ? (
+                                                         <>
+                                                            <span
+                                                               className="btn"
+                                                               style={{
+                                                                  color: "red",
+                                                               }}
+                                                               onClick={() =>
+                                                                  handleStatusNotification(
+                                                                     item.idNotification
+                                                                  )
+                                                               }>
+                                                               Sản phẩm id{" "}
+                                                               {item.idProduct}{" "}
+                                                               của bạn vừa được
+                                                               đánh giá
+                                                            </span>
+                                                         </>
+                                                      ) : (
+                                                         <>
+                                                            <span
+                                                               className="btn"
+                                                               style={{
+                                                                  color: "gray",
+                                                               }}>
+                                                               Sản phẩm id{" "}
+                                                               {item.idProduct}{" "}
+                                                               của bạn vừa được
+                                                               đánh giá
+                                                            </span>
+                                                         </>
+                                                      )}
+                                                   </>
+                                                ) : (
+                                                   <></>
+                                                )}
+                                             </>
+                                          ))}
                                     </div>
                                  </div>
                               </div>
@@ -429,8 +580,7 @@ export default function Navbar() {
                         </div>
                      </div>
                   </div>
-                  <div className="col-2">
-                  </div>
+                  <div className="col-2"></div>
                </div>
             </div>
          </div>

@@ -62,25 +62,13 @@ export default function ProductDetail() {
                 idProduct: product.idProduct,
                 priceInCart: product.price,
             };
+            console.log(data)
             swal("Thêm vào giỏ hàng thành công!");
             dispatch(addCartDetails(data)).then(() => {
                 dispatch(getCartDetailsByUser(user.idUser)).then(() => {
                     navigate(`/product-detail/${id}`);
                 });
             });
-        }
-    };
-
-    const handleFastBuy = (values) => {
-        if (cart) {
-            let data = {
-                ...values,
-                idCart: cart.idCart,
-                idProduct: product.idProduct,
-                priceInCart: product.price,
-            };
-            // dispatch(addCartDetails(data));
-            // dispatch(getCartDetails());
         }
     };
     useEffect(() => {
@@ -305,11 +293,6 @@ export default function ProductDetail() {
                                         <div className="col-4 pl-5">
                                             <button className="themGioHang" type="submit">
                                                 Thêm Vào Giỏ Hàng
-                                            </button>
-                                        </div>
-                                        <div className="col-8 pl-0">
-                                            <button className="muaHang" type="button">
-                                                Mua Ngay
                                             </button>
                                         </div>
                                     </div>

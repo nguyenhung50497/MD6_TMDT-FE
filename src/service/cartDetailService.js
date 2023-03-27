@@ -18,10 +18,7 @@ export const addCartDetails = createAsyncThunk(
 export const editCartDetails = createAsyncThunk(
    "cartDetails/editCartDetails",
    async (data) => {
-      await customAxios.put("cart-details/" + data.idCartDetail, data);
-      const res = await customAxios.get(
-         "cart-details/find-by-status?status=chưa+thanh+toán"
-      );
+      const res = await customAxios.put("cart-details/" + data.idCartDetail, data);
       return res.data;
    }
 );
