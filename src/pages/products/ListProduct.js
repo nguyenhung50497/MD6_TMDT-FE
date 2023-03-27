@@ -172,6 +172,7 @@ export default function ListProduct() {
                                                                         style={{
                                                                            backgroundColor:
                                                                               "#FFFF99",
+                                                                              textAlign: "center",
                                                                         }}>
                                                                         <div
                                                                            style={{
@@ -287,9 +288,9 @@ export default function ListProduct() {
                                  )}
                               </li>
                               <li className="page-item">
-                                 <a className="page-link">
+                                 <span className="page-link">
                                     {page1}/{totalPages}
-                                 </a>
+                                 </span>
                               </li>
                               <li className="page-item">
                                  {page1 == totalPages ? (

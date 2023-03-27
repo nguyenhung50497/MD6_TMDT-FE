@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import { getProducts, search } from "../../service/productService";
 import { Field, Form, Formik } from "formik";
+import { getAllVouchers } from "../../service/voucherService";
 
 export default function SearchProduct() {
    const navigate = useNavigate();
@@ -19,6 +20,12 @@ export default function SearchProduct() {
    const totalPages = useSelector((state) => {
       if (state.products.products !== undefined) {
          return state.products.search.totalPage;
+      }
+   });
+   const day = new Date();
+   const vouchers = useSelector((state) => {
+      if (state.vouchers.vouchers) {
+         return state.vouchers.vouchers;
       }
    });
    let products = useSelector((state) => {
@@ -43,14 +50,13 @@ export default function SearchProduct() {
    }
 
    const uniqueAddress = [...new Set(address)];
-   console.log(uniqueAddress);
 
    const keyword = useSelector((state) => {
       return state.products.keyword;
    });
    const existUrl = useSelector((state) => state.products.existUrl);
    const [queryValue, setQueryValue] = useState({
-      sort: ["newest"],
+      sort: [""],
       addressShop: [],
       nameCategory: [],
       minPrice: [""],
@@ -266,6 +272,9 @@ export default function SearchProduct() {
       minPrice: "",
       maxPrice: "",
    };
+   useEffect(() => {
+      dispatch(getAllVouchers());
+   }, []);
    return (
       <>
          {loading === true ? (
@@ -284,7 +293,7 @@ export default function SearchProduct() {
                   <div className="col-2"></div>
                   <div className="col-8">
                      <div className="row">
-                        <div className="col-3 bg-light">
+                        <div className="col-3">
                            <div className="contact-form">
                               <h5
                                  style={{
@@ -300,6 +309,7 @@ export default function SearchProduct() {
                                  onChange={(e) => {
                                     handleSort(e.target.value);
                                  }}>
+                                 <option value="">Sắp xếp theo:</option>
                                  <option value="newest">
                                     Ngày ra mắt: mới nhất
                                  </option>
@@ -541,6 +551,56 @@ export default function SearchProduct() {
                                                       }}
                                                       alt=""
                                                    />
+                                                   <div
+                                                      style={{
+                                                         position: "absolute",
+                                                         right: "0px",
+                                                         top: "0px",
+                                                      }}>
+                                                      <div>
+                                                         {vouchers &&
+                                                            vouchers.map(
+                                                               (it, index) => (
+                                                                  <>
+                                                                     {it.idProduct ===
+                                                                        item.idProduct &&
+                                                                        new Date(
+                                                                           it.dayStart
+                                                                        ) <=
+                                                                           day &&
+                                                                        new Date(
+                                                                           it.dayEnd
+                                                                        ) >
+                                                                           day && (
+                                                                           <div
+                                                                              className="p-1"
+                                                                              style={{
+                                                                                 backgroundColor:
+                                                                                    "#FFFF99",
+                                                                                 textAlign:
+                                                                                    "center",
+                                                                              }}>
+                                                                              <div
+                                                                                 style={{
+                                                                                    color: "#FF0000",
+                                                                                 }}>
+                                                                                 {
+                                                                                    it.valueVoucher
+                                                                                 }
+                                                                                 {
+                                                                                    "%"
+                                                                                 }
+                                                                              </div>
+                                                                              <div>
+                                                                                 Giảm
+                                                                              </div>
+                                                                           </div>
+                                                                        )}
+                                                                  </>
+                                                               )
+                                                            )}
+                                                      </div>
+                                                   </div>
                                                 </Link>
                                                 <div>
                                                    <div
