@@ -49,7 +49,6 @@ export default function ListProduct() {
    }, []);
    return (
       <>
-         {console.log(products)}
          {products && (
             <>
                <div className="row mt-2">
