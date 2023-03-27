@@ -7,6 +7,7 @@ const initialState = {
    cartDetail: [],
    count: [],
    cart: [],
+   loading: false
 };
 
 const cartDetailSlice = createSlice({
@@ -16,6 +17,7 @@ const cartDetailSlice = createSlice({
    extraReducers: (builder) => {
       builder.addCase(getCartDetails.fulfilled, (state, action) => {
          state.cartDetails = action.payload;
+         state.loading = true;
       });
       builder.addCase(addCartDetails.fulfilled, (state, action) => {
          state.cartDetails.push(action.payload);
@@ -25,6 +27,7 @@ const cartDetailSlice = createSlice({
       });
       builder.addCase(getCartDetailsByUser.fulfilled, (state, action) => {
          state.cart = action.payload;
+         state.loading = true;
       });
       builder.addCase(getCartDetailsByStatus.fulfilled, (state, action) => {
          state.cartDetails = action.payload.cartDetails;
