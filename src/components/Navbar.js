@@ -146,7 +146,7 @@ export default function Navbar() {
          dispatch(getNotificationsByReceiver(user.idUser));
          dispatch(getCartDetailsByUser(user.idUser));
       }
-   }, []);
+   }, [user]);
    return (
       <>
          <div

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import { getProducts, search } from "../../service/productService";
 import { getCategories } from "../../service/categoryService";
+import { getAllVouchers } from "../../service/voucherService";
 
 export default function ListProduct() {
    const [page, setPage] = useSearchParams();
@@ -23,6 +24,7 @@ export default function ListProduct() {
          return state.products.products.totalPage;
       }
    });
+   const day = new Date();
    const formatCurrency = (price) => {
       var DecimalSeparator = Number("1.2").toLocaleString().substr(1, 1);
       var priceWithCommas = price.toLocaleString();
@@ -31,16 +33,23 @@ export default function ListProduct() {
       var decPart = arParts.length > 1 ? arParts[1] : "";
       return intPart;
    };
-
+   const vouchers = useSelector((state) => {
+      if (state.vouchers.vouchers) {
+         return state.vouchers.vouchers;
+      }
+   });
    useEffect(() => {
       dispatch(getProducts(1));
    }, []);
    useEffect(() => {
       dispatch(getCategories());
    }, []);
-
+   useEffect(() => {
+      dispatch(getAllVouchers());
+   }, []);
    return (
       <>
+         {console.log(products)}
          {products && (
             <>
                <div className="row mt-2">
@@ -117,7 +126,7 @@ export default function ListProduct() {
                                           style={{
                                              height: "300px",
                                           }}>
-                                          <a
+                                          <span
                                              className="btn"
                                              style={{
                                                 textDecoration: "none",
@@ -140,7 +149,51 @@ export default function ListProduct() {
                                                 }}
                                                 alt=""
                                              />
-                                          </a>
+                                             <div
+                                                style={{
+                                                   position: "absolute",
+                                                   right: "0px",
+                                                   top: "0px",
+                                                }}>
+                                                <div>
+                                                   {vouchers &&
+                                                      vouchers.map(
+                                                         (it, index) => (
+                                                            <>
+                                                               {it.idProduct ===
+                                                                  item.idProduct &&
+                                                                  new Date(
+                                                                     it.dayStart
+                                                                  ) <= day &&
+                                                                  new Date(
+                                                                     it.dayEnd
+                                                                  ) > day && (
+                                                                     <div
+                                                                        className="p-1"
+                                                                        style={{
+                                                                           backgroundColor:
+                                                                              "#FFFF99",
+                                                                        }}>
+                                                                        <div
+                                                                           style={{
+                                                                              color: "#FF0000",
+                                                                           }}>
+                                                                           {
+                                                                              it.valueVoucher
+                                                                           }
+                                                                           {"%"}
+                                                                        </div>
+                                                                        <div>
+                                                                           Giảm
+                                                                        </div>
+                                                                     </div>
+                                                                  )}
+                                                            </>
+                                                         )
+                                                      )}
+                                                </div>
+                                             </div>
+                                          </span>
                                           <div>
                                              <div style={{ height: "50px" }}>
                                                 <p
