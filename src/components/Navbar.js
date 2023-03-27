@@ -467,9 +467,6 @@ export default function Navbar() {
                                                          <>
                                                             <span
                                                                className="btn"
-                                                               style={{
-                                                                  color: "red",
-                                                               }}
                                                                onClick={() =>
                                                                   handleStatusNotification(
                                                                      item.idNotification
@@ -486,7 +483,7 @@ export default function Navbar() {
                                                             <span
                                                                className="btn"
                                                                style={{
-                                                                  color: "gray",
+                                                                  color: "#8f8f8f",
                                                                }}>
                                                                Đơn hàng{" "}
                                                                {item.idCart} của
@@ -504,9 +501,6 @@ export default function Navbar() {
                                                          <>
                                                             <span
                                                                className="btn"
-                                                               style={{
-                                                                  color: "red",
-                                                               }}
                                                                onClick={() =>
                                                                   handleStatusNotification(
                                                                      item.idNotification
@@ -522,7 +516,7 @@ export default function Navbar() {
                                                             <span
                                                                className="btn"
                                                                style={{
-                                                                  color: "gray",
+                                                                  color: "#8f8f8f",
                                                                }}>
                                                                Đơn hàng{" "}
                                                                {item.idCart} của
@@ -539,9 +533,6 @@ export default function Navbar() {
                                                          <>
                                                             <span
                                                                className="btn"
-                                                               style={{
-                                                                  color: "red",
-                                                               }}
                                                                onClick={() =>
                                                                   handleStatusNotification(
                                                                      item.idNotification
@@ -558,7 +549,7 @@ export default function Navbar() {
                                                             <span
                                                                className="btn"
                                                                style={{
-                                                                  color: "gray",
+                                                                  color: "#8f8f8f",
                                                                }}>
                                                                Sản phẩm id{" "}
                                                                {item.idProduct}{" "}

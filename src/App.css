@@ -157,7 +157,7 @@ body {
 /* thay đổi màu background khi hover vào đường dẫn */
 .noidung_dropdown a:hover {
    color: rgb(238, 77, 45) !important;
-   background-color: #e4e2e2;
+   background-color: #ecebeb;
 }
 
 /* hiển thị nội dung dropdown khi hover */
@@ -584,7 +584,7 @@ input[type="radio"] {
 
 /* Thiết kế style cho các đường dẫn tronng Dropdown */
 .noidung_dropdown1 span {
-   color: black !important;
+   color: black;
    text-decoration: none;
    display: block;
    text-align: left;
@@ -592,8 +592,8 @@ input[type="radio"] {
 
 /* thay đổi màu background khi hover vào đường dẫn */
 .noidung_dropdown1 span:hover {
-   color: rgb(238, 77, 45) !important;
-   background-color: #e4e2e2;
+   color: rgb(238, 77, 45);
+   background-color: #ecebeb;
 }
 
 /* hiển thị nội dung dropdown khi hover */
