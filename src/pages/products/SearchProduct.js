@@ -9,6 +9,7 @@ import {
 import { getProducts, search } from "../../service/productService";
 import { Field, Form, Formik } from "formik";
 import { getAllVouchers } from "../../service/voucherService";
+import { getCategories } from "../../service/categoryService";
 
 export default function SearchProduct() {
    const navigate = useNavigate();
@@ -27,6 +28,9 @@ export default function SearchProduct() {
       if (state.vouchers.vouchers) {
          return state.vouchers.vouchers;
       }
+   });
+   const categories = useSelector((state) => {
+      return state.categories.categories;
    });
    const products = useSelector((state) => {
       return state.products.search.products;
@@ -79,9 +83,22 @@ export default function SearchProduct() {
    };
 
    function handleChange(event) {
+      let listCategorie = [
+         "Thời Trang",
+         "Mẹ & Bé",
+         "Thiết Bị Điện Tử",
+         "Máy Tính & Laptop",
+         "Đồng Hồ",
+         "Giày Dép",
+         "Nhà Cửa & Đời Sống",
+         "Sức Khỏe",
+         "Phụ Kiện & Trang Sức Nữ",
+         "Thể Thao",
+         "Oto & Xe Máy & Xe Đạp",
+         "Bách Hóa Online",
+      ];
       const isChecked = event.target.checked;
       const value = event.target.value;
-      console.log(value);
       if (isChecked === true) {
          if (uniqueAddress.includes(value) === true) {
             queryValue.addressShop.push(value);
@@ -94,20 +111,7 @@ export default function SearchProduct() {
                keyword: [...keyword],
             });
          }
-         if (
-            value === "Thời Trang" ||
-            value === "Mẹ & Bé" ||
-            value === "Thiết Bị Điện Tử" ||
-            value === "Máy Tính & Laptop" ||
-            value === "Đồng Hồ" ||
-            value === "Giày Dép" ||
-            value === "Nhà Cửa & Đời Sống" ||
-            value === "Sức Khỏe" ||
-            value === "Phụ Kiện & Trang Sức Nữ" ||
-            value === "Thể Thao" ||
-            value === "Oto & Xe Máy & Xe Đạp" ||
-            value === "Bách Hóa Online"
-         ) {
+         if (listCategorie.includes(value) === true) {
             queryValue.nameCategory.push(value);
             setQueryValue({
                sort: [...queryValue.sort],
@@ -133,20 +137,7 @@ export default function SearchProduct() {
                keyword: [...keyword],
             });
          }
-         if (
-            value === "Thời Trang" ||
-            value === "Mẹ & Bé" ||
-            value === "Thiết Bị Điện Tử" ||
-            value === "Máy Tính & Laptop" ||
-            value === "Đồng Hồ" ||
-            value === "Giày Dép" ||
-            value === "Nhà Cửa & Đời Sống" ||
-            value === "Sức Khỏe" ||
-            value === "Phụ Kiện & Trang Sức Nữ" ||
-            value === "Thể Thao" ||
-            value === "Oto & Xe Máy & Xe Đạp" ||
-            value === "Bách Hóa Online"
-         ) {
+         if (listCategorie.includes(value) === true) {
             for (let i = 0; i < queryValue.nameCategory.length; i++) {
                if (queryValue.nameCategory[i] === value)
                   queryValue.nameCategory.splice(i, 1);
@@ -277,6 +268,9 @@ export default function SearchProduct() {
    useEffect(() => {
       dispatch(getAllVouchers());
    }, []);
+   useEffect(() => {
+      dispatch(getCategories());
+   }, []);
    return (
       <>
          {loading === true ? (
@@ -295,223 +289,130 @@ export default function SearchProduct() {
                   <div className="col-2"></div>
                   <div className="col-8">
                      <div className="row">
-                        <div className="col-3">
+                        <div className="col-3 p-0">
                            <h2 className="text-center">Bộ Lọc Tìm Kiếm</h2>
-                           <div className="contact-form">
-                              <h5
-                                 style={{
-                                    marginBottom: "15px",
-                                    marginTop: "15px",
-                                 }}>
-                                 Sắp xếp
-                              </h5>
+                           <div className="contact-form row p-0">
+                              <div className="col-12">
+                                 <hr />
+                              </div>
+                              <div className="col-12">
+                                 <h5
+                                    style={{
+                                       marginBottom: "15px",
+                                       marginTop: "15px",
+                                    }}>
+                                    Sắp xếp
+                                 </h5>
 
-                              <select
-                                 class="custom-select"
-                                 name="sort"
-                                 onChange={(e) => {
-                                    handleSort(e.target.value);
-                                 }}>
-                                 <option value="">Sắp xếp theo:</option>
-                                 <option value="newest">
-                                    Ngày ra mắt: mới nhất
-                                 </option>
-                                 <option value="oldest">
-                                    Ngày ra mắt: cũ nhất
-                                 </option>
-                                 <option value="highestPrice">
-                                    Giá sản phẩm: cao đến thấp
-                                 </option>
-                                 <option value="lowestPrice">
-                                    Giá sản phẩm: thấp đến cao
-                                 </option>
-                                 <option value="discount">Đang giảm giá</option>
-                              </select>
-                              <hr />
-                              <h5
-                                 style={{
-                                    marginBottom: "15px",
-                                    marginTop: "15px",
-                                 }}>
-                                 Địa điểm
-                              </h5>
-                              {uniqueAddress &&
-                                 uniqueAddress.map((item, key) => (
-                                    <>
+                                 <select
+                                    class="custom-select"
+                                    name="sort"
+                                    onChange={(e) => {
+                                       handleSort(e.target.value);
+                                    }}>
+                                    <option value="">Sắp xếp theo:</option>
+                                    <option value="newest">
+                                       Ngày ra mắt: mới nhất
+                                    </option>
+                                    <option value="oldest">
+                                       Ngày ra mắt: cũ nhất
+                                    </option>
+                                    <option value="highestPrice">
+                                       Giá sản phẩm: cao đến thấp
+                                    </option>
+                                    <option value="lowestPrice">
+                                       Giá sản phẩm: thấp đến cao
+                                    </option>
+                                    <option value="discount">
+                                       Đang giảm giá
+                                    </option>
+                                 </select>
+                              </div>
+                              <div className="col-12">
+                                 <hr />
+                              </div>
+                              <div className="col-12">
+                                 <h5
+                                    style={{
+                                       marginBottom: "15px",
+                                       marginTop: "15px",
+                                    }}>
+                                    Địa điểm
+                                 </h5>
+                                 {uniqueAddress &&
+                                    uniqueAddress.map((item, key) => (
+                                       <>
+                                          <div>
+                                             <label>
+                                                <input
+                                                   type="checkbox"
+                                                   onChange={handleChange}
+                                                   value={`${item}`}
+                                                />{" "}
+                                                {item}
+                                             </label>
+                                          </div>
+                                       </>
+                                    ))}
+                              </div>
+                              <div className="col-12">
+                                 <hr />
+                              </div>
+                              <div className="col-12">
+                                 <h5 style={{ marginBottom: "15px" }}>
+                                    Khoảng giá{" "}
+                                 </h5>
+                                 <Formik
+                                    initialValues={initialValues}
+                                    onSubmit={handleSubmit}>
+                                    <Form>
+                                       <div className="form-group">
+                                          <Field
+                                             className="price pl-1"
+                                             type="text"
+                                             name="minPrice"
+                                             placeholder="đ - VND"
+                                          />
+                                          <a> - </a>
+                                          <Field
+                                             className="price pl-1"
+                                             type="text"
+                                             name="maxPrice"
+                                             placeholder="đ - VND"
+                                          />
+                                       </div>
+
+                                       <div className="form-group">
+                                          <button
+                                             className="btn-price"
+                                             type="submit">
+                                             Áp Dụng
+                                          </button>
+                                       </div>
+                                    </Form>
+                                 </Formik>
+                              </div>
+                              <div className="col-12">
+                                 <hr />
+                              </div>
+                              <div className="col-12">
+                                 <h5 style={{ marginBottom: "15px" }}>
+                                    Danh mục
+                                 </h5>
+                                 {categories &&
+                                    categories.map((it, key) => (
                                        <div>
                                           <label>
                                              <input
                                                 type="checkbox"
                                                 onChange={handleChange}
-                                                value={`${item}`}
+                                                value={it.nameCategory}
                                              />{" "}
-                                             {item}
+                                             {it.nameCategory}
                                           </label>
                                        </div>
-                                    </>
-                                 ))}
-
-                              <br />
-                              <hr />
-                              <h5 style={{ marginBottom: "15px" }}>
-                                 Khoảng giá{" "}
-                              </h5>
-                              <Formik
-                                 initialValues={initialValues}
-                                 onSubmit={handleSubmit}>
-                                 <Form>
-                                    <div className="form-group">
-                                       <Field
-                                          className="price pl-1"
-                                          type="text"
-                                          name="minPrice"
-                                          placeholder="đ - VND"
-                                       />
-                                       <a> - </a>
-                                       <Field
-                                          className="price pl-1"
-                                          type="text"
-                                          name="maxPrice"
-                                          placeholder="đ - VND"
-                                       />
-                                    </div>
-
-                                    <div className="form-group">
-                                       <button
-                                          className="btn-price"
-                                          type="submit">
-                                          Áp Dụng
-                                       </button>
-                                    </div>
-                                 </Form>
-                              </Formik>
-
-                              <br />
-                              <hr />
-                              <h5 style={{ marginBottom: "15px" }}>Danh mục</h5>
-
-                              <div>
-                                 <label>
-                                    <input
-                                       type="checkbox"
-                                       onChange={handleChange}
-                                       value="Thời Trang"
-                                    />{" "}
-                                    Thời Trang
-                                 </label>
+                                    ))}
                               </div>
-
-                              <div>
-                                 <label>
-                                    <input
-                                       type="checkbox"
-                                       onChange={handleChange}
-                                       value="Mẹ & Bé"
-                                    />{" "}
-                                    Mẹ & Bé
-                                 </label>
-                              </div>
-                              <div>
-                                 <label>
-                                    <input
-                                       type="checkbox"
-                                       onChange={handleChange}
-                                       value="Thiết Bị Điện Tử"
-                                    />{" "}
-                                    Thiết Bị Điện Tử
-                                 </label>
-                              </div>
-                              <div>
-                                 <label>
-                                    <input
-                                       type="checkbox"
-                                       onChange={handleChange}
-                                       value="Máy Tính & Laptop"
-                                    />{" "}
-                                    Máy Tính & Laptop
-                                 </label>
-                              </div>
-                              <div>
-                                 <label>
-                                    <input
-                                       type="checkbox"
-                                       onChange={handleChange}
-                                       value="Đồng Hồ"
-                                    />{" "}
-                                    Đồng Hồ
-                                 </label>
-                              </div>
-                              <div>
-                                 <label>
-                                    <input
-                                       type="checkbox"
-                                       onChange={handleChange}
-                                       value="Giày Dép"
-                                    />{" "}
-                                    Giày Dép
-                                 </label>
-                              </div>
-                              <div>
-                                 <label>
-                                    <input
-                                       type="checkbox"
-                                       onChange={handleChange}
-                                       value="Nhà Cửa & Đời Sống"
-                                    />{" "}
-                                    Nhà Cửa & Đời Sống
-                                 </label>
-                              </div>
-                              <div>
-                                 <label>
-                                    <input
-                                       type="checkbox"
-                                       onChange={handleChange}
-                                       value="Sức Khỏe"
-                                    />{" "}
-                                    Sức Khỏe
-                                 </label>
-                              </div>
-                              <div>
-                                 <label>
-                                    <input
-                                       type="checkbox"
-                                       onChange={handleChange}
-                                       value="Phụ Kiện & Trang Sức Nữ"
-                                    />{" "}
-                                    Phụ Kiện & Trang Sức Nữ
-                                 </label>
-                              </div>
-                              <div>
-                                 <label>
-                                    <input
-                                       type="checkbox"
-                                       onChange={handleChange}
-                                       value="Thể Thao"
-                                    />{" "}
-                                    Thể Thao
-                                 </label>
-                              </div>
-                              <div>
-                                 <label>
-                                    <input
-                                       type="checkbox"
-                                       onChange={handleChange}
-                                       value="Oto & Xe Máy & Xe Đạp"
-                                    />{" "}
-                                    Oto & Xe Máy & Xe Đạp
-                                 </label>
-                              </div>
-                              <div>
-                                 <label>
-                                    <input
-                                       type="checkbox"
-                                       onChange={handleChange}
-                                       value="Bách Hóa Online"
-                                    />{" "}
-                                    Bách Hóa Online
-                                 </label>
-                              </div>
-                              <br />
                            </div>
                         </div>
                         <div className="col-9" style={{ marginLeft: "-1px" }}>
