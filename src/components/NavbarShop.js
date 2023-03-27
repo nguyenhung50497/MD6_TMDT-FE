@@ -147,6 +147,7 @@ export default function NavbarShop() {
                                                    height={"20px"}
                                                    style={{
                                                       borderRadius: "100%",
+                                                      marginRight: "5px",
                                                    }}
                                                 />
                                                 <small>

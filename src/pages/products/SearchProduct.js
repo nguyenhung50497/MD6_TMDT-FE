@@ -28,29 +28,31 @@ export default function SearchProduct() {
          return state.vouchers.vouchers;
       }
    });
-   let products = useSelector((state) => {
+   const products = useSelector((state) => {
       return state.products.search.products;
    });
-   let allProducts = useSelector((state) => {
-      return state.products.products.products;
+   const allProducts = useSelector((state) => {
+      if (state.products.products.products) {
+         return state.products.products.products;
+      }
    });
    let address = [];
-   for (let i = 0; i < allProducts.length; i++) {
-      let temp = allProducts[i].addressShop;
-      for (let j = allProducts[i].addressShop.length - 1; j > 0; j--) {
-         if (allProducts[i].addressShop[j] === "-") {
-            temp = allProducts[i].addressShop.slice(
-               j + 1,
-               allProducts[i].addressShop.length
-            );
-            break;
+   if (allProducts !== undefined) {
+      for (let i = 0; i < allProducts.length; i++) {
+         let temp = allProducts[i].addressShop;
+         for (let j = allProducts[i].addressShop.length - 1; j > 0; j--) {
+            if (allProducts[i].addressShop[j] === "-") {
+               temp = allProducts[i].addressShop.slice(
+                  j + 1,
+                  allProducts[i].addressShop.length
+               );
+               break;
+            }
          }
+         address.push(temp);
       }
-      address.push(temp);
    }
-
    const uniqueAddress = [...new Set(address)];
-
    const keyword = useSelector((state) => {
       return state.products.keyword;
    });
@@ -266,7 +268,7 @@ export default function SearchProduct() {
       }
    }, [queryStringAPI]);
    useEffect(() => {
-      dispatch(getProducts);
+      dispatch(getProducts(1));
    }, []);
    let initialValues = {
       minPrice: "",

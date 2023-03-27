@@ -266,6 +266,7 @@ export default function Navbar() {
                                                    height={"20px"}
                                                    style={{
                                                       borderRadius: "100%",
+                                                      marginRight: "5px",
                                                    }}
                                                 />
                                                 <small>
