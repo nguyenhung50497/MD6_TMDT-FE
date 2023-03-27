@@ -25,6 +25,24 @@ export default function SearchProduct() {
     let products = useSelector((state) => {
         return state.products.search.products;
     });
+    let allProducts = useSelector((state) => {
+        return state.products.products.products;;
+    });
+    let address = []
+    for (let i = 0; i < allProducts.length; i++) {
+        let temp = allProducts[i].addressShop
+        for (let j = allProducts[i].addressShop.length - 1; j > 0; j--) {
+            if(allProducts[i].addressShop[j] === '-'){
+                temp = allProducts[i].addressShop.slice(j+1, allProducts[i].addressShop.length)
+                break;
+            }
+        }
+        address.push(temp)
+    }
+
+    const uniqueAddress = [...new Set(address)]
+    console.log(uniqueAddress)
+
     const keyword = useSelector((state) => {
         return state.products.keyword;
     });
@@ -53,18 +71,10 @@ export default function SearchProduct() {
     function handleChange(event) {
         const isChecked = event.target.checked;
         const value = event.target.value;
+        console.log(value)
         if (isChecked === true) {
-            if (
-                value === "Hà Nội" ||
-                value === "TP Hồ Chí Minh" ||
-                value === "Hải Phòng" ||
-                value === "Cần Thơ" ||
-                value === "Đà Nẵng" ||
-                value === "Bắc Ninh" ||
-                value === "Huế" ||
-                value === "Biên Hòa" ||
-                value === "Thủ Đức" ||
-                value === "Hải Dương"
+            if (uniqueAddress.includes(value) === true
+
             ) {
                 queryValue.addressShop.push(value);
                 setQueryValue({
@@ -102,16 +112,7 @@ export default function SearchProduct() {
             }
         } else if (isChecked === false) {
             if (
-                value === "Hà Nội" ||
-                value === "TP Hồ Chí Minh" ||
-                value === "Hải Phòng" ||
-                value === "Cần Thơ" ||
-                value === "Đà Nẵng" ||
-                value === "Bắc Ninh" ||
-                value === "Huế" ||
-                value === "Biên Hòa" ||
-                value === "Thủ Đức" ||
-                value === "Hải Dương"
+                uniqueAddress.includes(value) === true
             ) {
                 for (let i = 0; i < queryValue.addressShop.length; i++) {
                     if (queryValue.addressShop[i] === value)
@@ -261,6 +262,9 @@ export default function SearchProduct() {
             dispatch(search([queryStringAPI, 1]));
         }
     }, [queryStringAPI]);
+    useEffect(() => {
+        dispatch(getProducts)
+    }, []);
     let initialValues = {
         minPrice: "",
         maxPrice: "",
@@ -299,12 +303,12 @@ export default function SearchProduct() {
                                             name="sort"
                                             onChange={(e) => {
                                                 handleSort(e.target.value);
-                                            }}>
-                                            <option value="newest">Ngày ra mắt: sớm nhất</option>
-                                            <option value="oldest">Ngày ra mắt: muộn nhất</option>
+                                            }} style={{width:'325px',height:'30px',borderRadius:'2px'}}>
+                                            <option value="newest">Ngày ra mắt: mới nhất</option>
+                                            <option value="oldest">Ngày ra mắt: cũ nhất</option>
                                             <option value="highestPrice">Giá sản phẩm: cao đến thấp</option>
                                             <option value="lowestPrice">Giá sản phẩm: thấp đến cao</option>
-
+                                            <option value="discount">Đang giảm giá</option>
                                         </select>
 
 
@@ -315,110 +319,22 @@ export default function SearchProduct() {
                                             }}>
                                             Địa điểm
                                         </h5>
+                                        {uniqueAddress && uniqueAddress.map((item,key)=>(
+                                            <>
+                                                <div>
+                                                    <label>
+                                                        <input
+                                                            type="checkbox"
+                                                            onChange={handleChange}
+                                                            value={`${item}`}
+                                                        />{" "}
+                                                        {item}
+                                                    </label>
+                                                </div>
+                                            </>
+                                        ))}
 
-                                        <div>
-                                            <label>
-                                                <input
-                                                    type="checkbox"
-                                                    onChange={handleChange}
-                                                    value="Hà Nội"
-                                                />{" "}
-                                                Hà Nội
-                                            </label>
-                                        </div>
 
-                                        <div>
-                                            <label>
-                                                <input
-                                                    type="checkbox"
-                                                    onChange={handleChange}
-                                                    value="TP Hồ Chí Minh"
-                                                />{" "}
-                                                TP Hồ Chí Minh
-                                            </label>
-                                        </div>
-
-                                        <div>
-                                            <label>
-                                                <input
-                                                    type="checkbox"
-                                                    onChange={handleChange}
-                                                    value="Hải Phòng"
-                                                />{" "}
-                                                Hải Phòng
-                                            </label>
-                                        </div>
-                                        <div>
-                                            <label>
-                                                <input
-                                                    type="checkbox"
-                                                    onChange={handleChange}
-                                                    value="Cần Thơ"
-                                                />{" "}
-                                                Cần Thơ
-                                            </label>
-                                        </div>
-                                        <div>
-                                            <label>
-                                                <input
-                                                    type="checkbox"
-                                                    onChange={handleChange}
-                                                    value="Đà Nẵng"
-                                                />{" "}
-                                                Đà Nẵng
-                                            </label>
-                                        </div>
-
-                                        <div>
-                                            <label>
-                                                <input
-                                                    type="checkbox"
-                                                    onChange={handleChange}
-                                                    value="Bắc Ninh"
-                                                />{" "}
-                                                Bắc Ninh
-                                            </label>
-                                        </div>
-                                        <div>
-                                            <label>
-                                                <input
-                                                    type="checkbox"
-                                                    onChange={handleChange}
-                                                    value="Huế"
-                                                />{" "}
-                                                Huế
-                                            </label>
-                                        </div>
-                                        <div>
-                                            <label>
-                                                <input
-                                                    type="checkbox"
-                                                    onChange={handleChange}
-                                                    value="Biên Hòa"
-                                                />{" "}
-                                                Biên Hòa
-                                            </label>
-                                        </div>
-                                        <div>
-                                            <label>
-                                                <input
-                                                    type="checkbox"
-                                                    onChange={handleChange}
-                                                    value="Thủ Đức"
-                                                />{" "}
-                                                Thủ Đức
-                                            </label>
-                                        </div>
-                                        <div>
-                                            <label>
-                                                <input
-                                                    type="checkbox"
-                                                    onChange={handleChange}
-                                                    value="Hải Dương"
-                                                />{" "}
-                                                Hải Dương
-                                            </label>
-                                        </div>
 
                                         <br/>
                                         <hr/>
@@ -435,6 +351,9 @@ export default function SearchProduct() {
                                                         type="text"
                                                         name="minPrice"
                                                         placeholder="đ - VND"
+                                                        style={{
+                                                            width: "162px",
+                                                        }}
                                                     />
                                                     <a> - </a>
                                                     <Field
@@ -442,6 +361,9 @@ export default function SearchProduct() {
                                                         type="text"
                                                         name="maxPrice"
                                                         placeholder="đ - VND"
+                                                        style={{
+                                                            width: "162px",
+                                                        }}
                                                     />
                                                 </div>
 
