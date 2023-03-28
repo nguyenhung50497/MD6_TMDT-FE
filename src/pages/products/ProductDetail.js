@@ -30,7 +30,9 @@ export default function ProductDetail() {
       }
    });
    const user = useSelector((state) => {
-      return state.users.users;
+      if (state.users.users) {
+         return state.users.users
+      };
    });
    const cart = useSelector((state) => {
       if (state.carts.cart) {
@@ -84,7 +86,9 @@ export default function ProductDetail() {
       dispatch(getProductById(id));
    }, []);
    useEffect(() => {
+      if (user) {
       dispatch(getCartByIdUser(user.idUser));
+      }
    }, []);
    useEffect(() => {
       dispatch(getAllVouchers());
@@ -300,7 +304,7 @@ export default function ProductDetail() {
                         </div>
                      </div>
                   </div>
-                  {product.idUser !== user.idUser && (
+                  {user !== undefined && product.idUser !== user.idUser && (
                      <Formik
                         initialValues={{
                            quantityCart: 1,

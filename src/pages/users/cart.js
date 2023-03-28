@@ -20,7 +20,7 @@ import {
    updateCart,
 } from "../../service/cartService";
 import { getAllAddress } from "../../service/addressUser";
-import {addNotification} from "../../service/notificationService";
+import { addNotification } from "../../service/notificationService";
 
 const SignupSchema = Yup.object().shape({
    reviews: Yup.string()
@@ -87,8 +87,14 @@ export default function Cart() {
       let data = { ...values };
       data.assessment = star;
       data.idUser = user.idUser;
-      let data1 = {contentNotification: 'feedback', idSender: user.idUser, idReceiver: 0, idProduct: data.idProduct, idCart: 0}
-      dispatch(addNotification(data1))
+      let data1 = {
+         contentNotification: "feedback",
+         idSender: user.idUser,
+         idReceiver: 0,
+         idProduct: data.idProduct,
+         idCart: 0,
+      };
+      dispatch(addNotification(data1));
       dispatch(addFeedback(data)).then((check) => {
          if (check.payload === "success") {
             swal("Gửi đánh giá thành công");
@@ -113,7 +119,7 @@ export default function Cart() {
          setAddressCart(e.payload[0].idAddress);
       });
    }, []);
-   console.log(cartDetails)
+   console.log(cartDetails);
    return (
       <div className="row">
          <div className="col-12">
@@ -315,16 +321,22 @@ export default function Cart() {
                                                 textDecoration: "none",
                                                 color: "black",
                                              }}>
-                                             <img
-                                                src={item.image}
-                                                alt=""
-                                                style={{
-                                                   width: "100px",
-                                                }}
-                                             />
-                                             <span className="ml-3">
-                                                {item.nameProduct}
-                                             </span>
+                                             <div className="row">
+                                                <div className="col-3">
+                                                   <img
+                                                      src={item.image}
+                                                      alt=""
+                                                      style={{
+                                                         width: "100px",
+                                                      }}
+                                                   />
+                                                </div>
+                                                <div className="col-9 pl-4">
+                                                   <span>
+                                                      {item.nameProduct}
+                                                   </span>
+                                                </div>
+                                             </div>
                                           </Link>
                                        </div>
                                        <div className="col-2 text-center">

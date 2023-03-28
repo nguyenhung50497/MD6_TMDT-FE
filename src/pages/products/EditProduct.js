@@ -83,6 +83,9 @@ export default function EditProduct() {
       });
    };
    useEffect(() => {
+      if (user === undefined) {
+         navigate(`/`);
+      }
       dispatch(getProductById(id)).then((e) => {
          let data = e.payload
          if (data.idUser !== user.idUser) {
