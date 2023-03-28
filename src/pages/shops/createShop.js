@@ -9,7 +9,7 @@ import { date } from "yup";
 import { createShop } from "../../service/shopService";
 import swal from "sweetalert";
 import { getDistricts, getProvinces } from "../../service/addressService";
-import Login from "../auth/login";
+import Login from "../auth/Login";
 
 export default function CreateShop() {
    const dispatch = useDispatch();

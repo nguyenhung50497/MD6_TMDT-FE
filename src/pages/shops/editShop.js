@@ -9,7 +9,7 @@ import { date } from "yup";
 import { createShop, editShop, findByIdShop } from "../../service/shopService";
 import swal from "sweetalert";
 import { getDistricts, getProvinces } from "../../service/addressService";
-import Login from "../auth/login";
+import Login from "../auth/Login";
 
 export default function EditShop() {
    const { id } = useParams();
@@ -63,8 +63,8 @@ export default function EditShop() {
             data.phoneShop = profile.phoneUser;
             data.emailShop = profile.emailUser;
             if (district !== "" && province !== "") {
-            data.addressShop =
-               data.descriptionShop + "-" + district + "-" + province;
+               data.addressShop =
+                  data.descriptionShop + "-" + district + "-" + province;
             }
             setShop(data);
             setCheck("2");
@@ -107,6 +107,9 @@ export default function EditShop() {
          }
       }
    };
+   const user = useSelector((state) => {
+      return state.users.users;
+   });
    useEffect(() => {
       dispatch(getProvinces());
    }, []);
@@ -115,7 +118,12 @@ export default function EditShop() {
    }, []);
    useEffect(() => {
       dispatch(findByIdShop(id)).then((e) => {
-         setUrl(e.payload.imageShop);
+         let data = e.payload;
+         if (data.idUser !== user.idUser) {
+            navigate(`/`);
+         } else {
+            setUrl(e.payload.imageShop);
+         }
       });
       window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
    }, []);
@@ -221,7 +229,9 @@ export default function EditShop() {
                                                       {province == "" &&
                                                       district == ""
                                                          ? shopProfile.addressShop
-                                                         : district + "-" + province}
+                                                         : district +
+                                                           "-" +
+                                                           province}
                                                    </span>
                                                 </div>
                                                 <div className="col-4">

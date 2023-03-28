@@ -104,8 +104,16 @@ export default function ProductManager() {
          });
       }
    };
+   const user = useSelector((state) => {
+      return state.users.users;
+   });
    useEffect(() => {
-      dispatch(getProductByIdShop({ idShop: id, page: 1 }));
+      dispatch(getProductByIdShop({ idShop: id, page: 1 })).then((e) => {
+         let idUser = e.payload.products[0].idUser
+         if (idUser !== user.idUser) {
+            navigate("/")
+         }
+      });
       window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
    }, []);
    useEffect(() => {
@@ -633,14 +641,17 @@ export default function ProductManager() {
                                              <div
                                                 className="col-5 p-0 "
                                                 style={{
-                                                   marginTop: "6px",
+                                                   marginTop: "4px",
                                                 }}>
                                                 <span
-                                                   className="text-success p-0"
+                                                   className="btn text-success p-0"
                                                    onClick={() => {
                                                       navigate(
                                                          `/product-detail/${item.idProduct}`
                                                       );
+                                                   }}
+                                                   style={{
+                                                      fontWeight: "bold",
                                                    }}>
                                                    Chi tiết
                                                 </span>

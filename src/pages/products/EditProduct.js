@@ -72,7 +72,9 @@ export default function EditProduct() {
    const loading = useSelector((state) => {
       return state.products.loading;
    });
-
+   const user = useSelector((state) => {
+      return state.users.users;
+   });
    const handleEditProduct = (values) => {
       let data = { ...values, image: urls };
       dispatch(editProduct(data)).then((value) => {
@@ -82,7 +84,12 @@ export default function EditProduct() {
    };
    useEffect(() => {
       dispatch(getProductById(id)).then((e) => {
-         setUrls(e.payload.image);
+         let data = e.payload
+         if (data.idUser !== user.idUser) {
+            navigate(`/`)
+         } else {
+            setUrls(e.payload.image);
+         }
       });
    }, []);
    useEffect(() => {
